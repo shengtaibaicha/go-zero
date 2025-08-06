@@ -6,7 +6,7 @@ import (
 
 	"go-zero/apps/file/rpc/file"
 	"go-zero/apps/file/rpc/internal/config"
-	fileuploadserviceServer "go-zero/apps/file/rpc/internal/server/fileuploadservice"
+	fileuploadServer "go-zero/apps/file/rpc/internal/server/fileupload"
 	"go-zero/apps/file/rpc/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/conf"
@@ -26,7 +26,7 @@ func main() {
 	ctx := svc.NewServiceContext(c)
 
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
-		file.RegisterFileUploadServiceServer(grpcServer, fileuploadserviceServer.NewFileUploadServiceServer(ctx))
+		file.RegisterFileUploadServer(grpcServer, fileuploadServer.NewFileUploadServer(ctx))
 
 		if c.Mode == service.DevMode || c.Mode == service.TestMode {
 			reflection.Register(grpcServer)
