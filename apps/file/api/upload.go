@@ -3,15 +3,16 @@ package main
 import (
 	"flag"
 	"fmt"
+
+	"go-zero/apps/file/api/internal/config"
+	"go-zero/apps/file/api/internal/handler"
+	"go-zero/apps/file/api/internal/svc"
+
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"
-	"go-zero/apps/user/api/internal/config"
-	"go-zero/apps/user/api/internal/handler"
-	"go-zero/apps/user/api/internal/svc"
-	"go-zero/common/middleware"
 )
 
-var configFile = flag.String("f", "etc/user-api.yaml", "the config file")
+var configFile = flag.String("f", "etc/upload-api.yaml", "the config file")
 
 func main() {
 	flag.Parse()
@@ -19,9 +20,7 @@ func main() {
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
 
-	// 解决跨域
 	server := rest.MustNewServer(c.RestConf)
-	server.Use(middleware.HeadersMiddleware())
 	defer server.Stop()
 
 	ctx := svc.NewServiceContext(c)

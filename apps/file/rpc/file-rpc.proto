@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package file;
+
+option go_package = "./file";
+
+message UploadReq {
+  bytes File = 1;          // 文件数据流
+  string Filename = 2;     // 原始文件名
+  int64 Size = 3;          // 文件大小（字节）
+  string MimeType = 4;     // 文件MIME类型（如image/jpeg）
+}
+
+// 上传响应
+message UploadResponse {
+  bool success = 1;
+  string file_id = 2;     // 文件唯一标识
+  string file_url = 3;    // 文件访问URL
+  string message = 4;     // 提示信息
+}
+
+// 文件上传服务
+service FileUpload {
+  // 单请求上传（适合中小文件）
+  rpc UploadFile(UploadReq) returns (UploadResponse);
+}
+
+/*
+  goctl rpc protoc file-rpc.proto --go_out=. --go-grpc_out=. --zrpc_out=. -m
+*/

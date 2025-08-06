@@ -36,6 +36,7 @@ func (l *UserRegisterLogic) UserRegister(in *user.RegisterReq) (*user.RegisterRe
 	if !errors.Is(tx.Error, gorm.ErrRecordNotFound) {
 		return nil, errors.New("该用户名已注册！")
 	}
+	// 将密码加密后创建user实例并且写入数据库
 	password, _ := bcrypt.GenerateFromPassword([]byte(in.UserPassword), 12)
 	userId := uuid.New().String()
 	create := MDB.Create(&models.Users{

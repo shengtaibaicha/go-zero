@@ -9,6 +9,11 @@ type Config struct {
 	zrpc.RpcServerConf
 	RedisConf redis.RedisConf
 	Mysql     Mysql
+	Jwt       Jwt
+}
+
+type Jwt struct {
+	SecretKey string
 }
 
 type Mysql struct {

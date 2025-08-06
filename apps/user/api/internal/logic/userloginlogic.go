@@ -5,7 +5,8 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 	"go-zero/apps/user/api/internal/svc"
 	"go-zero/apps/user/api/internal/types"
-	"go-zero/apps/user/pkg/result"
+	"go-zero/apps/user/rpc/user"
+	"go-zero/common/result"
 )
 
 type UserLoginLogic struct {
@@ -24,6 +25,12 @@ func NewUserLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserLog
 
 func (l *UserLoginLogic) UserLogin(req *types.UserLoginReq) (resp *result.Result, err error) {
 	// todo: add your logic here and delete this line
-
-	return
+	token, err := l.svcCtx.Login.UserLogin(l.ctx, &user.LoginReq{
+		UserName:     req.UserName,
+		UserPassword: req.UserPassword,
+	})
+	if err != nil {
+		return result.Err().SetMsg(err.Error()), nil
+	}
+	return result.Ok().SetData(token), nil
 }

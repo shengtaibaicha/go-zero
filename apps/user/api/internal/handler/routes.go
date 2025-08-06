@@ -4,8 +4,9 @@
 package handler
 
 import (
-	"go-zero/apps/user/api/internal/svc"
 	"net/http"
+
+	"go-zero/apps/user/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
 )
@@ -15,17 +16,17 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodGet,
-				Path:    "/api/captcha/get",
+				Path:    "/wallpaper/captcha/get",
 				Handler: getCaptchaHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/user/login",
+				Path:    "/wallpaper/user/login",
 				Handler: userLoginHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/user/register",
+				Path:    "/wallpaper/user/register",
 				Handler: userRegisterHandler(serverCtx),
 			},
 		},

@@ -7,7 +7,7 @@ import (
 	"go-zero/apps/user/api/internal/svc"
 	"go-zero/apps/user/api/internal/types"
 	"go-zero/apps/user/api/tools/captcha"
-	"go-zero/apps/user/pkg/result"
+	"go-zero/common/result"
 )
 
 type GetCaptchaLogic struct {

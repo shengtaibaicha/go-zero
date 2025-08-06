@@ -4,6 +4,7 @@ go 1.24
 
 require (
 	github.com/dchest/captcha v1.1.0
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/google/uuid v1.6.0
 	github.com/zeromicro/go-zero v1.8.5
 	golang.org/x/crypto v0.40.0

@@ -1,8 +1,8 @@
 syntax = "v1"
 
 type (
-	Result  {}
-	GetCaptchaReq  {}
+	Result {}
+	GetCaptchaReq {}
 	UserLoginReq {
 		userName     string `json:"userName"`
 		userPassword string `json:"userPassword"`
@@ -18,12 +18,12 @@ type (
 
 service user {
 	@handler getCaptchaHandler
-	get /api/captcha/get (GetCaptchaReq) returns (Result)
+	get /wallpaper/captcha/get (GetCaptchaReq) returns (Result)
 
 	@handler userLoginHandler
-	post /api/user/login (UserLoginReq) returns (Result)
+	post /wallpaper/user/login (UserLoginReq) returns (Result)
 
 	@handler userRegisterHandler
-	post /api/user/register (UserRegisterReq) returns (Result)
+	post /wallpaper/user/register (UserRegisterReq) returns (Result)
 }
 

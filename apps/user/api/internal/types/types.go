@@ -12,12 +12,12 @@ type Result struct {
 type UserLoginReq struct {
 	UserName     string `json:"userName"`
 	UserPassword string `json:"userPassword"`
-	//CaptchaCode  string `json:"captchaCode"`
+	CaptchaCode  string `json:"captchaCode"`
 }
 
 type UserRegisterReq struct {
-	UserName  string `json:"userName"`
-	Password  string `json:"userPassword"`
-	UserEmail string `json:"userEmail"`
-	//CaptchaCode string `json:"captchaCode"`
+	UserName    string `json:"userName"`
+	Password    string `json:"userPassword"`
+	UserEmail   string `json:"userEmail"`
+	CaptchaCode string `json:"captchaCode"`
 }
