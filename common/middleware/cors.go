@@ -7,7 +7,7 @@ import (
 	"github.com/zeromicro/go-zero/rest"
 )
 
-func HeadersMiddleware() rest.Middleware {
+func CorsMiddleware() rest.Middleware {
 	return func(next http.HandlerFunc) http.HandlerFunc {
 		return func(w http.ResponseWriter, r *http.Request) {
 			// 获取请求源

@@ -1,0 +1,27 @@
+Name: community
+Host: 0.0.0.0
+Port: 8888
+
+Redis:
+  Host: 127.0.0.1:6379
+  Type: node
+  Pass: ""
+
+MaxBytes: 31547280  # 限制请求体最大为30M
+Timeout: 30000 # 单位：毫秒（30秒）
+
+FileRpc:
+  Timeout: 30000
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: file.rpc
+
+UserRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: user.rpc
+
+Jwt:
+  SecretKey: baichabaichabaichabaichabaichabaichabaichabaichabaichabaichabaichabaichabaichabaichabaichabaicha

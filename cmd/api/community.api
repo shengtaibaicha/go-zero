@@ -1,0 +1,56 @@
+// goctl api go -api C:/Users/12793/Desktop/golang/go-zero/apps/cmd/api/community.api -dir .
+syntax = "v1"
+
+// user
+type (
+	Result  {}
+	GetCaptchaReq  {}
+	UserLoginReq {
+		userName     string `json:"userName"`
+		userPassword string `json:"userPassword"`
+		captchaCode  string `json:"captchaCode"`
+	}
+	UserRegisterReq {
+		userName    string `json:"userName"`
+		password    string `json:"userPassword"`
+		userEmail   string `json:"userEmail"`
+		captchaCode string `json:"captchaCode"`
+	}
+)
+
+// file
+type (
+	UploadRequest  {}
+	// 定义文件上传的响应
+	UploadResponse {
+		FileUrl string `json:"file_url"` // 文件访问URL
+	}
+)
+
+@server (
+	group:      user
+	prefix:     /wallpaper/user
+	middleware: CorsMiddleware
+)
+service community {
+	@handler getCaptchaHandler
+	get /captcha (GetCaptchaReq) returns (Result)
+
+	@handler userLoginHandler
+	post /login (UserLoginReq) returns (Result)
+
+	@handler userRegisterHandler
+	post /register (UserRegisterReq) returns (Result)
+}
+
+@server (
+	group:      file
+	prefix:     /wallpaper/file
+	middleware: CorsMiddleware,JwtAuthMiddleware
+)
+// 定义文件上传接口
+service community {
+	@handler UploadHandler
+	post /upload (UploadRequest) returns (UploadResponse)
+}
+

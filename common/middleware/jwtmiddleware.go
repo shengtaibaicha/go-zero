@@ -40,7 +40,7 @@ type JwtCustomClaims struct {
 // NewJwtAuthMiddleware 创建一个JWT认证中间件
 // 参数：cfg - JWT中间件的配置
 // 返回：一个符合GoZero规范的HTTP中间件函数
-func NewJwtAuthMiddleware(cfg JwtAuthConfig) func(http.HandlerFunc) http.HandlerFunc {
+func JwtAuthMiddleware(cfg JwtAuthConfig) func(http.HandlerFunc) http.HandlerFunc {
 	// 如果未指定令牌前缀，默认使用"Bearer"（这是OAuth2.0的标准前缀）
 	//if cfg.TokenPrefix == "" {
 	//	cfg.TokenPrefix = "Bearer"
