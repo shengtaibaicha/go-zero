@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-
 	"go-zero/apps/file/rpc/file"
 	"go-zero/apps/file/rpc/internal/config"
 	fileuploadServer "go-zero/apps/file/rpc/internal/server/fileupload"
@@ -32,6 +31,8 @@ func main() {
 			reflection.Register(grpcServer)
 		}
 	})
+	// 设置grpc接收的最大文件为30M
+	s.AddOptions(grpc.MaxRecvMsgSize(30 * 1024 * 1024))
 	defer s.Stop()
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)

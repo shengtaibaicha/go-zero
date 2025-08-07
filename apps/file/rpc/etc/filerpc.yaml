@@ -1,5 +1,6 @@
 Name: filerpc.rpc
 ListenOn: 0.0.0.0:8080
+Timeout: 30000 # 单位：毫秒（30秒）
 Etcd:
   Hosts:
   - 127.0.0.1:2379
@@ -7,3 +8,12 @@ Etcd:
 
 Mysql:
   DataSource: root:root@tcp(127.0.0.1:3306)/gozero?charset=utf8mb4&parseTime=True&loc=Local
+
+# MinIO存储配置
+Minio:
+  Endpoint: 127.0.0.1:9000  # MinIO服务地址和端口
+  AccessKey: h8b2MIgMG9KLXZpfZitO     # 访问密钥（用户名）
+  SecretKey: tPVzDtM0StwxvocIVLjpuefStcncBe0Y2qs0QQo8     # 密钥（密码）
+  Bucket: gozero         # 存储桶名称，需要提前创建或让程序自动创建
+  UseSSL: false             # 是否使用SSL连接（生产环境建议开启）
+  Expires: 60               # 预签名URL的有效期（分钟）

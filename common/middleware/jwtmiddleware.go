@@ -72,19 +72,19 @@ func NewJwtAuthMiddleware(cfg JwtAuthConfig) func(http.HandlerFunc) http.Handler
 
 			// 3. 验证Authorization头的格式是否正确
 			// 标准格式为："Bearer <token>"，使用空格分割为两部分
-			parts := strings.SplitN(authHeader, " ", 2)
-			if len(parts) != 2 || parts[0] != cfg.TokenPrefix {
-				logx.Errorf("Invalid authorization format, path: %s", r.URL.Path)
-				httpx.WriteJson(w, http.StatusUnauthorized, map[string]string{
-					"code":    "401",
-					"message": fmt.Sprintf("Authorization format must be '%s <token>'", cfg.TokenPrefix),
-				})
-				return
-			}
+			//parts := strings.SplitN(authHeader, " ", 2)
+			//if len(parts) != 2 || parts[0] != cfg.TokenPrefix {
+			//	logx.Errorf("Invalid authorization format, path: %s", r.URL.Path)
+			//	httpx.WriteJson(w, http.StatusUnauthorized, map[string]string{
+			//		"code":    "401",
+			//		"message": fmt.Sprintf("Authorization format must be '%s <token>'", cfg.TokenPrefix),
+			//	})
+			//	return
+			//}
 
 			// 4. 验证JWT令牌的有效性
 			// parts[1]是提取出的纯令牌字符串
-			claims, err := verifyJwtToken(parts[1], cfg.SecretKey)
+			claims, err := verifyJwtToken(authHeader, cfg.SecretKey)
 			if err != nil {
 				logx.Errorf("JWT verify failed: %v, path: %s", err, r.URL.Path)
 				httpx.WriteJson(w, http.StatusUnauthorized, map[string]string{

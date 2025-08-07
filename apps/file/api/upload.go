@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"go-zero/common/middleware"
 
 	"go-zero/apps/file/api/internal/config"
 	"go-zero/apps/file/api/internal/handler"
@@ -21,6 +22,9 @@ func main() {
 	conf.MustLoad(*configFile, &c)
 
 	server := rest.MustNewServer(c.RestConf)
+	// jwt中间件
+	authConfig := middleware.JwtAuthConfig{SecretKey: c.Jwt.SecretKey}
+	server.Use(middleware.NewJwtAuthMiddleware(authConfig))
 	defer server.Stop()
 
 	ctx := svc.NewServiceContext(c)

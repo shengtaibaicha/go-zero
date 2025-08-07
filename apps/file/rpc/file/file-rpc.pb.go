@@ -27,6 +27,8 @@ type UploadReq struct {
 	Filename      string                 `protobuf:"bytes,2,opt,name=Filename,proto3" json:"Filename,omitempty"` // 原始文件名
 	Size          int64                  `protobuf:"varint,3,opt,name=Size,proto3" json:"Size,omitempty"`        // 文件大小（字节）
 	MimeType      string                 `protobuf:"bytes,4,opt,name=MimeType,proto3" json:"MimeType,omitempty"` // 文件MIME类型（如image/jpeg）
+	UserId        string                 `protobuf:"bytes,5,opt,name=UserId,proto3" json:"UserId,omitempty"`
+	TagId         int32                  `protobuf:"varint,6,opt,name=TagId,proto3" json:"TagId,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -87,6 +89,20 @@ func (x *UploadReq) GetMimeType() string {
 		return x.MimeType
 	}
 	return ""
+}
+
+func (x *UploadReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *UploadReq) GetTagId() int32 {
+	if x != nil {
+		return x.TagId
+	}
+	return 0
 }
 
 // 上传响应
@@ -162,12 +178,14 @@ var File_file_rpc_proto protoreflect.FileDescriptor
 
 const file_file_rpc_proto_rawDesc = "" +
 	"\n" +
-	"\x0efile-rpc.proto\x12\x04file\"k\n" +
+	"\x0efile-rpc.proto\x12\x04file\"\x99\x01\n" +
 	"\tUploadReq\x12\x12\n" +
 	"\x04File\x18\x01 \x01(\fR\x04File\x12\x1a\n" +
 	"\bFilename\x18\x02 \x01(\tR\bFilename\x12\x12\n" +
 	"\x04Size\x18\x03 \x01(\x03R\x04Size\x12\x1a\n" +
-	"\bMimeType\x18\x04 \x01(\tR\bMimeType\"x\n" +
+	"\bMimeType\x18\x04 \x01(\tR\bMimeType\x12\x16\n" +
+	"\x06UserId\x18\x05 \x01(\tR\x06UserId\x12\x14\n" +
+	"\x05TagId\x18\x06 \x01(\x05R\x05TagId\"x\n" +
 	"\x0eUploadResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x17\n" +
 	"\afile_id\x18\x02 \x01(\tR\x06fileId\x12\x19\n" +

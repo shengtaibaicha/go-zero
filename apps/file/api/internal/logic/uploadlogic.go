@@ -2,13 +2,13 @@ package logic
 
 import (
 	"context"
-	"fmt"
 	"github.com/zeromicro/go-zero/core/logx"
 	"go-zero/apps/file/api/internal/svc"
 	rpcfile "go-zero/apps/file/rpc/file"
 	"go-zero/common/result"
 	"io"
 	"net/http"
+	"strconv"
 )
 
 type UploadLogic struct {
@@ -27,8 +27,21 @@ func NewUploadLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UploadLogi
 
 func (l *UploadLogic) Upload(r *http.Request) (resp *result.Result, err error) {
 	// todo: add your logic here and delete this line
+	// 限制文件大小
+	err = r.ParseMultipartForm(30 << 20) // 10*1024*1024
+	if err != nil {
+		return result.Err().SetMsg("文件大小超过限制!"), nil
+	}
 	// 1. 解析前端上传的文件（表单字段名为"file"）
 	file, header, err := r.FormFile("file")
+	// 判断文件格式
+	contentType := header.Header.Get("Content-Type")
+	if contentType != "image/jpeg" && contentType != "image/png" {
+		// 非允许的格式，返回错误
+		return result.Err().SetMsg("文件格式不符合!"), nil
+	}
+
+	tagId := r.FormValue("tagId")
 	if err != nil {
 		return result.Err().SetMsg("解析文件失败！"), err
 	}
@@ -40,19 +53,25 @@ func (l *UploadLogic) Upload(r *http.Request) (resp *result.Result, err error) {
 		return result.Err().SetMsg("转换文件格式失败！"), err
 	}
 
+	atoi, _ := strconv.Atoi(tagId)
 	f := &rpcfile.UploadReq{
 		File:     fileContent,
 		Filename: header.Filename,
 		Size:     header.Size,
 		MimeType: header.Header.Get("Content-Type"),
+		UserId:   l.ctx.Value("userId").(string),
+		TagId:    int32(atoi),
 	}
 
 	uploadFile, err := l.svcCtx.FileClient.UploadFile(l.ctx, f)
-	if err != nil {
-		return result.Err().SetMsg("文件上传失败！"), err
+
+	if uploadFile.Success != true {
+		if uploadFile != nil {
+			return result.Err().SetMsg(uploadFile.Message), err
+		}
 	}
 
-	fmt.Println(uploadFile)
-
-	return
+	return result.Ok().SetData(map[string]string{
+		"url": uploadFile.FileUrl,
+	}), nil
 }

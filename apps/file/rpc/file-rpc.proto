@@ -9,6 +9,8 @@ message UploadReq {
   string Filename = 2;     // 原始文件名
   int64 Size = 3;          // 文件大小（字节）
   string MimeType = 4;     // 文件MIME类型（如image/jpeg）
+  string UserId = 5;
+  int32 TagId = 6;
 }
 
 // 上传响应

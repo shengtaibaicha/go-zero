@@ -13,3 +13,4 @@ service upload-api {
 	post /wallpaper/file/upload (UploadRequest) returns (UploadResponse)
 }
 
+// goctl api go -api file-api.api -dir .

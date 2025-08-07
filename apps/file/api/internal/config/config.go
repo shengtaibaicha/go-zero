@@ -7,5 +7,10 @@ import (
 
 type Config struct {
 	rest.RestConf
-	FileClient zrpc.RpcClientConf
+	FileRpc zrpc.RpcClientConf
+	Jwt     Jwt
+}
+
+type Jwt struct {
+	SecretKey string
 }
