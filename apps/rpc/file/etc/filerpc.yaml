@@ -1,4 +1,4 @@
-Name: filerpc.rpc
+Name: file.rpc
 ListenOn: 0.0.0.0:8080
 Timeout: 30000 # 单位：毫秒（30秒）
 Etcd:

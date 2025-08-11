@@ -1,0 +1,10 @@
+Name: tag.rpc
+ListenOn: 0.0.0.0:8082
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: tag.rpc
+
+
+Mysql:
+  DataSource: root:root@tcp(127.0.0.1:3306)/gozero?charset=utf8mb4&parseTime=True&loc=Local

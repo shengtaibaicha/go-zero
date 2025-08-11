@@ -13,7 +13,8 @@ type Config struct {
 }
 
 type Jwt struct {
-	SecretKey string
+	SecretKey   string
+	ExpireHours int64
 }
 
 type Mysql struct {

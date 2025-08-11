@@ -1,3 +1,7 @@
+/*
+  goctl rpc protoc file-rpc.proto --go_out=C:\Users\12793\Desktop\golang\go-zero\apps\rpc\file --go-grpc_out=C:\Users\12793\Desktop\golang\go-zero\apps\rpc\file --zrpc_out=C:\Users\12793\Desktop\golang\go-zero\apps\rpc\file -m
+*/
+
 syntax = "proto3";
 
 package file;
@@ -21,12 +25,67 @@ message UploadResponse {
   string message = 4;     // 提示信息
 }
 
-// 文件上传服务
-service FileUpload {
-  // 单请求上传（适合中小文件）
-  rpc UploadFile(UploadReq) returns (UploadResponse);
+message FindByPageReq {
+  int32 page = 1;
+  int32 size = 2;
 }
 
-/*
-  goctl rpc protoc file-rpc.proto --go_out=. --go-grpc_out=. --zrpc_out=. -m
-*/
+message FindByPageResp {
+  string records = 1;
+  int32 total = 2;
+  int32 size = 3;
+  int32 current = 4;
+  int32 pages = 5;
+}
+
+message DownloadFileReq {
+  string fileName = 1;
+}
+
+message DownloadFileResp {
+  bytes content = 1;      // 文件二进制内容
+  string fileName = 2;   // 文件名
+  string contentType = 3; // MIME 类型（如 "image/jpeg"）
+}
+
+message FindPageByTagReq {
+  int32 page = 1;
+  int32 size = 2;
+  int32 tagId = 3;
+}
+
+message FindPageByTagResp {
+  string records = 1;
+  int32 total = 2;
+  int32 size = 3;
+  int32 current = 4;
+  int32 pages = 5;
+}
+
+message FindPageByNameReq {
+  int32 page = 1;
+  int32 size = 2;
+  string name = 3;
+}
+
+message FindPageByNameResp {
+  string records = 1;
+  int32 total = 2;
+  int32 size = 3;
+  int32 current = 4;
+  int32 pages = 5;
+}
+
+// 文件上传服务
+service File {
+  // 单请求上传（适合中小文件）
+  rpc UploadFile(UploadReq) returns (UploadResponse);
+
+  rpc FindByPage(FindByPageReq) returns (FindByPageResp);
+
+  rpc DownloadFile(DownloadFileReq) returns (DownloadFileResp);
+
+  rpc FindPageByTag(FindPageByTagReq) returns (FindPageByTagResp);
+
+  rpc FindPageByName(FindPageByNameReq) returns (FindPageByNameResp);
+}

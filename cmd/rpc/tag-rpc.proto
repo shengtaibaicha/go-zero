@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package tag;
+
+option go_package = "./tag";
+
+message GetTagsReq {
+
+}
+
+message GetTagsResp {
+  string tags = 1;
+}
+
+service Tag {
+  rpc GetTags(GetTagsReq) returns (GetTagsResp);
+}
+
+/*
+  goctl rpc protoc file-rpc.proto --go_out=C:\Users\12793\Desktop\golang\go-zero\apps\rpc\tag --go-grpc_out=C:\Users\12793\Desktop\golang\go-zero\apps\rpc\tag --zrpc_out=C:\Users\12793\Desktop\golang\go-zero\apps\rpc\tag -m
+ */

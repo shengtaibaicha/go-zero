@@ -1,0 +1,97 @@
+// goctl api go -api C:\Users\12793\Desktop\golang\go-zero\cmd\api\gateway.api -dir .
+syntax = "v1"
+
+// user
+type (
+	Result  {}
+	GetCaptchaReq  {}
+	UserLoginReq {
+		userName     string `json:"userName"`
+		userPassword string `json:"userPassword"`
+		captchaCode  string `json:"captchaCode"`
+	}
+	UserRegisterReq {
+		userName    string `json:"userName"`
+		password    string `json:"userPassword"`
+		userEmail   string `json:"userEmail"`
+		captchaCode string `json:"captchaCode"`
+	}
+)
+
+@server (
+	group:      user
+	prefix:     /wallpaper/user
+	middleware: JwtAuthMiddleware
+)
+service gateway {}
+
+// file
+type (
+	UploadRequest  {}
+	// 定义文件上传的响应
+	DownloadFileReq {
+		FileName string `form:"fileName"` // MinIO 中存储的文件键（文件名/路径）
+	}
+)
+
+@server (
+	group:      file
+	prefix:     /wallpaper/file
+	middleware: JwtAuthMiddleware
+)
+// 定义文件上传接口
+service gateway {
+	@handler UploadHandler
+	post /upload (UploadRequest) returns (Result)
+
+	@handler Download
+	get /download (DownloadFileReq)
+}
+
+type (
+	findByPageReq {
+		page int32 `form:"page"`
+		size int32 `form:"size"`
+	}
+)
+
+type (
+	findPageByTagReq {
+		page  int32 `json:"page"`
+		size  int32 `json:"size"`
+		tagId int32 `json:"tagId"`
+	}
+	findPageByNameReq {
+		page int32  `form:"page"`
+		size int32  `form:"size"`
+		name string `form:"name"`
+	}
+)
+
+@server (
+	group:  public
+	prefix: /wallpaper
+)
+service gateway {
+	@handler FindByPage // 分页查询
+	get /file/find/page (findByPageReq) returns (Result)
+
+	@handler GetTags
+	get /file/tag/tags returns (Result)
+
+	@handler getCaptchaHandler
+	get /user/captcha (GetCaptchaReq) returns (Result)
+
+	@handler userLoginHandler
+	post /user/login (UserLoginReq) returns (Result)
+
+	@handler userRegisterHandler
+	post /user/register (UserRegisterReq) returns (Result)
+
+	@handler FindPageByTag
+	post /file/tag/find/page (findPageByTagReq) returns (Result)
+
+	@handler FindPageByName
+	get /file/find/name (findPageByNameReq) returns (Result)
+}
+

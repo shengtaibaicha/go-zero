@@ -7,6 +7,7 @@ import (
 	"go-zero/apps/rpc/user/tools"
 	"go-zero/apps/rpc/user/user"
 	"go-zero/models"
+
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 
@@ -41,8 +42,9 @@ func (l *UserLoginLogic) UserLogin(in *user.LoginReq) (*user.LoginResp, error) {
 	if err2 != nil {
 		return nil, errors.New("用户名或密码不正确！")
 	}
-	// 查找到对应的数据，我们生成token返回
-	token, err := tools.GenerateToken(l.svcCtx.Jwt.SecretKey, users.UserId, users.UserName, "0", 24)
+	// 查找到对应的数据，我们生成token返回，并且把token放入redis中
+	token, err := tools.GenerateToken(l.svcCtx.Jwt.SecretKey, users.UserId, users.UserName, "0", l.svcCtx.Jwt.ExpireHours)
+	l.svcCtx.Redis.SetexCtx(context.Background(), users.UserId, token, 60*60*24)
 	if err != nil {
 		return nil, errors.New("create token failed")
 	}
