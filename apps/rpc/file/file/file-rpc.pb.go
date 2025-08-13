@@ -236,6 +236,7 @@ type FindByPageResp struct {
 	Size          int32                  `protobuf:"varint,3,opt,name=size,proto3" json:"size,omitempty"`
 	Current       int32                  `protobuf:"varint,4,opt,name=current,proto3" json:"current,omitempty"`
 	Pages         int32                  `protobuf:"varint,5,opt,name=pages,proto3" json:"pages,omitempty"`
+	Collect       map[string]bool        `protobuf:"bytes,6,rep,name=collect,proto3" json:"collect,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -303,6 +304,13 @@ func (x *FindByPageResp) GetPages() int32 {
 		return x.Pages
 	}
 	return 0
+}
+
+func (x *FindByPageResp) GetCollect() map[string]bool {
+	if x != nil {
+		return x.Collect
+	}
+	return nil
 }
 
 type DownloadFileReq struct {
@@ -476,6 +484,7 @@ type FindPageByTagResp struct {
 	Size          int32                  `protobuf:"varint,3,opt,name=size,proto3" json:"size,omitempty"`
 	Current       int32                  `protobuf:"varint,4,opt,name=current,proto3" json:"current,omitempty"`
 	Pages         int32                  `protobuf:"varint,5,opt,name=pages,proto3" json:"pages,omitempty"`
+	Collect       map[string]bool        `protobuf:"bytes,6,rep,name=collect,proto3" json:"collect,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -545,6 +554,13 @@ func (x *FindPageByTagResp) GetPages() int32 {
 	return 0
 }
 
+func (x *FindPageByTagResp) GetCollect() map[string]bool {
+	if x != nil {
+		return x.Collect
+	}
+	return nil
+}
+
 type FindPageByNameReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
@@ -612,6 +628,7 @@ type FindPageByNameResp struct {
 	Size          int32                  `protobuf:"varint,3,opt,name=size,proto3" json:"size,omitempty"`
 	Current       int32                  `protobuf:"varint,4,opt,name=current,proto3" json:"current,omitempty"`
 	Pages         int32                  `protobuf:"varint,5,opt,name=pages,proto3" json:"pages,omitempty"`
+	Collect       map[string]bool        `protobuf:"bytes,6,rep,name=collect,proto3" json:"collect,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -681,6 +698,333 @@ func (x *FindPageByNameResp) GetPages() int32 {
 	return 0
 }
 
+func (x *FindPageByNameResp) GetCollect() map[string]bool {
+	if x != nil {
+		return x.Collect
+	}
+	return nil
+}
+
+type DeleteFileReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	FileId        string                 `protobuf:"bytes,1,opt,name=FileId,proto3" json:"FileId,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteFileReq) Reset() {
+	*x = DeleteFileReq{}
+	mi := &file_file_rpc_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteFileReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteFileReq) ProtoMessage() {}
+
+func (x *DeleteFileReq) ProtoReflect() protoreflect.Message {
+	mi := &file_file_rpc_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteFileReq.ProtoReflect.Descriptor instead.
+func (*DeleteFileReq) Descriptor() ([]byte, []int) {
+	return file_file_rpc_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *DeleteFileReq) GetFileId() string {
+	if x != nil {
+		return x.FileId
+	}
+	return ""
+}
+
+type DeleteFileResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Msg           string                 `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteFileResp) Reset() {
+	*x = DeleteFileResp{}
+	mi := &file_file_rpc_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteFileResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteFileResp) ProtoMessage() {}
+
+func (x *DeleteFileResp) ProtoReflect() protoreflect.Message {
+	mi := &file_file_rpc_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteFileResp.ProtoReflect.Descriptor instead.
+func (*DeleteFileResp) Descriptor() ([]byte, []int) {
+	return file_file_rpc_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *DeleteFileResp) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *DeleteFileResp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+type CollectFileReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	FileId        string                 `protobuf:"bytes,1,opt,name=FileId,proto3" json:"FileId,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CollectFileReq) Reset() {
+	*x = CollectFileReq{}
+	mi := &file_file_rpc_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CollectFileReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CollectFileReq) ProtoMessage() {}
+
+func (x *CollectFileReq) ProtoReflect() protoreflect.Message {
+	mi := &file_file_rpc_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CollectFileReq.ProtoReflect.Descriptor instead.
+func (*CollectFileReq) Descriptor() ([]byte, []int) {
+	return file_file_rpc_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *CollectFileReq) GetFileId() string {
+	if x != nil {
+		return x.FileId
+	}
+	return ""
+}
+
+type CollectFileResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Msg           string                 `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CollectFileResp) Reset() {
+	*x = CollectFileResp{}
+	mi := &file_file_rpc_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CollectFileResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CollectFileResp) ProtoMessage() {}
+
+func (x *CollectFileResp) ProtoReflect() protoreflect.Message {
+	mi := &file_file_rpc_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CollectFileResp.ProtoReflect.Descriptor instead.
+func (*CollectFileResp) Descriptor() ([]byte, []int) {
+	return file_file_rpc_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *CollectFileResp) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *CollectFileResp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+type FileUserPageReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
+	Size          int32                  `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FileUserPageReq) Reset() {
+	*x = FileUserPageReq{}
+	mi := &file_file_rpc_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FileUserPageReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FileUserPageReq) ProtoMessage() {}
+
+func (x *FileUserPageReq) ProtoReflect() protoreflect.Message {
+	mi := &file_file_rpc_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FileUserPageReq.ProtoReflect.Descriptor instead.
+func (*FileUserPageReq) Descriptor() ([]byte, []int) {
+	return file_file_rpc_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *FileUserPageReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *FileUserPageReq) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+type FileUserPageResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Records       string                 `protobuf:"bytes,1,opt,name=records,proto3" json:"records,omitempty"`
+	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
+	Size          int32                  `protobuf:"varint,3,opt,name=size,proto3" json:"size,omitempty"`
+	Current       int32                  `protobuf:"varint,4,opt,name=current,proto3" json:"current,omitempty"`
+	Pages         int32                  `protobuf:"varint,5,opt,name=pages,proto3" json:"pages,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FileUserPageResp) Reset() {
+	*x = FileUserPageResp{}
+	mi := &file_file_rpc_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FileUserPageResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FileUserPageResp) ProtoMessage() {}
+
+func (x *FileUserPageResp) ProtoReflect() protoreflect.Message {
+	mi := &file_file_rpc_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FileUserPageResp.ProtoReflect.Descriptor instead.
+func (*FileUserPageResp) Descriptor() ([]byte, []int) {
+	return file_file_rpc_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *FileUserPageResp) GetRecords() string {
+	if x != nil {
+		return x.Records
+	}
+	return ""
+}
+
+func (x *FileUserPageResp) GetTotal() int32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *FileUserPageResp) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *FileUserPageResp) GetCurrent() int32 {
+	if x != nil {
+		return x.Current
+	}
+	return 0
+}
+
+func (x *FileUserPageResp) GetPages() int32 {
+	if x != nil {
+		return x.Pages
+	}
+	return 0
+}
+
 var File_file_rpc_proto protoreflect.FileDescriptor
 
 const file_file_rpc_proto_rawDesc = "" +
@@ -700,13 +1044,17 @@ const file_file_rpc_proto_rawDesc = "" +
 	"\amessage\x18\x04 \x01(\tR\amessage\"7\n" +
 	"\rFindByPageReq\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x12\n" +
-	"\x04size\x18\x02 \x01(\x05R\x04size\"\x84\x01\n" +
+	"\x04size\x18\x02 \x01(\x05R\x04size\"\xfd\x01\n" +
 	"\x0eFindByPageResp\x12\x18\n" +
 	"\arecords\x18\x01 \x01(\tR\arecords\x12\x14\n" +
 	"\x05total\x18\x02 \x01(\x05R\x05total\x12\x12\n" +
 	"\x04size\x18\x03 \x01(\x05R\x04size\x12\x18\n" +
 	"\acurrent\x18\x04 \x01(\x05R\acurrent\x12\x14\n" +
-	"\x05pages\x18\x05 \x01(\x05R\x05pages\"-\n" +
+	"\x05pages\x18\x05 \x01(\x05R\x05pages\x12;\n" +
+	"\acollect\x18\x06 \x03(\v2!.file.FindByPageResp.CollectEntryR\acollect\x1a:\n" +
+	"\fCollectEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\bR\x05value:\x028\x01\"-\n" +
 	"\x0fDownloadFileReq\x12\x1a\n" +
 	"\bfileName\x18\x01 \x01(\tR\bfileName\"j\n" +
 	"\x10DownloadFileResp\x12\x18\n" +
@@ -716,23 +1064,50 @@ const file_file_rpc_proto_rawDesc = "" +
 	"\x10FindPageByTagReq\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x12\n" +
 	"\x04size\x18\x02 \x01(\x05R\x04size\x12\x14\n" +
-	"\x05tagId\x18\x03 \x01(\x05R\x05tagId\"\x87\x01\n" +
+	"\x05tagId\x18\x03 \x01(\x05R\x05tagId\"\x83\x02\n" +
 	"\x11FindPageByTagResp\x12\x18\n" +
 	"\arecords\x18\x01 \x01(\tR\arecords\x12\x14\n" +
 	"\x05total\x18\x02 \x01(\x05R\x05total\x12\x12\n" +
 	"\x04size\x18\x03 \x01(\x05R\x04size\x12\x18\n" +
 	"\acurrent\x18\x04 \x01(\x05R\acurrent\x12\x14\n" +
-	"\x05pages\x18\x05 \x01(\x05R\x05pages\"O\n" +
+	"\x05pages\x18\x05 \x01(\x05R\x05pages\x12>\n" +
+	"\acollect\x18\x06 \x03(\v2$.file.FindPageByTagResp.CollectEntryR\acollect\x1a:\n" +
+	"\fCollectEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\bR\x05value:\x028\x01\"O\n" +
 	"\x11FindPageByNameReq\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x12\n" +
 	"\x04size\x18\x02 \x01(\x05R\x04size\x12\x12\n" +
-	"\x04name\x18\x03 \x01(\tR\x04name\"\x88\x01\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\"\x85\x02\n" +
 	"\x12FindPageByNameResp\x12\x18\n" +
 	"\arecords\x18\x01 \x01(\tR\arecords\x12\x14\n" +
 	"\x05total\x18\x02 \x01(\x05R\x05total\x12\x12\n" +
 	"\x04size\x18\x03 \x01(\x05R\x04size\x12\x18\n" +
 	"\acurrent\x18\x04 \x01(\x05R\acurrent\x12\x14\n" +
-	"\x05pages\x18\x05 \x01(\x05R\x05pages2\xba\x02\n" +
+	"\x05pages\x18\x05 \x01(\x05R\x05pages\x12?\n" +
+	"\acollect\x18\x06 \x03(\v2%.file.FindPageByNameResp.CollectEntryR\acollect\x1a:\n" +
+	"\fCollectEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\bR\x05value:\x028\x01\"'\n" +
+	"\rDeleteFileReq\x12\x16\n" +
+	"\x06FileId\x18\x01 \x01(\tR\x06FileId\"<\n" +
+	"\x0eDeleteFileResp\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x10\n" +
+	"\x03msg\x18\x02 \x01(\tR\x03msg\"(\n" +
+	"\x0eCollectFileReq\x12\x16\n" +
+	"\x06FileId\x18\x01 \x01(\tR\x06FileId\"=\n" +
+	"\x0fCollectFileResp\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x10\n" +
+	"\x03msg\x18\x02 \x01(\tR\x03msg\"9\n" +
+	"\x0fFileUserPageReq\x12\x12\n" +
+	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x12\n" +
+	"\x04size\x18\x02 \x01(\x05R\x04size\"\x86\x01\n" +
+	"\x10FileUserPageResp\x12\x18\n" +
+	"\arecords\x18\x01 \x01(\tR\arecords\x12\x14\n" +
+	"\x05total\x18\x02 \x01(\x05R\x05total\x12\x12\n" +
+	"\x04size\x18\x03 \x01(\x05R\x04size\x12\x18\n" +
+	"\acurrent\x18\x04 \x01(\x05R\acurrent\x12\x14\n" +
+	"\x05pages\x18\x05 \x01(\x05R\x05pages2\xee\x03\n" +
 	"\x04File\x123\n" +
 	"\n" +
 	"UploadFile\x12\x0f.file.UploadReq\x1a\x14.file.UploadResponse\x127\n" +
@@ -740,7 +1115,11 @@ const file_file_rpc_proto_rawDesc = "" +
 	"FindByPage\x12\x13.file.FindByPageReq\x1a\x14.file.FindByPageResp\x12=\n" +
 	"\fDownloadFile\x12\x15.file.DownloadFileReq\x1a\x16.file.DownloadFileResp\x12@\n" +
 	"\rFindPageByTag\x12\x16.file.FindPageByTagReq\x1a\x17.file.FindPageByTagResp\x12C\n" +
-	"\x0eFindPageByName\x12\x17.file.FindPageByNameReq\x1a\x18.file.FindPageByNameRespB\bZ\x06./fileb\x06proto3"
+	"\x0eFindPageByName\x12\x17.file.FindPageByNameReq\x1a\x18.file.FindPageByNameResp\x127\n" +
+	"\n" +
+	"DeleteFile\x12\x13.file.DeleteFileReq\x1a\x14.file.DeleteFileResp\x12:\n" +
+	"\vCollectFile\x12\x14.file.CollectFileReq\x1a\x15.file.CollectFileResp\x12=\n" +
+	"\fFileUserPage\x12\x15.file.FileUserPageReq\x1a\x16.file.FileUserPageRespB\bZ\x06./fileb\x06proto3"
 
 var (
 	file_file_rpc_proto_rawDescOnce sync.Once
@@ -754,7 +1133,7 @@ func file_file_rpc_proto_rawDescGZIP() []byte {
 	return file_file_rpc_proto_rawDescData
 }
 
-var file_file_rpc_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_file_rpc_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
 var file_file_rpc_proto_goTypes = []any{
 	(*UploadReq)(nil),          // 0: file.UploadReq
 	(*UploadResponse)(nil),     // 1: file.UploadResponse
@@ -766,23 +1145,41 @@ var file_file_rpc_proto_goTypes = []any{
 	(*FindPageByTagResp)(nil),  // 7: file.FindPageByTagResp
 	(*FindPageByNameReq)(nil),  // 8: file.FindPageByNameReq
 	(*FindPageByNameResp)(nil), // 9: file.FindPageByNameResp
+	(*DeleteFileReq)(nil),      // 10: file.DeleteFileReq
+	(*DeleteFileResp)(nil),     // 11: file.DeleteFileResp
+	(*CollectFileReq)(nil),     // 12: file.CollectFileReq
+	(*CollectFileResp)(nil),    // 13: file.CollectFileResp
+	(*FileUserPageReq)(nil),    // 14: file.FileUserPageReq
+	(*FileUserPageResp)(nil),   // 15: file.FileUserPageResp
+	nil,                        // 16: file.FindByPageResp.CollectEntry
+	nil,                        // 17: file.FindPageByTagResp.CollectEntry
+	nil,                        // 18: file.FindPageByNameResp.CollectEntry
 }
 var file_file_rpc_proto_depIdxs = []int32{
-	0, // 0: file.File.UploadFile:input_type -> file.UploadReq
-	2, // 1: file.File.FindByPage:input_type -> file.FindByPageReq
-	4, // 2: file.File.DownloadFile:input_type -> file.DownloadFileReq
-	6, // 3: file.File.FindPageByTag:input_type -> file.FindPageByTagReq
-	8, // 4: file.File.FindPageByName:input_type -> file.FindPageByNameReq
-	1, // 5: file.File.UploadFile:output_type -> file.UploadResponse
-	3, // 6: file.File.FindByPage:output_type -> file.FindByPageResp
-	5, // 7: file.File.DownloadFile:output_type -> file.DownloadFileResp
-	7, // 8: file.File.FindPageByTag:output_type -> file.FindPageByTagResp
-	9, // 9: file.File.FindPageByName:output_type -> file.FindPageByNameResp
-	5, // [5:10] is the sub-list for method output_type
-	0, // [0:5] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	16, // 0: file.FindByPageResp.collect:type_name -> file.FindByPageResp.CollectEntry
+	17, // 1: file.FindPageByTagResp.collect:type_name -> file.FindPageByTagResp.CollectEntry
+	18, // 2: file.FindPageByNameResp.collect:type_name -> file.FindPageByNameResp.CollectEntry
+	0,  // 3: file.File.UploadFile:input_type -> file.UploadReq
+	2,  // 4: file.File.FindByPage:input_type -> file.FindByPageReq
+	4,  // 5: file.File.DownloadFile:input_type -> file.DownloadFileReq
+	6,  // 6: file.File.FindPageByTag:input_type -> file.FindPageByTagReq
+	8,  // 7: file.File.FindPageByName:input_type -> file.FindPageByNameReq
+	10, // 8: file.File.DeleteFile:input_type -> file.DeleteFileReq
+	12, // 9: file.File.CollectFile:input_type -> file.CollectFileReq
+	14, // 10: file.File.FileUserPage:input_type -> file.FileUserPageReq
+	1,  // 11: file.File.UploadFile:output_type -> file.UploadResponse
+	3,  // 12: file.File.FindByPage:output_type -> file.FindByPageResp
+	5,  // 13: file.File.DownloadFile:output_type -> file.DownloadFileResp
+	7,  // 14: file.File.FindPageByTag:output_type -> file.FindPageByTagResp
+	9,  // 15: file.File.FindPageByName:output_type -> file.FindPageByNameResp
+	11, // 16: file.File.DeleteFile:output_type -> file.DeleteFileResp
+	13, // 17: file.File.CollectFile:output_type -> file.CollectFileResp
+	15, // 18: file.File.FileUserPage:output_type -> file.FileUserPageResp
+	11, // [11:19] is the sub-list for method output_type
+	3,  // [3:11] is the sub-list for method input_type
+	3,  // [3:3] is the sub-list for extension type_name
+	3,  // [3:3] is the sub-list for extension extendee
+	0,  // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_file_rpc_proto_init() }
@@ -796,7 +1193,7 @@ func file_file_rpc_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_file_rpc_proto_rawDesc), len(file_file_rpc_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   19,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

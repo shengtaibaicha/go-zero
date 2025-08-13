@@ -3,30 +3,21 @@
 
 package types
 
+type CollectReq struct {
+	FileId string `json:"fileId"`
+}
+
+type DeleteReq struct {
+	FileId string `form:"fileId"`
+}
+
 type DownloadFileReq struct {
 	FileName string `form:"fileName"` // MinIO 中存储的文件键（文件名/路径）
 }
 
-type GetCaptchaReq struct {
-}
-
-type Result struct {
-}
-
-type UploadRequest struct {
-}
-
-type UserLoginReq struct {
-	UserName     string `json:"userName"`
-	UserPassword string `json:"userPassword"`
-	CaptchaCode  string `json:"captchaCode"`
-}
-
-type UserRegisterReq struct {
-	UserName    string `json:"userName"`
-	Password    string `json:"userPassword"`
-	UserEmail   string `json:"userEmail"`
-	CaptchaCode string `json:"captchaCode"`
+type FileUserPageReq struct {
+	Page int32 `form:"page"`
+	Size int32 `form:"size"`
 }
 
 type FindByPageReq struct {
@@ -44,4 +35,29 @@ type FindPageByTagReq struct {
 	Page  int32 `json:"page"`
 	Size  int32 `json:"size"`
 	TagId int32 `json:"tagId"`
+}
+
+type GetCaptchaReq struct {
+}
+
+type Result struct {
+}
+
+type UploadRequest struct {
+}
+
+type UserInfoReq struct {
+}
+
+type UserLoginReq struct {
+	UserName     string `json:"userName"`
+	UserPassword string `json:"userPassword"`
+	CaptchaCode  string `json:"captchaCode"`
+}
+
+type UserRegisterReq struct {
+	UserName    string `json:"userName"`
+	Password    string `json:"userPassword"`
+	UserEmail   string `json:"userEmail"`
+	CaptchaCode string `json:"captchaCode"`
 }

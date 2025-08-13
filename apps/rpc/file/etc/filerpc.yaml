@@ -17,3 +17,11 @@ Minio:
   Bucket: gozero         # 存储桶名称，需要提前创建或让程序自动创建
   UseSSL: false             # 是否使用SSL连接（生产环境建议开启）
   Expires: 60               # 预签名URL的有效期（分钟）
+
+Redis:
+  Host: 127.0.0.1:6379
+  Type: node
+  Pass: ""
+  Key: "File"
+
+RedisExpires: 1    # 分钟

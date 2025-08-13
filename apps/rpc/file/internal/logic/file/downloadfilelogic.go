@@ -11,6 +11,8 @@ import (
 
 	"github.com/minio/minio-go/v7"
 	"github.com/zeromicro/go-zero/core/logx"
+	"google.golang.org/grpc/metadata"
+	"gorm.io/gorm"
 )
 
 type DownloadFileLogic struct {
@@ -58,6 +60,15 @@ func (l *DownloadFileLogic) DownloadFile(in *file.DownloadFileReq) (*file.Downlo
 	var files models.Files
 	l.svcCtx.MDB.Where("file_name = ?", in.FileName).Find(&files)
 	l.svcCtx.MDB.Model(&models.Files{}).Where("file_name = ?", in.FileName).Update("number", files.Number+1)
+
+	// 更新用户下载数量
+	incomingContext, Ok := metadata.FromIncomingContext(l.ctx)
+	if !Ok {
+		logx.Error("在下载文件任务中从metadata获取userId失败，请排查原因！")
+	} else {
+		userId := incomingContext.Get("userId")
+		l.svcCtx.MDB.Model(&models.Users{}).Where("user_id = ?", userId).Update("download_number", gorm.Expr("download_number + 1"))
+	}
 
 	return &file.DownloadFileResp{
 		Content:     content,

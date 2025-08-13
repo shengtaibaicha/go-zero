@@ -3,10 +3,12 @@ package registerlogic
 import (
 	"context"
 	"errors"
-	"github.com/google/uuid"
 	"go-zero/apps/rpc/user/internal/svc"
 	"go-zero/apps/rpc/user/user"
 	"go-zero/models"
+	"time"
+
+	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 
@@ -28,7 +30,6 @@ func NewUserRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *User
 }
 
 func (l *UserRegisterLogic) UserRegister(in *user.RegisterReq) (*user.RegisterResp, error) {
-	// todo: add your logic here and delete this line
 	MDB := l.svcCtx.MDB
 	var re models.Users
 	tx := MDB.Where("user_name = ?", in.UserName).First(&re)
@@ -40,11 +41,15 @@ func (l *UserRegisterLogic) UserRegister(in *user.RegisterReq) (*user.RegisterRe
 	password, _ := bcrypt.GenerateFromPassword([]byte(in.UserPassword), 12)
 	userId := uuid.New().String()
 	create := MDB.Create(&models.Users{
-		UserId:       userId,
-		UserName:     in.UserName,
-		UserEmail:    in.UserEmail,
-		UserAvatar:   "",
-		UserPassword: string(password),
+		UserId:         userId,
+		UserName:       in.UserName,
+		UserEmail:      in.UserEmail,
+		UserAvatar:     "",
+		UserPassword:   string(password),
+		JoinDate:       time.Now(),
+		DownloadNumber: 0,
+		UploadNumber:   0,
+		CollectNumber:  0,
 	})
 	if create.Error != nil {
 		return nil, errors.New("用户注册失败！")

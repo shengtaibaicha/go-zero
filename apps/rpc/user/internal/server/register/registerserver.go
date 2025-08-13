@@ -6,14 +6,15 @@ package server
 
 import (
 	"context"
+
 	"go-zero/apps/rpc/user/internal/logic/register"
 	"go-zero/apps/rpc/user/internal/svc"
-	user2 "go-zero/apps/rpc/user/user"
+	"go-zero/apps/rpc/user/user"
 )
 
 type RegisterServer struct {
 	svcCtx *svc.ServiceContext
-	user2.UnimplementedRegisterServer
+	user.UnimplementedRegisterServer
 }
 
 func NewRegisterServer(svcCtx *svc.ServiceContext) *RegisterServer {
@@ -22,7 +23,7 @@ func NewRegisterServer(svcCtx *svc.ServiceContext) *RegisterServer {
 	}
 }
 
-func (s *RegisterServer) UserRegister(ctx context.Context, in *user2.RegisterReq) (*user2.RegisterResp, error) {
+func (s *RegisterServer) UserRegister(ctx context.Context, in *user.RegisterReq) (*user.RegisterResp, error) {
 	l := registerlogic.NewUserRegisterLogic(ctx, s.svcCtx)
 	return l.UserRegister(in)
 }

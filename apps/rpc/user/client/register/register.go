@@ -6,17 +6,20 @@ package register
 
 import (
 	"context"
-	user2 "go-zero/apps/rpc/user/user"
+
+	"go-zero/apps/rpc/user/user"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
 )
 
 type (
-	LoginReq     = user2.LoginReq
-	LoginResp    = user2.LoginResp
-	RegisterReq  = user2.RegisterReq
-	RegisterResp = user2.RegisterResp
+	InfoReq      = user.InfoReq
+	InfoResp     = user.InfoResp
+	LoginReq     = user.LoginReq
+	LoginResp    = user.LoginResp
+	RegisterReq  = user.RegisterReq
+	RegisterResp = user.RegisterResp
 
 	Register interface {
 		UserRegister(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error)
@@ -34,6 +37,6 @@ func NewRegister(cli zrpc.Client) Register {
 }
 
 func (m *defaultRegister) UserRegister(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error) {
-	client := user2.NewRegisterClient(m.cli.Conn())
+	client := user.NewRegisterClient(m.cli.Conn())
 	return client.UserRegister(ctx, in, opts...)
 }

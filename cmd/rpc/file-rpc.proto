@@ -36,6 +36,7 @@ message FindByPageResp {
   int32 size = 3;
   int32 current = 4;
   int32 pages = 5;
+  map<string, bool> collect = 6;
 }
 
 message DownloadFileReq {
@@ -60,6 +61,7 @@ message FindPageByTagResp {
   int32 size = 3;
   int32 current = 4;
   int32 pages = 5;
+  map<string, bool> collect = 6;
 }
 
 message FindPageByNameReq {
@@ -69,6 +71,38 @@ message FindPageByNameReq {
 }
 
 message FindPageByNameResp {
+  string records = 1;
+  int32 total = 2;
+  int32 size = 3;
+  int32 current = 4;
+  int32 pages = 5;
+  map<string, bool> collect = 6;
+}
+
+message DeleteFileReq {
+  string FileId = 1;
+}
+
+message DeleteFileResp {
+  bool success = 1;
+  string msg = 2;
+}
+
+message CollectFileReq {
+  string FileId = 1;
+}
+
+message CollectFileResp {
+  bool success = 1;
+  string msg = 2;
+}
+
+message FileUserPageReq {
+  int32 page = 1;
+  int32 size = 2;
+}
+
+message FileUserPageResp {
   string records = 1;
   int32 total = 2;
   int32 size = 3;
@@ -88,4 +122,10 @@ service File {
   rpc FindPageByTag(FindPageByTagReq) returns (FindPageByTagResp);
 
   rpc FindPageByName(FindPageByNameReq) returns (FindPageByNameResp);
+
+  rpc DeleteFile(DeleteFileReq) returns (DeleteFileResp);
+
+  rpc CollectFile(CollectFileReq) returns (CollectFileResp);
+
+  rpc FileUserPage(FileUserPageReq) returns (FileUserPageResp);
 }

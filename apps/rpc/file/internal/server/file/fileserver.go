@@ -48,3 +48,18 @@ func (s *FileServer) FindPageByName(ctx context.Context, in *file.FindPageByName
 	l := filelogic.NewFindPageByNameLogic(ctx, s.svcCtx)
 	return l.FindPageByName(in)
 }
+
+func (s *FileServer) DeleteFile(ctx context.Context, in *file.DeleteFileReq) (*file.DeleteFileResp, error) {
+	l := filelogic.NewDeleteFileLogic(ctx, s.svcCtx)
+	return l.DeleteFile(in)
+}
+
+func (s *FileServer) CollectFile(ctx context.Context, in *file.CollectFileReq) (*file.CollectFileResp, error) {
+	l := filelogic.NewCollectFileLogic(ctx, s.svcCtx)
+	return l.CollectFile(in)
+}
+
+func (s *FileServer) FileUserPage(ctx context.Context, in *file.FileUserPageReq) (*file.FileUserPageResp, error) {
+	l := filelogic.NewFileUserPageLogic(ctx, s.svcCtx)
+	return l.FileUserPage(in)
+}

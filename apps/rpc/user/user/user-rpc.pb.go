@@ -221,6 +221,142 @@ func (x *RegisterResp) GetUserId() string {
 	return ""
 }
 
+type InfoReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InfoReq) Reset() {
+	*x = InfoReq{}
+	mi := &file_user_rpc_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InfoReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InfoReq) ProtoMessage() {}
+
+func (x *InfoReq) ProtoReflect() protoreflect.Message {
+	mi := &file_user_rpc_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InfoReq.ProtoReflect.Descriptor instead.
+func (*InfoReq) Descriptor() ([]byte, []int) {
+	return file_user_rpc_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *InfoReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+type InfoResp struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	UserName       string                 `protobuf:"bytes,1,opt,name=userName,proto3" json:"userName,omitempty"`
+	UserEmail      string                 `protobuf:"bytes,2,opt,name=userEmail,proto3" json:"userEmail,omitempty"`
+	JoinDate       string                 `protobuf:"bytes,3,opt,name=joinDate,proto3" json:"joinDate,omitempty"`
+	UserAvatar     string                 `protobuf:"bytes,4,opt,name=userAvatar,proto3" json:"userAvatar,omitempty"`
+	UploadNumber   int64                  `protobuf:"varint,5,opt,name=uploadNumber,proto3" json:"uploadNumber,omitempty"`
+	DownloadNumber int64                  `protobuf:"varint,6,opt,name=downloadNumber,proto3" json:"downloadNumber,omitempty"`
+	CollectNumber  int64                  `protobuf:"varint,7,opt,name=collectNumber,proto3" json:"collectNumber,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *InfoResp) Reset() {
+	*x = InfoResp{}
+	mi := &file_user_rpc_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InfoResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InfoResp) ProtoMessage() {}
+
+func (x *InfoResp) ProtoReflect() protoreflect.Message {
+	mi := &file_user_rpc_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InfoResp.ProtoReflect.Descriptor instead.
+func (*InfoResp) Descriptor() ([]byte, []int) {
+	return file_user_rpc_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *InfoResp) GetUserName() string {
+	if x != nil {
+		return x.UserName
+	}
+	return ""
+}
+
+func (x *InfoResp) GetUserEmail() string {
+	if x != nil {
+		return x.UserEmail
+	}
+	return ""
+}
+
+func (x *InfoResp) GetJoinDate() string {
+	if x != nil {
+		return x.JoinDate
+	}
+	return ""
+}
+
+func (x *InfoResp) GetUserAvatar() string {
+	if x != nil {
+		return x.UserAvatar
+	}
+	return ""
+}
+
+func (x *InfoResp) GetUploadNumber() int64 {
+	if x != nil {
+		return x.UploadNumber
+	}
+	return 0
+}
+
+func (x *InfoResp) GetDownloadNumber() int64 {
+	if x != nil {
+		return x.DownloadNumber
+	}
+	return 0
+}
+
+func (x *InfoResp) GetCollectNumber() int64 {
+	if x != nil {
+		return x.CollectNumber
+	}
+	return 0
+}
+
 var File_user_rpc_proto protoreflect.FileDescriptor
 
 const file_user_rpc_proto_rawDesc = "" +
@@ -236,11 +372,25 @@ const file_user_rpc_proto_rawDesc = "" +
 	"\fuserPassword\x18\x02 \x01(\tR\fuserPassword\x12\x1c\n" +
 	"\tuserEmail\x18\x03 \x01(\tR\tuserEmail\"&\n" +
 	"\fRegisterResp\x12\x16\n" +
-	"\x06userId\x18\x01 \x01(\tR\x06userId25\n" +
+	"\x06userId\x18\x01 \x01(\tR\x06userId\"!\n" +
+	"\aInfoReq\x12\x16\n" +
+	"\x06userId\x18\x01 \x01(\tR\x06userId\"\xf2\x01\n" +
+	"\bInfoResp\x12\x1a\n" +
+	"\buserName\x18\x01 \x01(\tR\buserName\x12\x1c\n" +
+	"\tuserEmail\x18\x02 \x01(\tR\tuserEmail\x12\x1a\n" +
+	"\bjoinDate\x18\x03 \x01(\tR\bjoinDate\x12\x1e\n" +
+	"\n" +
+	"userAvatar\x18\x04 \x01(\tR\n" +
+	"userAvatar\x12\"\n" +
+	"\fuploadNumber\x18\x05 \x01(\x03R\fuploadNumber\x12&\n" +
+	"\x0edownloadNumber\x18\x06 \x01(\x03R\x0edownloadNumber\x12$\n" +
+	"\rcollectNumber\x18\a \x01(\x03R\rcollectNumber25\n" +
 	"\x05login\x12,\n" +
 	"\tUserLogin\x12\x0e.user.LoginReq\x1a\x0f.user.LoginResp2A\n" +
 	"\bregister\x125\n" +
-	"\fUserRegister\x12\x11.user.RegisterReq\x1a\x12.user.RegisterRespB\bZ\x06./userb\x06proto3"
+	"\fUserRegister\x12\x11.user.RegisterReq\x1a\x12.user.RegisterResp22\n" +
+	"\x05other\x12)\n" +
+	"\bUserInfo\x12\r.user.InfoReq\x1a\x0e.user.InfoRespB\bZ\x06./userb\x06proto3"
 
 var (
 	file_user_rpc_proto_rawDescOnce sync.Once
@@ -254,20 +404,24 @@ func file_user_rpc_proto_rawDescGZIP() []byte {
 	return file_user_rpc_proto_rawDescData
 }
 
-var file_user_rpc_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_user_rpc_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_user_rpc_proto_goTypes = []any{
 	(*LoginReq)(nil),     // 0: user.LoginReq
 	(*LoginResp)(nil),    // 1: user.LoginResp
 	(*RegisterReq)(nil),  // 2: user.RegisterReq
 	(*RegisterResp)(nil), // 3: user.RegisterResp
+	(*InfoReq)(nil),      // 4: user.InfoReq
+	(*InfoResp)(nil),     // 5: user.InfoResp
 }
 var file_user_rpc_proto_depIdxs = []int32{
 	0, // 0: user.login.UserLogin:input_type -> user.LoginReq
 	2, // 1: user.register.UserRegister:input_type -> user.RegisterReq
-	1, // 2: user.login.UserLogin:output_type -> user.LoginResp
-	3, // 3: user.register.UserRegister:output_type -> user.RegisterResp
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
+	4, // 2: user.other.UserInfo:input_type -> user.InfoReq
+	1, // 3: user.login.UserLogin:output_type -> user.LoginResp
+	3, // 4: user.register.UserRegister:output_type -> user.RegisterResp
+	5, // 5: user.other.UserInfo:output_type -> user.InfoResp
+	3, // [3:6] is the sub-list for method output_type
+	0, // [0:3] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -284,9 +438,9 @@ func file_user_rpc_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_user_rpc_proto_rawDesc), len(file_user_rpc_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
-			NumServices:   2,
+			NumServices:   3,
 		},
 		GoTypes:           file_user_rpc_proto_goTypes,
 		DependencyIndexes: file_user_rpc_proto_depIdxs,

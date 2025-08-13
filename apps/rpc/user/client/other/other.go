@@ -2,7 +2,7 @@
 // goctl 1.8.5
 // Source: user-rpc.proto
 
-package login
+package other
 
 import (
 	"context"
@@ -21,22 +21,22 @@ type (
 	RegisterReq  = user.RegisterReq
 	RegisterResp = user.RegisterResp
 
-	Login interface {
-		UserLogin(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
+	Other interface {
+		UserInfo(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error)
 	}
 
-	defaultLogin struct {
+	defaultOther struct {
 		cli zrpc.Client
 	}
 )
 
-func NewLogin(cli zrpc.Client) Login {
-	return &defaultLogin{
+func NewOther(cli zrpc.Client) Other {
+	return &defaultOther{
 		cli: cli,
 	}
 }
 
-func (m *defaultLogin) UserLogin(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error) {
-	client := user.NewLoginClient(m.cli.Conn())
-	return client.UserLogin(ctx, in, opts...)
+func (m *defaultOther) UserInfo(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error) {
+	client := user.NewOtherClient(m.cli.Conn())
+	return client.UserInfo(ctx, in, opts...)
 }

@@ -1,10 +1,11 @@
 package db
 
 import (
+	"log"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-	"log"
 )
 
 func Init(datasource string) *gorm.DB {

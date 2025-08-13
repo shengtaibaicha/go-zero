@@ -1,25 +1,24 @@
-package public
+package file
 
 import (
 	"net/http"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"go-zero/apps/api/gateway/internal/logic/public"
+	"go-zero/apps/api/gateway/internal/logic/file"
 	"go-zero/apps/api/gateway/internal/svc"
 	"go-zero/apps/api/gateway/internal/types"
 )
 
-func FindPageByNameHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func CollectHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.FindPageByNameReq
+		var req types.CollectReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := public.NewFindPageByNameLogic(r.Context(), svcCtx)
-		auth := r.Header.Get("Authorization")
-		resp, err := l.FindPageByName(&req, auth)
+		l := file.NewCollectLogic(r.Context(), svcCtx)
+		resp, err := l.Collect(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {

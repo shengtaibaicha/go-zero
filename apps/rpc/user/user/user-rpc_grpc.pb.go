@@ -221,3 +221,105 @@ var Register_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "user-rpc.proto",
 }
+
+const (
+	Other_UserInfo_FullMethodName = "/user.other/UserInfo"
+)
+
+// OtherClient is the client API for Other service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type OtherClient interface {
+	UserInfo(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error)
+}
+
+type otherClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewOtherClient(cc grpc.ClientConnInterface) OtherClient {
+	return &otherClient{cc}
+}
+
+func (c *otherClient) UserInfo(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InfoResp)
+	err := c.cc.Invoke(ctx, Other_UserInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// OtherServer is the server API for Other service.
+// All implementations must embed UnimplementedOtherServer
+// for forward compatibility.
+type OtherServer interface {
+	UserInfo(context.Context, *InfoReq) (*InfoResp, error)
+	mustEmbedUnimplementedOtherServer()
+}
+
+// UnimplementedOtherServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedOtherServer struct{}
+
+func (UnimplementedOtherServer) UserInfo(context.Context, *InfoReq) (*InfoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserInfo not implemented")
+}
+func (UnimplementedOtherServer) mustEmbedUnimplementedOtherServer() {}
+func (UnimplementedOtherServer) testEmbeddedByValue()               {}
+
+// UnsafeOtherServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to OtherServer will
+// result in compilation errors.
+type UnsafeOtherServer interface {
+	mustEmbedUnimplementedOtherServer()
+}
+
+func RegisterOtherServer(s grpc.ServiceRegistrar, srv OtherServer) {
+	// If the following call pancis, it indicates UnimplementedOtherServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&Other_ServiceDesc, srv)
+}
+
+func _Other_UserInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OtherServer).UserInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Other_UserInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OtherServer).UserInfo(ctx, req.(*InfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Other_ServiceDesc is the grpc.ServiceDesc for Other service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var Other_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "user.other",
+	HandlerType: (*OtherServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "UserInfo",
+			Handler:    _Other_UserInfo_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "user-rpc.proto",
+}

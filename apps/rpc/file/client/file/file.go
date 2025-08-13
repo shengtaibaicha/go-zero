@@ -14,8 +14,14 @@ import (
 )
 
 type (
+	CollectFileReq     = file.CollectFileReq
+	CollectFileResp    = file.CollectFileResp
+	DeleteFileReq      = file.DeleteFileReq
+	DeleteFileResp     = file.DeleteFileResp
 	DownloadFileReq    = file.DownloadFileReq
 	DownloadFileResp   = file.DownloadFileResp
+	FileUserPageReq    = file.FileUserPageReq
+	FileUserPageResp   = file.FileUserPageResp
 	FindByPageReq      = file.FindByPageReq
 	FindByPageResp     = file.FindByPageResp
 	FindPageByNameReq  = file.FindPageByNameReq
@@ -32,6 +38,9 @@ type (
 		DownloadFile(ctx context.Context, in *DownloadFileReq, opts ...grpc.CallOption) (*DownloadFileResp, error)
 		FindPageByTag(ctx context.Context, in *FindPageByTagReq, opts ...grpc.CallOption) (*FindPageByTagResp, error)
 		FindPageByName(ctx context.Context, in *FindPageByNameReq, opts ...grpc.CallOption) (*FindPageByNameResp, error)
+		DeleteFile(ctx context.Context, in *DeleteFileReq, opts ...grpc.CallOption) (*DeleteFileResp, error)
+		CollectFile(ctx context.Context, in *CollectFileReq, opts ...grpc.CallOption) (*CollectFileResp, error)
+		FileUserPage(ctx context.Context, in *FileUserPageReq, opts ...grpc.CallOption) (*FileUserPageResp, error)
 	}
 
 	defaultFile struct {
@@ -69,4 +78,19 @@ func (m *defaultFile) FindPageByTag(ctx context.Context, in *FindPageByTagReq, o
 func (m *defaultFile) FindPageByName(ctx context.Context, in *FindPageByNameReq, opts ...grpc.CallOption) (*FindPageByNameResp, error) {
 	client := file.NewFileClient(m.cli.Conn())
 	return client.FindPageByName(ctx, in, opts...)
+}
+
+func (m *defaultFile) DeleteFile(ctx context.Context, in *DeleteFileReq, opts ...grpc.CallOption) (*DeleteFileResp, error) {
+	client := file.NewFileClient(m.cli.Conn())
+	return client.DeleteFile(ctx, in, opts...)
+}
+
+func (m *defaultFile) CollectFile(ctx context.Context, in *CollectFileReq, opts ...grpc.CallOption) (*CollectFileResp, error) {
+	client := file.NewFileClient(m.cli.Conn())
+	return client.CollectFile(ctx, in, opts...)
+}
+
+func (m *defaultFile) FileUserPage(ctx context.Context, in *FileUserPageReq, opts ...grpc.CallOption) (*FileUserPageResp, error) {
+	client := file.NewFileClient(m.cli.Conn())
+	return client.FileUserPage(ctx, in, opts...)
 }

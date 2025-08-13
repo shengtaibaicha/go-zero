@@ -7,6 +7,7 @@ import (
 	"go-zero/apps/rpc/file/file"
 
 	"github.com/zeromicro/go-zero/core/logx"
+	"google.golang.org/grpc/metadata"
 )
 
 type DownloadLogic struct {
@@ -25,7 +26,10 @@ func NewDownloadLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Download
 
 func (l *DownloadLogic) Download(req *types.DownloadFileReq) (resp *file.DownloadFileResp, err error) {
 
-	downloadFile, err := l.svcCtx.FileClient.DownloadFile(context.Background(), &file.DownloadFileReq{
+	md := metadata.New(map[string]string{"userId": l.ctx.Value("userId").(string)})
+	outgoingContext := metadata.NewOutgoingContext(l.ctx, md)
+
+	downloadFile, err := l.svcCtx.FileClient.DownloadFile(outgoingContext, &file.DownloadFileReq{
 		FileName: req.FileName,
 	})
 	if err != nil {

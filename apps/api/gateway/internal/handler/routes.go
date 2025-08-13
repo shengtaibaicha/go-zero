@@ -8,6 +8,7 @@ import (
 
 	file "go-zero/apps/api/gateway/internal/handler/file"
 	public "go-zero/apps/api/gateway/internal/handler/public"
+	user "go-zero/apps/api/gateway/internal/handler/user"
 	"go-zero/apps/api/gateway/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -19,6 +20,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			[]rest.Middleware{serverCtx.JwtAuthMiddleware},
 			[]rest.Route{
 				{
+					Method:  http.MethodPost,
+					Path:    "/collect",
+					Handler: file.CollectHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodDelete,
+					Path:    "/delete",
+					Handler: file.DeleteHandler(serverCtx),
+				},
+				{
 					Method:  http.MethodGet,
 					Path:    "/download",
 					Handler: file.DownloadHandler(serverCtx),
@@ -27,6 +38,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Method:  http.MethodPost,
 					Path:    "/upload",
 					Handler: file.UploadHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodGet,
+					Path:    "/user/page",
+					Handler: file.FileUserPageHandler(serverCtx),
 				},
 			}...,
 		),
@@ -77,7 +93,13 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		rest.WithMiddlewares(
 			[]rest.Middleware{serverCtx.JwtAuthMiddleware},
-			[]rest.Route{}...,
+			[]rest.Route{
+				{
+					Method:  http.MethodGet,
+					Path:    "/info",
+					Handler: user.UserInfoHandler(serverCtx),
+				},
+			}...,
 		),
 		rest.WithPrefix("/wallpaper/user"),
 	)

@@ -6,14 +6,15 @@ package server
 
 import (
 	"context"
+
 	"go-zero/apps/rpc/user/internal/logic/login"
 	"go-zero/apps/rpc/user/internal/svc"
-	user2 "go-zero/apps/rpc/user/user"
+	"go-zero/apps/rpc/user/user"
 )
 
 type LoginServer struct {
 	svcCtx *svc.ServiceContext
-	user2.UnimplementedLoginServer
+	user.UnimplementedLoginServer
 }
 
 func NewLoginServer(svcCtx *svc.ServiceContext) *LoginServer {
@@ -22,7 +23,7 @@ func NewLoginServer(svcCtx *svc.ServiceContext) *LoginServer {
 	}
 }
 
-func (s *LoginServer) UserLogin(ctx context.Context, in *user2.LoginReq) (*user2.LoginResp, error) {
+func (s *LoginServer) UserLogin(ctx context.Context, in *user.LoginReq) (*user.LoginResp, error) {
 	l := loginlogic.NewUserLoginLogic(ctx, s.svcCtx)
 	return l.UserLogin(in)
 }

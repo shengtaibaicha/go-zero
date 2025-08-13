@@ -1,11 +1,14 @@
 package config
 
-import "github.com/zeromicro/go-zero/zrpc"
+import (
+	"github.com/zeromicro/go-zero/zrpc"
+)
 
 type Config struct {
 	zrpc.RpcServerConf
-	Minio MinioConf
-	Mysql Mysql
+	Minio        MinioConf
+	Mysql        Mysql
+	RedisExpires int
 }
 
 // MinioConf MinIO配置结构体，与配置文件中的Minio节点对应

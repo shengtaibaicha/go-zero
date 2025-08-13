@@ -23,14 +23,32 @@ message RegisterResp {
   string userId = 1;
 }
 
+message InfoReq {
+  string userId = 1;
+}
+
+message InfoResp {
+  string userName = 1;
+  string userEmail = 2;
+  string joinDate = 3;
+  string userAvatar = 4;
+  int64 uploadNumber = 5;
+  int64 downloadNumber = 6;
+  int64 collectNumber = 7;
+}
+
 service login {
-  rpc UserLogin(LoginReq) returns(LoginResp);
+  rpc UserLogin(LoginReq) returns (LoginResp);
 }
 
 service register {
-  rpc UserRegister(RegisterReq) returns(RegisterResp);
+  rpc UserRegister(RegisterReq) returns (RegisterResp);
+}
+
+service other {
+  rpc UserInfo(InfoReq) returns (InfoResp);
 }
 
 /*
-  goctl rpc protoc user.proto --go_out=. --go-grpc_out=. --zrpc_out=. -m
+  >goctl rpc protoc user-rpc.proto --go_out=C:\Users\12793\Desktop\golang\go-zero\apps\rpc\user --go-grpc_out=C:\Users\12793\Desktop\golang\go-zero\apps\rpc\user --zrpc_out=C:\Users\12793\Desktop\golang\go-zero\apps\rpc\user -m
  */

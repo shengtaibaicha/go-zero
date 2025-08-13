@@ -14,6 +14,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/minio/minio-go/v7"
 	"github.com/zeromicro/go-zero/core/logx"
+	"gorm.io/gorm"
 )
 
 type UploadFileLogic struct {
@@ -35,13 +36,6 @@ func (l *UploadFileLogic) UploadFile(in *file.UploadReq) (*file.UploadResponse, 
 	MDB := l.svcCtx.MDB
 
 	fileList := strings.Split(in.Filename, ".")
-
-	// metadata接收数据
-	//incomingContext, ok := metadata.FromIncomingContext(l.ctx)
-	//if !ok {
-	//	log.Printf("metadata.FromIncomingContext() fail")
-	//}
-	//log.Printf("metadata取到的数据%s\n", incomingContext)
 
 	// 存储原文件到minio
 	filename := strconv.FormatInt(time.Now().UnixMilli(), 10) + "_" + in.Filename
@@ -118,6 +112,9 @@ func (l *UploadFileLogic) UploadFile(in *file.UploadReq) (*file.UploadResponse, 
 			Message: "存储上传信息失败！",
 		}, nil
 	}
+
+	// 更新用户上传数量
+	db.Model(&models.Users{}).Where("user_id = ?", in.UserId).Update("upload_number", gorm.Expr("upload_number + ?", 1))
 
 	// 提交事务
 	db.Commit()

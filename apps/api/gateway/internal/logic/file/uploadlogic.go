@@ -63,10 +63,6 @@ func (l *UploadLogic) Upload(r *http.Request) (resp *result.Result, err error) {
 		TagId:    int32(atoi),
 	}
 
-	// metadata传递数据
-	//md := metadata.New(map[string]string{"aaa": "dada"})
-	//l.ctx = metadata.NewOutgoingContext(l.ctx, md)
-
 	uploadFile, err := l.svcCtx.FileClient.UploadFile(l.ctx, f)
 
 	if uploadFile.Success != true {

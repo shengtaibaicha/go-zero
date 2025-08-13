@@ -27,6 +27,9 @@ const (
 	File_DownloadFile_FullMethodName   = "/file.File/DownloadFile"
 	File_FindPageByTag_FullMethodName  = "/file.File/FindPageByTag"
 	File_FindPageByName_FullMethodName = "/file.File/FindPageByName"
+	File_DeleteFile_FullMethodName     = "/file.File/DeleteFile"
+	File_CollectFile_FullMethodName    = "/file.File/CollectFile"
+	File_FileUserPage_FullMethodName   = "/file.File/FileUserPage"
 )
 
 // FileClient is the client API for File service.
@@ -41,6 +44,9 @@ type FileClient interface {
 	DownloadFile(ctx context.Context, in *DownloadFileReq, opts ...grpc.CallOption) (*DownloadFileResp, error)
 	FindPageByTag(ctx context.Context, in *FindPageByTagReq, opts ...grpc.CallOption) (*FindPageByTagResp, error)
 	FindPageByName(ctx context.Context, in *FindPageByNameReq, opts ...grpc.CallOption) (*FindPageByNameResp, error)
+	DeleteFile(ctx context.Context, in *DeleteFileReq, opts ...grpc.CallOption) (*DeleteFileResp, error)
+	CollectFile(ctx context.Context, in *CollectFileReq, opts ...grpc.CallOption) (*CollectFileResp, error)
+	FileUserPage(ctx context.Context, in *FileUserPageReq, opts ...grpc.CallOption) (*FileUserPageResp, error)
 }
 
 type fileClient struct {
@@ -101,6 +107,36 @@ func (c *fileClient) FindPageByName(ctx context.Context, in *FindPageByNameReq, 
 	return out, nil
 }
 
+func (c *fileClient) DeleteFile(ctx context.Context, in *DeleteFileReq, opts ...grpc.CallOption) (*DeleteFileResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteFileResp)
+	err := c.cc.Invoke(ctx, File_DeleteFile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fileClient) CollectFile(ctx context.Context, in *CollectFileReq, opts ...grpc.CallOption) (*CollectFileResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CollectFileResp)
+	err := c.cc.Invoke(ctx, File_CollectFile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fileClient) FileUserPage(ctx context.Context, in *FileUserPageReq, opts ...grpc.CallOption) (*FileUserPageResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(FileUserPageResp)
+	err := c.cc.Invoke(ctx, File_FileUserPage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // FileServer is the server API for File service.
 // All implementations must embed UnimplementedFileServer
 // for forward compatibility.
@@ -113,6 +149,9 @@ type FileServer interface {
 	DownloadFile(context.Context, *DownloadFileReq) (*DownloadFileResp, error)
 	FindPageByTag(context.Context, *FindPageByTagReq) (*FindPageByTagResp, error)
 	FindPageByName(context.Context, *FindPageByNameReq) (*FindPageByNameResp, error)
+	DeleteFile(context.Context, *DeleteFileReq) (*DeleteFileResp, error)
+	CollectFile(context.Context, *CollectFileReq) (*CollectFileResp, error)
+	FileUserPage(context.Context, *FileUserPageReq) (*FileUserPageResp, error)
 	mustEmbedUnimplementedFileServer()
 }
 
@@ -137,6 +176,15 @@ func (UnimplementedFileServer) FindPageByTag(context.Context, *FindPageByTagReq)
 }
 func (UnimplementedFileServer) FindPageByName(context.Context, *FindPageByNameReq) (*FindPageByNameResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindPageByName not implemented")
+}
+func (UnimplementedFileServer) DeleteFile(context.Context, *DeleteFileReq) (*DeleteFileResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteFile not implemented")
+}
+func (UnimplementedFileServer) CollectFile(context.Context, *CollectFileReq) (*CollectFileResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CollectFile not implemented")
+}
+func (UnimplementedFileServer) FileUserPage(context.Context, *FileUserPageReq) (*FileUserPageResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FileUserPage not implemented")
 }
 func (UnimplementedFileServer) mustEmbedUnimplementedFileServer() {}
 func (UnimplementedFileServer) testEmbeddedByValue()              {}
@@ -249,6 +297,60 @@ func _File_FindPageByName_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _File_DeleteFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteFileReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FileServer).DeleteFile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: File_DeleteFile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FileServer).DeleteFile(ctx, req.(*DeleteFileReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _File_CollectFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CollectFileReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FileServer).CollectFile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: File_CollectFile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FileServer).CollectFile(ctx, req.(*CollectFileReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _File_FileUserPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FileUserPageReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FileServer).FileUserPage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: File_FileUserPage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FileServer).FileUserPage(ctx, req.(*FileUserPageReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // File_ServiceDesc is the grpc.ServiceDesc for File service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -275,6 +377,18 @@ var File_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "FindPageByName",
 			Handler:    _File_FindPageByName_Handler,
+		},
+		{
+			MethodName: "DeleteFile",
+			Handler:    _File_DeleteFile_Handler,
+		},
+		{
+			MethodName: "CollectFile",
+			Handler:    _File_CollectFile_Handler,
+		},
+		{
+			MethodName: "FileUserPage",
+			Handler:    _File_FileUserPage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

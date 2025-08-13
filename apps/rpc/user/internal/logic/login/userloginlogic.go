@@ -29,7 +29,7 @@ func NewUserLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserLog
 }
 
 func (l *UserLoginLogic) UserLogin(in *user.LoginReq) (*user.LoginResp, error) {
-	// todo: add your logic here and delete this line
+
 	MDB := l.svcCtx.MDB
 	var users models.Users
 	tx := MDB.Where("user_name = ?", in.UserName).First(&users)
@@ -44,7 +44,7 @@ func (l *UserLoginLogic) UserLogin(in *user.LoginReq) (*user.LoginResp, error) {
 	}
 	// 查找到对应的数据，我们生成token返回，并且把token放入redis中
 	token, err := tools.GenerateToken(l.svcCtx.Jwt.SecretKey, users.UserId, users.UserName, "0", l.svcCtx.Jwt.ExpireHours)
-	l.svcCtx.Redis.SetexCtx(context.Background(), users.UserId, token, 60*60*24)
+	l.svcCtx.Redis.SetexCtx(context.Background(), users.UserId, token, 60*60*24*7)
 	if err != nil {
 		return nil, errors.New("create token failed")
 	}

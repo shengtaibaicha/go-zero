@@ -1,25 +1,24 @@
-package public
+package user
 
 import (
 	"net/http"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"go-zero/apps/api/gateway/internal/logic/public"
+	"go-zero/apps/api/gateway/internal/logic/user"
 	"go-zero/apps/api/gateway/internal/svc"
 	"go-zero/apps/api/gateway/internal/types"
 )
 
-func FindPageByNameHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func UserInfoHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.FindPageByNameReq
+		var req types.UserInfoReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := public.NewFindPageByNameLogic(r.Context(), svcCtx)
-		auth := r.Header.Get("Authorization")
-		resp, err := l.FindPageByName(&req, auth)
+		l := user.NewUserInfoLogic(r.Context(), svcCtx)
+		resp, err := l.UserInfo(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {

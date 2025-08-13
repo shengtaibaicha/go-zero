@@ -3,10 +3,11 @@ package public
 import (
 	"net/http"
 
-	"github.com/zeromicro/go-zero/rest/httpx"
 	"go-zero/apps/api/gateway/internal/logic/public"
 	"go-zero/apps/api/gateway/internal/svc"
 	"go-zero/apps/api/gateway/internal/types"
+
+	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
 func FindByPageHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
@@ -18,7 +19,8 @@ func FindByPageHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		}
 
 		l := public.NewFindByPageLogic(r.Context(), svcCtx)
-		resp, err := l.FindByPage(&req)
+		auth := r.Header.Get("Authorization")
+		resp, err := l.FindByPage(&req, auth)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {

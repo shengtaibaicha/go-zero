@@ -4,18 +4,10 @@ syntax = "v1"
 // user
 type (
 	Result  {}
-	GetCaptchaReq  {}
-	UserLoginReq {
-		userName     string `json:"userName"`
-		userPassword string `json:"userPassword"`
-		captchaCode  string `json:"captchaCode"`
-	}
-	UserRegisterReq {
-		userName    string `json:"userName"`
-		password    string `json:"userPassword"`
-		userEmail   string `json:"userEmail"`
-		captchaCode string `json:"captchaCode"`
-	}
+)
+
+type (
+	UserInfoReq  {}
 )
 
 @server (
@@ -23,7 +15,10 @@ type (
 	prefix:     /wallpaper/user
 	middleware: JwtAuthMiddleware
 )
-service gateway {}
+service gateway {
+	@handler UserInfo
+	get /info (UserInfoReq) returns (Result)
+}
 
 // file
 type (
@@ -31,6 +26,16 @@ type (
 	// 定义文件上传的响应
 	DownloadFileReq {
 		FileName string `form:"fileName"` // MinIO 中存储的文件键（文件名/路径）
+	}
+	DeleteReq {
+		FileId string `form:"fileId"`
+	}
+	CollectReq {
+		FileId string `json:"fileId"`
+	}
+	FileUserPageReq {
+		page int32 `form:"page"`
+		size int32 `form:"size"`
 	}
 )
 
@@ -46,25 +51,46 @@ service gateway {
 
 	@handler Download
 	get /download (DownloadFileReq)
+
+	@handler Delete
+	delete /delete (DeleteReq) returns (Result)
+
+	@handler Collect
+	post /collect (CollectReq) returns (Result)
+
+	@handler FileUserPage
+	get /user/page (FileUserPageReq) returns (Result)
 }
 
 type (
-	findByPageReq {
+	FindByPageReq {
 		page int32 `form:"page"`
 		size int32 `form:"size"`
 	}
 )
 
 type (
-	findPageByTagReq {
+	FindPageByTagReq {
 		page  int32 `json:"page"`
 		size  int32 `json:"size"`
 		tagId int32 `json:"tagId"`
 	}
-	findPageByNameReq {
+	FindPageByNameReq {
 		page int32  `form:"page"`
 		size int32  `form:"size"`
 		name string `form:"name"`
+	}
+	GetCaptchaReq  {}
+	UserLoginReq {
+		userName     string `json:"userName"`
+		userPassword string `json:"userPassword"`
+		captchaCode  string `json:"captchaCode"`
+	}
+	UserRegisterReq {
+		userName    string `json:"userName"`
+		password    string `json:"userPassword"`
+		userEmail   string `json:"userEmail"`
+		captchaCode string `json:"captchaCode"`
 	}
 )
 
@@ -74,7 +100,7 @@ type (
 )
 service gateway {
 	@handler FindByPage // 分页查询
-	get /file/find/page (findByPageReq) returns (Result)
+	get /file/find/page (FindByPageReq) returns (Result)
 
 	@handler GetTags
 	get /file/tag/tags returns (Result)
@@ -89,9 +115,9 @@ service gateway {
 	post /user/register (UserRegisterReq) returns (Result)
 
 	@handler FindPageByTag
-	post /file/tag/find/page (findPageByTagReq) returns (Result)
+	post /file/tag/find/page (FindPageByTagReq) returns (Result)
 
 	@handler FindPageByName
-	get /file/find/name (findPageByNameReq) returns (Result)
+	get /file/find/name (FindPageByNameReq) returns (Result)
 }
 
