@@ -1025,6 +1025,86 @@ func (x *FileUserPageResp) GetPages() int32 {
 	return 0
 }
 
+type GetTagsReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTagsReq) Reset() {
+	*x = GetTagsReq{}
+	mi := &file_file_rpc_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTagsReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTagsReq) ProtoMessage() {}
+
+func (x *GetTagsReq) ProtoReflect() protoreflect.Message {
+	mi := &file_file_rpc_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTagsReq.ProtoReflect.Descriptor instead.
+func (*GetTagsReq) Descriptor() ([]byte, []int) {
+	return file_file_rpc_proto_rawDescGZIP(), []int{16}
+}
+
+type GetTagsResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Tags          string                 `protobuf:"bytes,1,opt,name=tags,proto3" json:"tags,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTagsResp) Reset() {
+	*x = GetTagsResp{}
+	mi := &file_file_rpc_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTagsResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTagsResp) ProtoMessage() {}
+
+func (x *GetTagsResp) ProtoReflect() protoreflect.Message {
+	mi := &file_file_rpc_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTagsResp.ProtoReflect.Descriptor instead.
+func (*GetTagsResp) Descriptor() ([]byte, []int) {
+	return file_file_rpc_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *GetTagsResp) GetTags() string {
+	if x != nil {
+		return x.Tags
+	}
+	return ""
+}
+
 var File_file_rpc_proto protoreflect.FileDescriptor
 
 const file_file_rpc_proto_rawDesc = "" +
@@ -1107,7 +1187,11 @@ const file_file_rpc_proto_rawDesc = "" +
 	"\x05total\x18\x02 \x01(\x05R\x05total\x12\x12\n" +
 	"\x04size\x18\x03 \x01(\x05R\x04size\x12\x18\n" +
 	"\acurrent\x18\x04 \x01(\x05R\acurrent\x12\x14\n" +
-	"\x05pages\x18\x05 \x01(\x05R\x05pages2\xee\x03\n" +
+	"\x05pages\x18\x05 \x01(\x05R\x05pages\"\f\n" +
+	"\n" +
+	"GetTagsReq\"!\n" +
+	"\vGetTagsResp\x12\x12\n" +
+	"\x04tags\x18\x01 \x01(\tR\x04tags2\x9e\x04\n" +
 	"\x04File\x123\n" +
 	"\n" +
 	"UploadFile\x12\x0f.file.UploadReq\x1a\x14.file.UploadResponse\x127\n" +
@@ -1119,7 +1203,8 @@ const file_file_rpc_proto_rawDesc = "" +
 	"\n" +
 	"DeleteFile\x12\x13.file.DeleteFileReq\x1a\x14.file.DeleteFileResp\x12:\n" +
 	"\vCollectFile\x12\x14.file.CollectFileReq\x1a\x15.file.CollectFileResp\x12=\n" +
-	"\fFileUserPage\x12\x15.file.FileUserPageReq\x1a\x16.file.FileUserPageRespB\bZ\x06./fileb\x06proto3"
+	"\fFileUserPage\x12\x15.file.FileUserPageReq\x1a\x16.file.FileUserPageResp\x12.\n" +
+	"\aGetTags\x12\x10.file.GetTagsReq\x1a\x11.file.GetTagsRespB\bZ\x06./fileb\x06proto3"
 
 var (
 	file_file_rpc_proto_rawDescOnce sync.Once
@@ -1133,7 +1218,7 @@ func file_file_rpc_proto_rawDescGZIP() []byte {
 	return file_file_rpc_proto_rawDescData
 }
 
-var file_file_rpc_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
+var file_file_rpc_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
 var file_file_rpc_proto_goTypes = []any{
 	(*UploadReq)(nil),          // 0: file.UploadReq
 	(*UploadResponse)(nil),     // 1: file.UploadResponse
@@ -1151,14 +1236,16 @@ var file_file_rpc_proto_goTypes = []any{
 	(*CollectFileResp)(nil),    // 13: file.CollectFileResp
 	(*FileUserPageReq)(nil),    // 14: file.FileUserPageReq
 	(*FileUserPageResp)(nil),   // 15: file.FileUserPageResp
-	nil,                        // 16: file.FindByPageResp.CollectEntry
-	nil,                        // 17: file.FindPageByTagResp.CollectEntry
-	nil,                        // 18: file.FindPageByNameResp.CollectEntry
+	(*GetTagsReq)(nil),         // 16: file.GetTagsReq
+	(*GetTagsResp)(nil),        // 17: file.GetTagsResp
+	nil,                        // 18: file.FindByPageResp.CollectEntry
+	nil,                        // 19: file.FindPageByTagResp.CollectEntry
+	nil,                        // 20: file.FindPageByNameResp.CollectEntry
 }
 var file_file_rpc_proto_depIdxs = []int32{
-	16, // 0: file.FindByPageResp.collect:type_name -> file.FindByPageResp.CollectEntry
-	17, // 1: file.FindPageByTagResp.collect:type_name -> file.FindPageByTagResp.CollectEntry
-	18, // 2: file.FindPageByNameResp.collect:type_name -> file.FindPageByNameResp.CollectEntry
+	18, // 0: file.FindByPageResp.collect:type_name -> file.FindByPageResp.CollectEntry
+	19, // 1: file.FindPageByTagResp.collect:type_name -> file.FindPageByTagResp.CollectEntry
+	20, // 2: file.FindPageByNameResp.collect:type_name -> file.FindPageByNameResp.CollectEntry
 	0,  // 3: file.File.UploadFile:input_type -> file.UploadReq
 	2,  // 4: file.File.FindByPage:input_type -> file.FindByPageReq
 	4,  // 5: file.File.DownloadFile:input_type -> file.DownloadFileReq
@@ -1167,16 +1254,18 @@ var file_file_rpc_proto_depIdxs = []int32{
 	10, // 8: file.File.DeleteFile:input_type -> file.DeleteFileReq
 	12, // 9: file.File.CollectFile:input_type -> file.CollectFileReq
 	14, // 10: file.File.FileUserPage:input_type -> file.FileUserPageReq
-	1,  // 11: file.File.UploadFile:output_type -> file.UploadResponse
-	3,  // 12: file.File.FindByPage:output_type -> file.FindByPageResp
-	5,  // 13: file.File.DownloadFile:output_type -> file.DownloadFileResp
-	7,  // 14: file.File.FindPageByTag:output_type -> file.FindPageByTagResp
-	9,  // 15: file.File.FindPageByName:output_type -> file.FindPageByNameResp
-	11, // 16: file.File.DeleteFile:output_type -> file.DeleteFileResp
-	13, // 17: file.File.CollectFile:output_type -> file.CollectFileResp
-	15, // 18: file.File.FileUserPage:output_type -> file.FileUserPageResp
-	11, // [11:19] is the sub-list for method output_type
-	3,  // [3:11] is the sub-list for method input_type
+	16, // 11: file.File.GetTags:input_type -> file.GetTagsReq
+	1,  // 12: file.File.UploadFile:output_type -> file.UploadResponse
+	3,  // 13: file.File.FindByPage:output_type -> file.FindByPageResp
+	5,  // 14: file.File.DownloadFile:output_type -> file.DownloadFileResp
+	7,  // 15: file.File.FindPageByTag:output_type -> file.FindPageByTagResp
+	9,  // 16: file.File.FindPageByName:output_type -> file.FindPageByNameResp
+	11, // 17: file.File.DeleteFile:output_type -> file.DeleteFileResp
+	13, // 18: file.File.CollectFile:output_type -> file.CollectFileResp
+	15, // 19: file.File.FileUserPage:output_type -> file.FileUserPageResp
+	17, // 20: file.File.GetTags:output_type -> file.GetTagsResp
+	12, // [12:21] is the sub-list for method output_type
+	3,  // [3:12] is the sub-list for method input_type
 	3,  // [3:3] is the sub-list for extension type_name
 	3,  // [3:3] is the sub-list for extension extendee
 	0,  // [0:3] is the sub-list for field type_name
@@ -1193,7 +1282,7 @@ func file_file_rpc_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_file_rpc_proto_rawDesc), len(file_file_rpc_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   19,
+			NumMessages:   21,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

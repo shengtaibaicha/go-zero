@@ -35,20 +35,34 @@ message InfoResp {
   int64 uploadNumber = 5;
   int64 downloadNumber = 6;
   int64 collectNumber = 7;
+  string role = 8;
+  int32 enable = 9;
 }
 
-service login {
+message AdminFindPageReq {
+  int32 page = 1;
+  int32 size = 2;
+}
+
+message AdminFindPageResp {
+  string records = 1;
+  int32 total = 2;
+  int32 size = 3;
+  int32 current = 4;
+  int32 pages = 5;
+}
+
+service user {
   rpc UserLogin(LoginReq) returns (LoginResp);
-}
 
-service register {
   rpc UserRegister(RegisterReq) returns (RegisterResp);
-}
 
-service other {
   rpc UserInfo(InfoReq) returns (InfoResp);
 }
 
+service admin {
+  rpc FindPage(AdminFindPageReq) returns (AdminFindPageResp);
+}
 /*
-  >goctl rpc protoc user-rpc.proto --go_out=C:\Users\12793\Desktop\golang\go-zero\apps\rpc\user --go-grpc_out=C:\Users\12793\Desktop\golang\go-zero\apps\rpc\user --zrpc_out=C:\Users\12793\Desktop\golang\go-zero\apps\rpc\user -m
+  goctl rpc protoc user-rpc.proto --go_out=C:\Users\12793\Desktop\golang\go-zero\apps\rpc\user --go-grpc_out=C:\Users\12793\Desktop\golang\go-zero\apps\rpc\user --zrpc_out=C:\Users\12793\Desktop\golang\go-zero\apps\rpc\user -m
  */

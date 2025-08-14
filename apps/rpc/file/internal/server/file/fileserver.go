@@ -23,7 +23,6 @@ func NewFileServer(svcCtx *svc.ServiceContext) *FileServer {
 	}
 }
 
-// 单请求上传（适合中小文件）
 func (s *FileServer) UploadFile(ctx context.Context, in *file.UploadReq) (*file.UploadResponse, error) {
 	l := filelogic.NewUploadFileLogic(ctx, s.svcCtx)
 	return l.UploadFile(in)
@@ -62,4 +61,9 @@ func (s *FileServer) CollectFile(ctx context.Context, in *file.CollectFileReq) (
 func (s *FileServer) FileUserPage(ctx context.Context, in *file.FileUserPageReq) (*file.FileUserPageResp, error) {
 	l := filelogic.NewFileUserPageLogic(ctx, s.svcCtx)
 	return l.FileUserPage(in)
+}
+
+func (s *FileServer) GetTags(ctx context.Context, in *file.GetTagsReq) (*file.GetTagsResp, error) {
+	l := filelogic.NewGetTagsLogic(ctx, s.svcCtx)
+	return l.GetTags(in)
 }

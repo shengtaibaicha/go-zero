@@ -43,7 +43,7 @@ func CompressPNG(input []byte) ([]byte, error) {
 
 	// 重新编码PNG，通过设置压缩级别优化体积
 	// 注意：PNG是无损压缩，压缩级别影响速度而非画质
-	err = imaging.Encode(&outputBuf, img, imaging.PNG, imaging.PNGCompressionLevel(6))
+	err = imaging.Encode(&outputBuf, img, imaging.PNG, imaging.PNGCompressionLevel(9))
 	if err != nil {
 		return nil, err
 	}

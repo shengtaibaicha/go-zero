@@ -19,203 +19,177 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Login_UserLogin_FullMethodName = "/user.login/UserLogin"
+	User_UserLogin_FullMethodName    = "/user.user/UserLogin"
+	User_UserRegister_FullMethodName = "/user.user/UserRegister"
+	User_UserInfo_FullMethodName     = "/user.user/UserInfo"
 )
 
-// LoginClient is the client API for Login service.
+// UserClient is the client API for User service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type LoginClient interface {
+type UserClient interface {
 	UserLogin(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
+	UserRegister(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error)
+	UserInfo(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error)
 }
 
-type loginClient struct {
+type userClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewLoginClient(cc grpc.ClientConnInterface) LoginClient {
-	return &loginClient{cc}
+func NewUserClient(cc grpc.ClientConnInterface) UserClient {
+	return &userClient{cc}
 }
 
-func (c *loginClient) UserLogin(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error) {
+func (c *userClient) UserLogin(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(LoginResp)
-	err := c.cc.Invoke(ctx, Login_UserLogin_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, User_UserLogin_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// LoginServer is the server API for Login service.
-// All implementations must embed UnimplementedLoginServer
-// for forward compatibility.
-type LoginServer interface {
-	UserLogin(context.Context, *LoginReq) (*LoginResp, error)
-	mustEmbedUnimplementedLoginServer()
+func (c *userClient) UserRegister(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RegisterResp)
+	err := c.cc.Invoke(ctx, User_UserRegister_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// UnimplementedLoginServer must be embedded to have
+func (c *userClient) UserInfo(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InfoResp)
+	err := c.cc.Invoke(ctx, User_UserInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// UserServer is the server API for User service.
+// All implementations must embed UnimplementedUserServer
+// for forward compatibility.
+type UserServer interface {
+	UserLogin(context.Context, *LoginReq) (*LoginResp, error)
+	UserRegister(context.Context, *RegisterReq) (*RegisterResp, error)
+	UserInfo(context.Context, *InfoReq) (*InfoResp, error)
+	mustEmbedUnimplementedUserServer()
+}
+
+// UnimplementedUserServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedLoginServer struct{}
+type UnimplementedUserServer struct{}
 
-func (UnimplementedLoginServer) UserLogin(context.Context, *LoginReq) (*LoginResp, error) {
+func (UnimplementedUserServer) UserLogin(context.Context, *LoginReq) (*LoginResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserLogin not implemented")
 }
-func (UnimplementedLoginServer) mustEmbedUnimplementedLoginServer() {}
-func (UnimplementedLoginServer) testEmbeddedByValue()               {}
+func (UnimplementedUserServer) UserRegister(context.Context, *RegisterReq) (*RegisterResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserRegister not implemented")
+}
+func (UnimplementedUserServer) UserInfo(context.Context, *InfoReq) (*InfoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UserInfo not implemented")
+}
+func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
+func (UnimplementedUserServer) testEmbeddedByValue()              {}
 
-// UnsafeLoginServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to LoginServer will
+// UnsafeUserServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to UserServer will
 // result in compilation errors.
-type UnsafeLoginServer interface {
-	mustEmbedUnimplementedLoginServer()
+type UnsafeUserServer interface {
+	mustEmbedUnimplementedUserServer()
 }
 
-func RegisterLoginServer(s grpc.ServiceRegistrar, srv LoginServer) {
-	// If the following call pancis, it indicates UnimplementedLoginServer was
+func RegisterUserServer(s grpc.ServiceRegistrar, srv UserServer) {
+	// If the following call pancis, it indicates UnimplementedUserServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&Login_ServiceDesc, srv)
+	s.RegisterService(&User_ServiceDesc, srv)
 }
 
-func _Login_UserLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _User_UserLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(LoginReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LoginServer).UserLogin(ctx, in)
+		return srv.(UserServer).UserLogin(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Login_UserLogin_FullMethodName,
+		FullMethod: User_UserLogin_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LoginServer).UserLogin(ctx, req.(*LoginReq))
+		return srv.(UserServer).UserLogin(ctx, req.(*LoginReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Login_ServiceDesc is the grpc.ServiceDesc for Login service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var Login_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "user.login",
-	HandlerType: (*LoginServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "UserLogin",
-			Handler:    _Login_UserLogin_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "user-rpc.proto",
-}
-
-const (
-	Register_UserRegister_FullMethodName = "/user.register/UserRegister"
-)
-
-// RegisterClient is the client API for Register service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type RegisterClient interface {
-	UserRegister(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error)
-}
-
-type registerClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewRegisterClient(cc grpc.ClientConnInterface) RegisterClient {
-	return &registerClient{cc}
-}
-
-func (c *registerClient) UserRegister(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RegisterResp)
-	err := c.cc.Invoke(ctx, Register_UserRegister_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// RegisterServer is the server API for Register service.
-// All implementations must embed UnimplementedRegisterServer
-// for forward compatibility.
-type RegisterServer interface {
-	UserRegister(context.Context, *RegisterReq) (*RegisterResp, error)
-	mustEmbedUnimplementedRegisterServer()
-}
-
-// UnimplementedRegisterServer must be embedded to have
-// forward compatible implementations.
-//
-// NOTE: this should be embedded by value instead of pointer to avoid a nil
-// pointer dereference when methods are called.
-type UnimplementedRegisterServer struct{}
-
-func (UnimplementedRegisterServer) UserRegister(context.Context, *RegisterReq) (*RegisterResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UserRegister not implemented")
-}
-func (UnimplementedRegisterServer) mustEmbedUnimplementedRegisterServer() {}
-func (UnimplementedRegisterServer) testEmbeddedByValue()                  {}
-
-// UnsafeRegisterServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to RegisterServer will
-// result in compilation errors.
-type UnsafeRegisterServer interface {
-	mustEmbedUnimplementedRegisterServer()
-}
-
-func RegisterRegisterServer(s grpc.ServiceRegistrar, srv RegisterServer) {
-	// If the following call pancis, it indicates UnimplementedRegisterServer was
-	// embedded by pointer and is nil.  This will cause panics if an
-	// unimplemented method is ever invoked, so we test this at initialization
-	// time to prevent it from happening at runtime later due to I/O.
-	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
-		t.testEmbeddedByValue()
-	}
-	s.RegisterService(&Register_ServiceDesc, srv)
-}
-
-func _Register_UserRegister_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _User_UserRegister_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RegisterReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RegisterServer).UserRegister(ctx, in)
+		return srv.(UserServer).UserRegister(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Register_UserRegister_FullMethodName,
+		FullMethod: User_UserRegister_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RegisterServer).UserRegister(ctx, req.(*RegisterReq))
+		return srv.(UserServer).UserRegister(ctx, req.(*RegisterReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Register_ServiceDesc is the grpc.ServiceDesc for Register service.
+func _User_UserInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).UserInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_UserInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).UserInfo(ctx, req.(*InfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Register_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "user.register",
-	HandlerType: (*RegisterServer)(nil),
+var User_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "user.user",
+	HandlerType: (*UserServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "UserLogin",
+			Handler:    _User_UserLogin_Handler,
+		},
+		{
 			MethodName: "UserRegister",
-			Handler:    _Register_UserRegister_Handler,
+			Handler:    _User_UserRegister_Handler,
+		},
+		{
+			MethodName: "UserInfo",
+			Handler:    _User_UserInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -223,101 +197,101 @@ var Register_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	Other_UserInfo_FullMethodName = "/user.other/UserInfo"
+	Admin_FindPage_FullMethodName = "/user.admin/FindPage"
 )
 
-// OtherClient is the client API for Other service.
+// AdminClient is the client API for Admin service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type OtherClient interface {
-	UserInfo(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error)
+type AdminClient interface {
+	FindPage(ctx context.Context, in *AdminFindPageReq, opts ...grpc.CallOption) (*AdminFindPageResp, error)
 }
 
-type otherClient struct {
+type adminClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewOtherClient(cc grpc.ClientConnInterface) OtherClient {
-	return &otherClient{cc}
+func NewAdminClient(cc grpc.ClientConnInterface) AdminClient {
+	return &adminClient{cc}
 }
 
-func (c *otherClient) UserInfo(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error) {
+func (c *adminClient) FindPage(ctx context.Context, in *AdminFindPageReq, opts ...grpc.CallOption) (*AdminFindPageResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(InfoResp)
-	err := c.cc.Invoke(ctx, Other_UserInfo_FullMethodName, in, out, cOpts...)
+	out := new(AdminFindPageResp)
+	err := c.cc.Invoke(ctx, Admin_FindPage_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// OtherServer is the server API for Other service.
-// All implementations must embed UnimplementedOtherServer
+// AdminServer is the server API for Admin service.
+// All implementations must embed UnimplementedAdminServer
 // for forward compatibility.
-type OtherServer interface {
-	UserInfo(context.Context, *InfoReq) (*InfoResp, error)
-	mustEmbedUnimplementedOtherServer()
+type AdminServer interface {
+	FindPage(context.Context, *AdminFindPageReq) (*AdminFindPageResp, error)
+	mustEmbedUnimplementedAdminServer()
 }
 
-// UnimplementedOtherServer must be embedded to have
+// UnimplementedAdminServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedOtherServer struct{}
+type UnimplementedAdminServer struct{}
 
-func (UnimplementedOtherServer) UserInfo(context.Context, *InfoReq) (*InfoResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UserInfo not implemented")
+func (UnimplementedAdminServer) FindPage(context.Context, *AdminFindPageReq) (*AdminFindPageResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FindPage not implemented")
 }
-func (UnimplementedOtherServer) mustEmbedUnimplementedOtherServer() {}
-func (UnimplementedOtherServer) testEmbeddedByValue()               {}
+func (UnimplementedAdminServer) mustEmbedUnimplementedAdminServer() {}
+func (UnimplementedAdminServer) testEmbeddedByValue()               {}
 
-// UnsafeOtherServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to OtherServer will
+// UnsafeAdminServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AdminServer will
 // result in compilation errors.
-type UnsafeOtherServer interface {
-	mustEmbedUnimplementedOtherServer()
+type UnsafeAdminServer interface {
+	mustEmbedUnimplementedAdminServer()
 }
 
-func RegisterOtherServer(s grpc.ServiceRegistrar, srv OtherServer) {
-	// If the following call pancis, it indicates UnimplementedOtherServer was
+func RegisterAdminServer(s grpc.ServiceRegistrar, srv AdminServer) {
+	// If the following call pancis, it indicates UnimplementedAdminServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&Other_ServiceDesc, srv)
+	s.RegisterService(&Admin_ServiceDesc, srv)
 }
 
-func _Other_UserInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(InfoReq)
+func _Admin_FindPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdminFindPageReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OtherServer).UserInfo(ctx, in)
+		return srv.(AdminServer).FindPage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Other_UserInfo_FullMethodName,
+		FullMethod: Admin_FindPage_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OtherServer).UserInfo(ctx, req.(*InfoReq))
+		return srv.(AdminServer).FindPage(ctx, req.(*AdminFindPageReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Other_ServiceDesc is the grpc.ServiceDesc for Other service.
+// Admin_ServiceDesc is the grpc.ServiceDesc for Admin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Other_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "user.other",
-	HandlerType: (*OtherServer)(nil),
+var Admin_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "user.admin",
+	HandlerType: (*AdminServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "UserInfo",
-			Handler:    _Other_UserInfo_Handler,
+			MethodName: "FindPage",
+			Handler:    _Admin_FindPage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

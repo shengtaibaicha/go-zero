@@ -30,15 +30,15 @@ const (
 	File_DeleteFile_FullMethodName     = "/file.File/DeleteFile"
 	File_CollectFile_FullMethodName    = "/file.File/CollectFile"
 	File_FileUserPage_FullMethodName   = "/file.File/FileUserPage"
+	File_GetTags_FullMethodName        = "/file.File/GetTags"
 )
 
 // FileClient is the client API for File service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// 文件上传服务
+// 文件服务
 type FileClient interface {
-	// 单请求上传（适合中小文件）
 	UploadFile(ctx context.Context, in *UploadReq, opts ...grpc.CallOption) (*UploadResponse, error)
 	FindByPage(ctx context.Context, in *FindByPageReq, opts ...grpc.CallOption) (*FindByPageResp, error)
 	DownloadFile(ctx context.Context, in *DownloadFileReq, opts ...grpc.CallOption) (*DownloadFileResp, error)
@@ -47,6 +47,7 @@ type FileClient interface {
 	DeleteFile(ctx context.Context, in *DeleteFileReq, opts ...grpc.CallOption) (*DeleteFileResp, error)
 	CollectFile(ctx context.Context, in *CollectFileReq, opts ...grpc.CallOption) (*CollectFileResp, error)
 	FileUserPage(ctx context.Context, in *FileUserPageReq, opts ...grpc.CallOption) (*FileUserPageResp, error)
+	GetTags(ctx context.Context, in *GetTagsReq, opts ...grpc.CallOption) (*GetTagsResp, error)
 }
 
 type fileClient struct {
@@ -137,13 +138,22 @@ func (c *fileClient) FileUserPage(ctx context.Context, in *FileUserPageReq, opts
 	return out, nil
 }
 
+func (c *fileClient) GetTags(ctx context.Context, in *GetTagsReq, opts ...grpc.CallOption) (*GetTagsResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetTagsResp)
+	err := c.cc.Invoke(ctx, File_GetTags_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // FileServer is the server API for File service.
 // All implementations must embed UnimplementedFileServer
 // for forward compatibility.
 //
-// 文件上传服务
+// 文件服务
 type FileServer interface {
-	// 单请求上传（适合中小文件）
 	UploadFile(context.Context, *UploadReq) (*UploadResponse, error)
 	FindByPage(context.Context, *FindByPageReq) (*FindByPageResp, error)
 	DownloadFile(context.Context, *DownloadFileReq) (*DownloadFileResp, error)
@@ -152,6 +162,7 @@ type FileServer interface {
 	DeleteFile(context.Context, *DeleteFileReq) (*DeleteFileResp, error)
 	CollectFile(context.Context, *CollectFileReq) (*CollectFileResp, error)
 	FileUserPage(context.Context, *FileUserPageReq) (*FileUserPageResp, error)
+	GetTags(context.Context, *GetTagsReq) (*GetTagsResp, error)
 	mustEmbedUnimplementedFileServer()
 }
 
@@ -185,6 +196,9 @@ func (UnimplementedFileServer) CollectFile(context.Context, *CollectFileReq) (*C
 }
 func (UnimplementedFileServer) FileUserPage(context.Context, *FileUserPageReq) (*FileUserPageResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FileUserPage not implemented")
+}
+func (UnimplementedFileServer) GetTags(context.Context, *GetTagsReq) (*GetTagsResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTags not implemented")
 }
 func (UnimplementedFileServer) mustEmbedUnimplementedFileServer() {}
 func (UnimplementedFileServer) testEmbeddedByValue()              {}
@@ -351,6 +365,24 @@ func _File_FileUserPage_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _File_GetTags_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTagsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FileServer).GetTags(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: File_GetTags_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FileServer).GetTags(ctx, req.(*GetTagsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // File_ServiceDesc is the grpc.ServiceDesc for File service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -389,6 +421,10 @@ var File_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "FileUserPage",
 			Handler:    _File_FileUserPage_Handler,
+		},
+		{
+			MethodName: "GetTags",
+			Handler:    _File_GetTags_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

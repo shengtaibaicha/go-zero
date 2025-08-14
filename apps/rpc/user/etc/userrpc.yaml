@@ -17,3 +17,5 @@ Mysql:
 Jwt:
   SecretKey: baichabaichabaichabaichabaichabaichabaichabaichabaichabaichabaichabaichabaichabaichabaichabaicha
   ExpireHours: 168
+
+JwtExpire: 7

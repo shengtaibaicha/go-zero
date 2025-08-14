@@ -3,6 +3,7 @@ package file
 import (
 	"context"
 	"go-zero/apps/rpc/file/file"
+	"go-zero/common/middleware"
 	"go-zero/common/result"
 
 	"go-zero/apps/api/gateway/internal/svc"
@@ -30,7 +31,7 @@ func (l *DeleteLogic) Delete(req *types.DeleteReq) (resp *result.Result, err err
 
 	// 拿到上下文的userId并通过metadata传递到rpc
 	md := metadata.New(map[string]string{
-		"userId": l.ctx.Value("userId").(string),
+		"userId": middleware.GetUserIdFromCtx(l.ctx),
 	})
 	l.ctx = metadata.NewOutgoingContext(l.ctx, md)
 	// 调用rpc服务

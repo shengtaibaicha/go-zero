@@ -3,6 +3,7 @@ package file
 import (
 	"context"
 	"go-zero/apps/rpc/file/file"
+	"go-zero/common/middleware"
 	"go-zero/common/result"
 
 	"go-zero/apps/api/gateway/internal/svc"
@@ -28,7 +29,7 @@ func NewCollectLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CollectLo
 
 func (l *CollectLogic) Collect(req *types.CollectReq) (resp *result.Result, err error) {
 
-	md := metadata.New(map[string]string{"userId": l.ctx.Value("userId").(string)})
+	md := metadata.New(map[string]string{"userId": middleware.GetUserIdFromCtx(l.ctx)})
 	outgoingContext := metadata.NewOutgoingContext(l.ctx, md)
 
 	collectFile, _ := l.svcCtx.FileClient.CollectFile(outgoingContext, &file.CollectFileReq{FileId: req.FileId})

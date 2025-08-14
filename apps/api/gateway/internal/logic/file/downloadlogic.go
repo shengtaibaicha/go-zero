@@ -5,6 +5,7 @@ import (
 	"go-zero/apps/api/gateway/internal/svc"
 	"go-zero/apps/api/gateway/internal/types"
 	"go-zero/apps/rpc/file/file"
+	"go-zero/common/middleware"
 
 	"github.com/zeromicro/go-zero/core/logx"
 	"google.golang.org/grpc/metadata"
@@ -26,7 +27,7 @@ func NewDownloadLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Download
 
 func (l *DownloadLogic) Download(req *types.DownloadFileReq) (resp *file.DownloadFileResp, err error) {
 
-	md := metadata.New(map[string]string{"userId": l.ctx.Value("userId").(string)})
+	md := metadata.New(map[string]string{"userId": middleware.GetUserIdFromCtx(l.ctx)})
 	outgoingContext := metadata.NewOutgoingContext(l.ctx, md)
 
 	downloadFile, err := l.svcCtx.FileClient.DownloadFile(outgoingContext, &file.DownloadFileReq{

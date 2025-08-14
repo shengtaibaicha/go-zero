@@ -24,4 +24,4 @@ Redis:
   Pass: ""
   Key: "File"
 
-RedisExpires: 1    # 分钟
+RedisExpires: 10    # 秒

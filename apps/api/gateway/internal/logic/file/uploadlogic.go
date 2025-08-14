@@ -3,7 +3,8 @@ package file
 import (
 	"context"
 	"go-zero/apps/api/gateway/internal/svc"
-	rpcfile "go-zero/apps/rpc/file/file"
+	"go-zero/apps/rpc/file/file"
+	"go-zero/common/middleware"
 	"go-zero/common/result"
 	"io"
 	"net/http"
@@ -33,8 +34,9 @@ func (l *UploadLogic) Upload(r *http.Request) (resp *result.Result, err error) {
 		return result.Err().SetMsg("文件大小超过限制!"), nil
 	}
 	// 1. 解析前端上传的文件（表单字段名为"file"）
-	file, header, err := r.FormFile("file")
-	// 判断文件格式
+	fileData, header, err := r.FormFile("file")
+
+	//判断文件格式
 	contentType := header.Header.Get("Content-Type")
 	if contentType != "image/jpeg" && contentType != "image/png" {
 		// 非允许的格式，返回错误
@@ -45,21 +47,21 @@ func (l *UploadLogic) Upload(r *http.Request) (resp *result.Result, err error) {
 	if err != nil {
 		return result.Err().SetMsg("解析文件失败！"), err
 	}
-	defer file.Close() // 确保文件流关闭
+	defer fileData.Close() // 确保文件流关闭
 
 	// 2. 读取文件内容为字节数组（适合中小文件）
-	fileContent, err := io.ReadAll(file)
+	fileContent, err := io.ReadAll(fileData)
 	if err != nil {
 		return result.Err().SetMsg("转换文件格式失败！"), err
 	}
 
 	atoi, _ := strconv.Atoi(tagId)
-	f := &rpcfile.UploadReq{
+	f := &file.UploadReq{
 		File:     fileContent,
 		Filename: header.Filename,
 		Size:     header.Size,
 		MimeType: header.Header.Get("Content-Type"),
-		UserId:   l.ctx.Value("userId").(string),
+		UserId:   middleware.GetUserIdFromCtx(l.ctx),
 		TagId:    int32(atoi),
 	}
 

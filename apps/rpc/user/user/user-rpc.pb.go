@@ -274,6 +274,8 @@ type InfoResp struct {
 	UploadNumber   int64                  `protobuf:"varint,5,opt,name=uploadNumber,proto3" json:"uploadNumber,omitempty"`
 	DownloadNumber int64                  `protobuf:"varint,6,opt,name=downloadNumber,proto3" json:"downloadNumber,omitempty"`
 	CollectNumber  int64                  `protobuf:"varint,7,opt,name=collectNumber,proto3" json:"collectNumber,omitempty"`
+	Role           string                 `protobuf:"bytes,8,opt,name=role,proto3" json:"role,omitempty"`
+	Enable         int32                  `protobuf:"varint,9,opt,name=enable,proto3" json:"enable,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -357,6 +359,148 @@ func (x *InfoResp) GetCollectNumber() int64 {
 	return 0
 }
 
+func (x *InfoResp) GetRole() string {
+	if x != nil {
+		return x.Role
+	}
+	return ""
+}
+
+func (x *InfoResp) GetEnable() int32 {
+	if x != nil {
+		return x.Enable
+	}
+	return 0
+}
+
+type AdminFindPageReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
+	Size          int32                  `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AdminFindPageReq) Reset() {
+	*x = AdminFindPageReq{}
+	mi := &file_user_rpc_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AdminFindPageReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AdminFindPageReq) ProtoMessage() {}
+
+func (x *AdminFindPageReq) ProtoReflect() protoreflect.Message {
+	mi := &file_user_rpc_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AdminFindPageReq.ProtoReflect.Descriptor instead.
+func (*AdminFindPageReq) Descriptor() ([]byte, []int) {
+	return file_user_rpc_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *AdminFindPageReq) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *AdminFindPageReq) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+type AdminFindPageResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Records       string                 `protobuf:"bytes,1,opt,name=records,proto3" json:"records,omitempty"`
+	Total         int32                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
+	Size          int32                  `protobuf:"varint,3,opt,name=size,proto3" json:"size,omitempty"`
+	Current       int32                  `protobuf:"varint,4,opt,name=current,proto3" json:"current,omitempty"`
+	Pages         int32                  `protobuf:"varint,5,opt,name=pages,proto3" json:"pages,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AdminFindPageResp) Reset() {
+	*x = AdminFindPageResp{}
+	mi := &file_user_rpc_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AdminFindPageResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AdminFindPageResp) ProtoMessage() {}
+
+func (x *AdminFindPageResp) ProtoReflect() protoreflect.Message {
+	mi := &file_user_rpc_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AdminFindPageResp.ProtoReflect.Descriptor instead.
+func (*AdminFindPageResp) Descriptor() ([]byte, []int) {
+	return file_user_rpc_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *AdminFindPageResp) GetRecords() string {
+	if x != nil {
+		return x.Records
+	}
+	return ""
+}
+
+func (x *AdminFindPageResp) GetTotal() int32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *AdminFindPageResp) GetSize() int32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *AdminFindPageResp) GetCurrent() int32 {
+	if x != nil {
+		return x.Current
+	}
+	return 0
+}
+
+func (x *AdminFindPageResp) GetPages() int32 {
+	if x != nil {
+		return x.Pages
+	}
+	return 0
+}
+
 var File_user_rpc_proto protoreflect.FileDescriptor
 
 const file_user_rpc_proto_rawDesc = "" +
@@ -374,7 +518,7 @@ const file_user_rpc_proto_rawDesc = "" +
 	"\fRegisterResp\x12\x16\n" +
 	"\x06userId\x18\x01 \x01(\tR\x06userId\"!\n" +
 	"\aInfoReq\x12\x16\n" +
-	"\x06userId\x18\x01 \x01(\tR\x06userId\"\xf2\x01\n" +
+	"\x06userId\x18\x01 \x01(\tR\x06userId\"\x9e\x02\n" +
 	"\bInfoResp\x12\x1a\n" +
 	"\buserName\x18\x01 \x01(\tR\buserName\x12\x1c\n" +
 	"\tuserEmail\x18\x02 \x01(\tR\tuserEmail\x12\x1a\n" +
@@ -384,13 +528,24 @@ const file_user_rpc_proto_rawDesc = "" +
 	"userAvatar\x12\"\n" +
 	"\fuploadNumber\x18\x05 \x01(\x03R\fuploadNumber\x12&\n" +
 	"\x0edownloadNumber\x18\x06 \x01(\x03R\x0edownloadNumber\x12$\n" +
-	"\rcollectNumber\x18\a \x01(\x03R\rcollectNumber25\n" +
-	"\x05login\x12,\n" +
-	"\tUserLogin\x12\x0e.user.LoginReq\x1a\x0f.user.LoginResp2A\n" +
-	"\bregister\x125\n" +
-	"\fUserRegister\x12\x11.user.RegisterReq\x1a\x12.user.RegisterResp22\n" +
-	"\x05other\x12)\n" +
-	"\bUserInfo\x12\r.user.InfoReq\x1a\x0e.user.InfoRespB\bZ\x06./userb\x06proto3"
+	"\rcollectNumber\x18\a \x01(\x03R\rcollectNumber\x12\x12\n" +
+	"\x04role\x18\b \x01(\tR\x04role\x12\x16\n" +
+	"\x06enable\x18\t \x01(\x05R\x06enable\":\n" +
+	"\x10AdminFindPageReq\x12\x12\n" +
+	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x12\n" +
+	"\x04size\x18\x02 \x01(\x05R\x04size\"\x87\x01\n" +
+	"\x11AdminFindPageResp\x12\x18\n" +
+	"\arecords\x18\x01 \x01(\tR\arecords\x12\x14\n" +
+	"\x05total\x18\x02 \x01(\x05R\x05total\x12\x12\n" +
+	"\x04size\x18\x03 \x01(\x05R\x04size\x12\x18\n" +
+	"\acurrent\x18\x04 \x01(\x05R\acurrent\x12\x14\n" +
+	"\x05pages\x18\x05 \x01(\x05R\x05pages2\x96\x01\n" +
+	"\x04user\x12,\n" +
+	"\tUserLogin\x12\x0e.user.LoginReq\x1a\x0f.user.LoginResp\x125\n" +
+	"\fUserRegister\x12\x11.user.RegisterReq\x1a\x12.user.RegisterResp\x12)\n" +
+	"\bUserInfo\x12\r.user.InfoReq\x1a\x0e.user.InfoResp2D\n" +
+	"\x05admin\x12;\n" +
+	"\bFindPage\x12\x16.user.AdminFindPageReq\x1a\x17.user.AdminFindPageRespB\bZ\x06./userb\x06proto3"
 
 var (
 	file_user_rpc_proto_rawDescOnce sync.Once
@@ -404,24 +559,28 @@ func file_user_rpc_proto_rawDescGZIP() []byte {
 	return file_user_rpc_proto_rawDescData
 }
 
-var file_user_rpc_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_user_rpc_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_user_rpc_proto_goTypes = []any{
-	(*LoginReq)(nil),     // 0: user.LoginReq
-	(*LoginResp)(nil),    // 1: user.LoginResp
-	(*RegisterReq)(nil),  // 2: user.RegisterReq
-	(*RegisterResp)(nil), // 3: user.RegisterResp
-	(*InfoReq)(nil),      // 4: user.InfoReq
-	(*InfoResp)(nil),     // 5: user.InfoResp
+	(*LoginReq)(nil),          // 0: user.LoginReq
+	(*LoginResp)(nil),         // 1: user.LoginResp
+	(*RegisterReq)(nil),       // 2: user.RegisterReq
+	(*RegisterResp)(nil),      // 3: user.RegisterResp
+	(*InfoReq)(nil),           // 4: user.InfoReq
+	(*InfoResp)(nil),          // 5: user.InfoResp
+	(*AdminFindPageReq)(nil),  // 6: user.AdminFindPageReq
+	(*AdminFindPageResp)(nil), // 7: user.AdminFindPageResp
 }
 var file_user_rpc_proto_depIdxs = []int32{
-	0, // 0: user.login.UserLogin:input_type -> user.LoginReq
-	2, // 1: user.register.UserRegister:input_type -> user.RegisterReq
-	4, // 2: user.other.UserInfo:input_type -> user.InfoReq
-	1, // 3: user.login.UserLogin:output_type -> user.LoginResp
-	3, // 4: user.register.UserRegister:output_type -> user.RegisterResp
-	5, // 5: user.other.UserInfo:output_type -> user.InfoResp
-	3, // [3:6] is the sub-list for method output_type
-	0, // [0:3] is the sub-list for method input_type
+	0, // 0: user.user.UserLogin:input_type -> user.LoginReq
+	2, // 1: user.user.UserRegister:input_type -> user.RegisterReq
+	4, // 2: user.user.UserInfo:input_type -> user.InfoReq
+	6, // 3: user.admin.FindPage:input_type -> user.AdminFindPageReq
+	1, // 4: user.user.UserLogin:output_type -> user.LoginResp
+	3, // 5: user.user.UserRegister:output_type -> user.RegisterResp
+	5, // 6: user.user.UserInfo:output_type -> user.InfoResp
+	7, // 7: user.admin.FindPage:output_type -> user.AdminFindPageResp
+	4, // [4:8] is the sub-list for method output_type
+	0, // [0:4] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -438,9 +597,9 @@ func file_user_rpc_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_user_rpc_proto_rawDesc), len(file_user_rpc_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   8,
 			NumExtensions: 0,
-			NumServices:   3,
+			NumServices:   2,
 		},
 		GoTypes:           file_user_rpc_proto_goTypes,
 		DependencyIndexes: file_user_rpc_proto_depIdxs,

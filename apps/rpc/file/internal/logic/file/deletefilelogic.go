@@ -55,5 +55,5 @@ func (l *DeleteFileLogic) DeleteFile(in *file.DeleteFileReq) (*file.DeleteFileRe
 	if tx.Error != nil {
 		return &file.DeleteFileResp{Success: false, Msg: "操作数据库删除失败：" + tx.Error.Error()}, nil
 	}
-	return &file.DeleteFileResp{Success: false, Msg: "删除文件成功！"}, nil
+	return &file.DeleteFileResp{Success: true, Msg: "删除文件成功！"}, nil
 }

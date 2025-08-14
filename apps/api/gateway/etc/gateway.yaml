@@ -23,11 +23,5 @@ UserRpc:
       - 127.0.0.1:2379
     Key: user.rpc
 
-TagRpc:
-  Etcd:
-    Hosts:
-      - 127.0.0.1:2379
-    Key: tag.rpc
-
 Jwt:
   SecretKey: baichabaichabaichabaichabaichabaichabaichabaichabaichabaichabaichabaichabaichabaichabaichabaicha

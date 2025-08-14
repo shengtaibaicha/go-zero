@@ -26,7 +26,6 @@ func NewGetCaptchaLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetCap
 }
 
 func (l *GetCaptchaLogic) GetCaptcha(req *types.GetCaptchaReq) (resp *result.Result, redisKey string, err error) {
-	// todo: add your logic here and delete this line
 	captcha, code := myCaptcha.GetCaptcha()
 	// 生成redisKey
 	id := uuid.New()

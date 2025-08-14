@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"go-zero/apps/rpc/file/file"
+	"go-zero/common/middleware"
 	"go-zero/common/result"
 	"go-zero/models"
 
@@ -30,7 +31,7 @@ func NewFileUserPageLogic(ctx context.Context, svcCtx *svc.ServiceContext) *File
 
 func (l *FileUserPageLogic) FileUserPage(req *types.FileUserPageReq) (resp *result.Result, err error) {
 
-	md := metadata.New(map[string]string{"userId": l.ctx.Value("userId").(string)})
+	md := metadata.New(map[string]string{"userId": middleware.GetUserIdFromCtx(l.ctx)})
 	outgoingContext := metadata.NewOutgoingContext(l.ctx, md)
 
 	page, _ := l.svcCtx.FileClient.FileUserPage(outgoingContext, &file.FileUserPageReq{

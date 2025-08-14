@@ -33,12 +33,13 @@ func NewUploadFileLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Upload
 
 // 单请求上传（适合中小文件）
 func (l *UploadFileLogic) UploadFile(in *file.UploadReq) (*file.UploadResponse, error) {
-	MDB := l.svcCtx.MDB
 
 	fileList := strings.Split(in.Filename, ".")
 
+	MDB := l.svcCtx.MDB
+
 	// 存储原文件到minio
-	filename := strconv.FormatInt(time.Now().UnixMilli(), 10) + "_" + in.Filename
+	filename := strconv.FormatInt(time.Now().UnixMilli(), 10) + "_" + fileList[0]
 	response, err := up(l, filename, in.File, in.Size, in.MimeType)
 	if err != nil {
 		return response, err
@@ -65,7 +66,49 @@ func (l *UploadFileLogic) UploadFile(in *file.UploadReq) (*file.UploadResponse, 
 			FileTitle:  fileList[0],
 			FileUrlse:  fileSE.FileUrl,
 			Number:     0,
+			Deleted:    0,
+			FileSize:   in.Size,
 		}
+
+		// 开启gorm事务
+		db := MDB.Begin()
+		defer func() {
+			if r := recover(); r != nil {
+				db.Rollback() // 回滚事务
+			}
+		}()
+
+		err = db.Create(mfile).Error
+		if err != nil {
+			// 失败回滚
+			db.Rollback()
+			return &file.UploadResponse{
+				Success: false,
+				Message: "存储上传信息失败！",
+			}, nil
+		}
+
+		err = db.Create(&models.TagAndFile{
+			Id:     uuid.New().String(),
+			TagId:  in.TagId,
+			FileId: mfile.FileId,
+		}).Error
+		if err != nil {
+			// 失败回滚
+			db.Rollback()
+			return &file.UploadResponse{
+				Success: false,
+				Message: "存储上传信息失败！",
+			}, nil
+		}
+
+		// 更新用户上传数量
+		db.Model(&models.Users{}).Where("user_id = ?", in.UserId).Update("upload_number", gorm.Expr("upload_number + ?", 1))
+
+		// 提交事务
+		db.Commit()
+
+		return response, err
 	}
 
 	mfile = &models.Files{
@@ -79,6 +122,7 @@ func (l *UploadFileLogic) UploadFile(in *file.UploadReq) (*file.UploadResponse, 
 		FileUrlse:  response.FileUrl,
 		Number:     0,
 		Deleted:    0,
+		FileSize:   in.Size,
 	}
 
 	// 开启gorm事务

@@ -50,6 +50,7 @@ func (l *CollectFileLogic) CollectFile(in *file.CollectFileReq) (*file.CollectFi
 		// 当收藏表里面有匹配的记录则删除
 		MDB.Where("user_id = ? and file_id = ?", userId, in.FileId).Delete(&models.Collect{})
 		MDB.Model(&models.Users{}).Where("user_id = ?", userId[0]).Update("collect_number", gorm.Expr("collect_number - 1"))
+
 	}
 
 	return &file.CollectFileResp{

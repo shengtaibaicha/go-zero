@@ -1,4 +1,4 @@
-package loginlogic
+package userlogic
 
 import (
 	"context"
@@ -43,8 +43,8 @@ func (l *UserLoginLogic) UserLogin(in *user.LoginReq) (*user.LoginResp, error) {
 		return nil, errors.New("用户名或密码不正确！")
 	}
 	// 查找到对应的数据，我们生成token返回，并且把token放入redis中
-	token, err := tools.GenerateToken(l.svcCtx.Jwt.SecretKey, users.UserId, users.UserName, "0", l.svcCtx.Jwt.ExpireHours)
-	l.svcCtx.Redis.SetexCtx(context.Background(), users.UserId, token, 60*60*24*7)
+	token, err := tools.GenerateToken(l.svcCtx.Jwt.SecretKey, users.UserId, users.UserName, users.Role, l.svcCtx.Jwt.ExpireHours)
+	l.svcCtx.Redis.SetexCtx(context.Background(), users.UserId, token, 60*60*24*l.svcCtx.Config.JwtExpire)
 	if err != nil {
 		return nil, errors.New("create token failed")
 	}

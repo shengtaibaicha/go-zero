@@ -3,7 +3,7 @@ package public
 import (
 	"context"
 	"encoding/json"
-	"go-zero/apps/rpc/tag/tag"
+	"go-zero/apps/rpc/file/file"
 	"go-zero/common/result"
 	"go-zero/models"
 
@@ -28,7 +28,7 @@ func NewGetTagsLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetTagsLo
 
 func (l *GetTagsLogic) GetTags() (resp *result.Result, err error) {
 
-	tags, _ := l.svcCtx.TagClient.GetTags(l.ctx, &tag.GetTagsReq{})
+	tags, _ := l.svcCtx.FileClient.GetTags(l.ctx, &file.GetTagsReq{})
 	var data []models.Tags
 	json.Unmarshal([]byte(tags.Tags), &data)
 

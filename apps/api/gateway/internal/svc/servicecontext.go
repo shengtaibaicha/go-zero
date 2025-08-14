@@ -3,10 +3,8 @@ package svc
 import (
 	"go-zero/apps/api/gateway/internal/config"
 	"go-zero/apps/rpc/file/client/file"
-	"go-zero/apps/rpc/tag/client/tag"
-	"go-zero/apps/rpc/user/client/login"
-	"go-zero/apps/rpc/user/client/other"
-	"go-zero/apps/rpc/user/client/register"
+	"go-zero/apps/rpc/user/client/admin"
+	"go-zero/apps/rpc/user/client/user"
 	middleware2 "go-zero/common/middleware"
 
 	"github.com/zeromicro/go-zero/core/stores/redis"
@@ -16,14 +14,13 @@ import (
 )
 
 type ServiceContext struct {
-	Config            config.Config
-	JwtAuthMiddleware rest.Middleware
-	FileClient        file.File
-	LoginClient       login.Login
-	RegisterClient    register.Register
-	RedisClient       *redis.Redis
-	TagClient         tag.Tag
-	OtherClient       other.Other
+	Config              config.Config
+	JwtAuthMiddleware   rest.Middleware
+	FileClient          file.File
+	UserClient          user.User
+	RedisClient         *redis.Redis
+	AdminClient         admin.Admin
+	AdminAuthMiddleware rest.Middleware
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -35,11 +32,10 @@ func NewServiceContext(c config.Config) *ServiceContext {
 				grpc.MaxCallSendMsgSize(30*1024*1024), // 客户端发送最大消息大小
 			)),
 		)),
-		LoginClient:       login.NewLogin(zrpc.MustNewClient(c.UserRpc)),
-		TagClient:         tag.NewTag(zrpc.MustNewClient(c.TagRpc)),
-		RegisterClient:    register.NewRegister(zrpc.MustNewClient(c.UserRpc)),
-		OtherClient:       other.NewOther(zrpc.MustNewClient(c.UserRpc)),
-		RedisClient:       redis.MustNewRedis(c.Redis),
-		JwtAuthMiddleware: middleware2.JwtAuthMiddleware(middleware2.JwtAuthConfig{SecretKey: c.Jwt.SecretKey, RedisClient: redis.MustNewRedis(c.Redis)}),
+		UserClient:          user.NewUser(zrpc.MustNewClient(c.UserRpc)),
+		AdminClient:         admin.NewAdmin(zrpc.MustNewClient(c.UserRpc)),
+		RedisClient:         redis.MustNewRedis(c.Redis),
+		JwtAuthMiddleware:   middleware2.JwtAuthMiddleware(middleware2.JwtAuthConfig{SecretKey: c.Jwt.SecretKey, RedisClient: redis.MustNewRedis(c.Redis)}),
+		AdminAuthMiddleware: middleware2.AdminAuthMiddleware,
 	}
 }

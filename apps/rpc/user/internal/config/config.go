@@ -10,6 +10,7 @@ type Config struct {
 	RedisConf redis.RedisConf
 	Mysql     Mysql
 	Jwt       Jwt
+	JwtExpire int
 }
 
 type Jwt struct {

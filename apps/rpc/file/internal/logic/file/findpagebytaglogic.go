@@ -71,7 +71,7 @@ func (l *FindPageByTagLogic) FindPageByTag(in *file.FindPageByTagReq) (*file.Fin
 		}
 
 		redisData, _ := json.Marshal(result)
-		l.svcCtx.RedisClient.SetexCtx(context.Background(), key, string(redisData), l.svcCtx.Config.RedisExpires*60)
+		l.svcCtx.RedisClient.SetexCtx(context.Background(), key, string(redisData), l.svcCtx.Config.RedisExpires)
 
 		return result, nil
 	}

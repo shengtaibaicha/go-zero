@@ -34,7 +34,7 @@ func (l *UserRegisterLogic) UserRegister(req *types.UserRegisterReq, redisKey st
 	// 验证成功后删除redis中的验证码
 	l.svcCtx.RedisClient.DelCtx(l.ctx, redisKey)
 	// 调用rpc层进行验证和数据库操作
-	register, err := l.svcCtx.RegisterClient.UserRegister(l.ctx, &user.RegisterReq{
+	register, err := l.svcCtx.UserClient.UserRegister(l.ctx, &user.RegisterReq{
 		UserName:     req.UserName,
 		UserPassword: req.Password,
 		UserEmail:    req.UserEmail,

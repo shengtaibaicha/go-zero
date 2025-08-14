@@ -14,6 +14,7 @@ type Files struct {
 	Number     int64  `gorm:"column:number" json:"number"`
 	FileTitle  string `gorm:"column:file_title" json:"fileTitle"`
 	FileUrlse  string `gorm:"column:file_urlse" json:"fileUrlse"`
+	FileSize   int64  `gorm:"column:file_size" json:"fileSize"`
 
 	// 这个gorm插件不加softDelete:flag时使用unix时间戳作为删除标志，加上则以0,1作为删除标志
 	// gorm.DeletedAt 这个类型使用*time.Time作为删除标志，其他类型需要使用插件实现

@@ -6,6 +6,7 @@ package handler
 import (
 	"net/http"
 
+	admin "go-zero/apps/api/gateway/internal/handler/admin"
 	file "go-zero/apps/api/gateway/internal/handler/file"
 	public "go-zero/apps/api/gateway/internal/handler/public"
 	user "go-zero/apps/api/gateway/internal/handler/user"
@@ -15,6 +16,20 @@ import (
 )
 
 func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.JwtAuthMiddleware, serverCtx.AdminAuthMiddleware},
+			[]rest.Route{
+				{
+					Method:  http.MethodGet,
+					Path:    "/file",
+					Handler: admin.AdminFindPageHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithPrefix("/wallpaper/admin"),
+	)
+
 	server.AddRoutes(
 		rest.WithMiddlewares(
 			[]rest.Middleware{serverCtx.JwtAuthMiddleware},

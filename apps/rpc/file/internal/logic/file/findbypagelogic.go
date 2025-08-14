@@ -73,7 +73,7 @@ func (l *FindByPageLogic) FindByPage(in *file.FindByPageReq) (*file.FindByPageRe
 
 		// 将数据序列化后存入redis
 		redisData, _ := json.Marshal(result)
-		l.svcCtx.RedisClient.SetexCtx(context.Background(), key, string(redisData), l.svcCtx.Config.RedisExpires*60)
+		l.svcCtx.RedisClient.SetexCtx(context.Background(), key, string(redisData), l.svcCtx.Config.RedisExpires)
 
 		return result, nil
 	}

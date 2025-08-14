@@ -1,4 +1,4 @@
-package registerlogic
+package userlogic
 
 import (
 	"context"
@@ -50,6 +50,8 @@ func (l *UserRegisterLogic) UserRegister(in *user.RegisterReq) (*user.RegisterRe
 		DownloadNumber: 0,
 		UploadNumber:   0,
 		CollectNumber:  0,
+		Role:           "user",
+		Enable:         1,
 	})
 	if create.Error != nil {
 		return nil, errors.New("用户注册失败！")

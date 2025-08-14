@@ -1,4 +1,4 @@
-package otherlogic
+package userlogic
 
 import (
 	"context"
@@ -40,5 +40,7 @@ func (l *UserInfoLogic) UserInfo(in *user.InfoReq) (*user.InfoResp, error) {
 		UploadNumber:   userInfo.UploadNumber,
 		DownloadNumber: userInfo.DownloadNumber,
 		CollectNumber:  userInfo.CollectNumber,
+		Role:           userInfo.Role,
+		Enable:         int32(userInfo.Enable),
 	}, nil
 }

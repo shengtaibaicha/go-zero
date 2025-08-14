@@ -32,7 +32,7 @@ func (l *UserLoginLogic) UserLogin(req *types.UserLoginReq, redisKey string) (re
 	}
 	// 验证成功后删除redis中的验证码
 	l.svcCtx.RedisClient.DelCtx(l.ctx, redisKey)
-	token, err := l.svcCtx.LoginClient.UserLogin(l.ctx, &user.LoginReq{
+	token, err := l.svcCtx.UserClient.UserLogin(l.ctx, &user.LoginReq{
 		UserName:     req.UserName,
 		UserPassword: req.UserPassword,
 	})

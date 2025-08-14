@@ -11,7 +11,6 @@ type Config struct {
 	Redis   redis.RedisConf
 	FileRpc zrpc.RpcClientConf
 	UserRpc zrpc.RpcClientConf
-	TagRpc  zrpc.RpcClientConf
 	Jwt     Jwt
 }
 

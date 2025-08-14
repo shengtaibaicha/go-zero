@@ -28,11 +28,12 @@ type (
 	FindPageByNameResp = file.FindPageByNameResp
 	FindPageByTagReq   = file.FindPageByTagReq
 	FindPageByTagResp  = file.FindPageByTagResp
+	GetTagsReq         = file.GetTagsReq
+	GetTagsResp        = file.GetTagsResp
 	UploadReq          = file.UploadReq
 	UploadResponse     = file.UploadResponse
 
 	File interface {
-		// 单请求上传（适合中小文件）
 		UploadFile(ctx context.Context, in *UploadReq, opts ...grpc.CallOption) (*UploadResponse, error)
 		FindByPage(ctx context.Context, in *FindByPageReq, opts ...grpc.CallOption) (*FindByPageResp, error)
 		DownloadFile(ctx context.Context, in *DownloadFileReq, opts ...grpc.CallOption) (*DownloadFileResp, error)
@@ -41,6 +42,7 @@ type (
 		DeleteFile(ctx context.Context, in *DeleteFileReq, opts ...grpc.CallOption) (*DeleteFileResp, error)
 		CollectFile(ctx context.Context, in *CollectFileReq, opts ...grpc.CallOption) (*CollectFileResp, error)
 		FileUserPage(ctx context.Context, in *FileUserPageReq, opts ...grpc.CallOption) (*FileUserPageResp, error)
+		GetTags(ctx context.Context, in *GetTagsReq, opts ...grpc.CallOption) (*GetTagsResp, error)
 	}
 
 	defaultFile struct {
@@ -54,7 +56,6 @@ func NewFile(cli zrpc.Client) File {
 	}
 }
 
-// 单请求上传（适合中小文件）
 func (m *defaultFile) UploadFile(ctx context.Context, in *UploadReq, opts ...grpc.CallOption) (*UploadResponse, error) {
 	client := file.NewFileClient(m.cli.Conn())
 	return client.UploadFile(ctx, in, opts...)
@@ -93,4 +94,9 @@ func (m *defaultFile) CollectFile(ctx context.Context, in *CollectFileReq, opts 
 func (m *defaultFile) FileUserPage(ctx context.Context, in *FileUserPageReq, opts ...grpc.CallOption) (*FileUserPageResp, error) {
 	client := file.NewFileClient(m.cli.Conn())
 	return client.FileUserPage(ctx, in, opts...)
+}
+
+func (m *defaultFile) GetTags(ctx context.Context, in *GetTagsReq, opts ...grpc.CallOption) (*GetTagsResp, error) {
+	client := file.NewFileClient(m.cli.Conn())
+	return client.GetTags(ctx, in, opts...)
 }

@@ -110,9 +110,16 @@ message FileUserPageResp {
   int32 pages = 5;
 }
 
-// 文件上传服务
+message GetTagsReq {
+
+}
+
+message GetTagsResp {
+  string tags = 1;
+}
+
+// 文件服务
 service File {
-  // 单请求上传（适合中小文件）
   rpc UploadFile(UploadReq) returns (UploadResponse);
 
   rpc FindByPage(FindByPageReq) returns (FindByPageResp);
@@ -128,4 +135,6 @@ service File {
   rpc CollectFile(CollectFileReq) returns (CollectFileResp);
 
   rpc FileUserPage(FileUserPageReq) returns (FileUserPageResp);
+
+  rpc GetTags(GetTagsReq) returns (GetTagsResp);
 }

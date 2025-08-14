@@ -67,9 +67,6 @@ type (
 		page int32 `form:"page"`
 		size int32 `form:"size"`
 	}
-)
-
-type (
 	FindPageByTagReq {
 		page  int32 `json:"page"`
 		size  int32 `json:"size"`
@@ -119,5 +116,15 @@ service gateway {
 
 	@handler FindPageByName
 	get /file/find/name (FindPageByNameReq) returns (Result)
+}
+
+@server (
+	group:      admin
+	prefix:     /wallpaper/admin
+	middleware: JwtAuthMiddleware,AdminAuthMiddleware
+)
+service gateway {
+	@handler AdminFindPage
+	get /file (FindByPageReq) returns (Result)
 }
 

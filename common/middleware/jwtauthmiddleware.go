@@ -18,7 +18,7 @@ import (
 // 这些键与JWT中解析出的用户信息字段对应
 const (
 	JwtUserIdKey   = "userId"   // 用户ID在上下文中的存储键
-	JwtUsernameKey = "username" // 用户名在上下文中的存储键
+	JwtUsernameKey = "userName" // 用户名在上下文中的存储键
 	JwtRoleKey     = "role"     // 用户角色在上下文中的存储键
 )
 
@@ -44,23 +44,18 @@ type JwtCustomClaims struct {
 // 参数：cfg - JWT中间件的配置
 // 返回：一个符合GoZero规范的HTTP中间件函数
 func JwtAuthMiddleware(cfg JwtAuthConfig) func(http.HandlerFunc) http.HandlerFunc {
-	// 如果未指定令牌前缀，默认使用"Bearer"（这是OAuth2.0的标准前缀）
-	//if cfg.TokenPrefix == "" {
-	//	cfg.TokenPrefix = "Bearer"
-	//}
-
 	// 返回中间件函数，遵循GoZero的中间件签名：func(http.HandlerFunc) http.HandlerFunc
 	return func(next http.HandlerFunc) http.HandlerFunc {
 		// 中间件的核心逻辑，接收http.ResponseWriter和*http.Request
 		return func(w http.ResponseWriter, r *http.Request) {
-			// 1. 检查当前请求路径是否在排除列表中
+			// 检查当前请求路径是否在排除列表中
 			// 如果是排除路径，直接跳过验证，执行下一个处理器
 			if isExcluded(r.URL.Path, cfg.ExcludePaths) {
 				next(w, r)
 				return
 			}
 
-			// 2. 从请求头中获取Authorization字段
+			// 从请求头中获取Authorization字段
 			authHeader := r.Header.Get("Authorization")
 			if authHeader == "" {
 				// 日志记录：Authorization头为空的错误
@@ -73,19 +68,7 @@ func JwtAuthMiddleware(cfg JwtAuthConfig) func(http.HandlerFunc) http.HandlerFun
 				return // 终止请求处理
 			}
 
-			// 3. 验证Authorization头的格式是否正确
-			// 标准格式为："Bearer <token>"，使用空格分割为两部分
-			//parts := strings.SplitN(authHeader, " ", 2)
-			//if len(parts) != 2 || parts[0] != cfg.TokenPrefix {
-			//	logx.Errorf("Invalid authorization format, path: %s", r.URL.Path)
-			//	httpx.WriteJson(w, http.StatusUnauthorized, map[string]string{
-			//		"code":    "401",
-			//		"message": fmt.Sprintf("Authorization format must be '%s <token>'", cfg.TokenPrefix),
-			//	})
-			//	return
-			//}
-
-			// 4. 验证JWT令牌的有效性
+			// 验证JWT令牌的有效性
 			// parts[1]是提取出的纯令牌字符串
 			claims, err := verifyJwtToken(authHeader, cfg.SecretKey)
 			if err != nil {
@@ -116,7 +99,7 @@ func JwtAuthMiddleware(cfg JwtAuthConfig) func(http.HandlerFunc) http.HandlerFun
 				})
 				return
 			}
-			// 5. 将解析后的用户信息存入GoZero上下文
+			// 将解析后的用户信息存入GoZero上下文
 			// 获取原始请求上下文
 			ctx := r.Context()
 			// 使用GoZero的contextx.WithValue存储键值对（线程安全）
@@ -127,8 +110,8 @@ func JwtAuthMiddleware(cfg JwtAuthConfig) func(http.HandlerFunc) http.HandlerFun
 			// 更新请求的上下文为新的上下文
 			r = r.WithContext(ctx)
 
-			// 6. 执行下一个处理器（业务逻辑）
-			next(w, r)
+			// 执行下一个处理器（业务逻辑）
+			next.ServeHTTP(w, r)
 		}
 	}
 }

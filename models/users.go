@@ -13,6 +13,8 @@ type Users struct {
 	DownloadNumber int64     `gorm:"column:download_number"`
 	UploadNumber   int64     `gorm:"column:upload_number"`
 	CollectNumber  int64     `gorm:"column:collect_number"`
+	Role           string    `gorm:"column:role"`
+	Enable         int       `gorm:"column:enable"`
 }
 
 // TableName 指定表名
