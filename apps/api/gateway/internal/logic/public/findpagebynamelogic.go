@@ -47,7 +47,11 @@ func (l *FindPageByNameLogic) FindPageByName(req *types.FindPageByNameReq, auth 
 
 	var data []res
 
-	json.Unmarshal([]byte(nameData.Records), &data)
+	jsonErr := json.Unmarshal([]byte(nameData.GetRecords()), &data)
+	if jsonErr != nil {
+		l.Logger.Error("json序列化失败", jsonErr.Error())
+		return result.Err().SetMsg("json序列化失败！"), err
+	}
 
 	if auth != "" {
 		// 使用索引遍历，直接访问原切片中的元素
@@ -63,10 +67,10 @@ func (l *FindPageByNameLogic) FindPageByName(req *types.FindPageByNameReq, auth 
 
 	r := map[string]any{}
 	r["records"] = data
-	r["total"] = nameData.Total
-	r["current"] = nameData.Current
-	r["pages"] = nameData.Pages
-	r["size"] = nameData.Size
+	r["total"] = nameData.GetTotal()
+	r["current"] = nameData.GetCurrent()
+	r["pages"] = nameData.GetPages()
+	r["size"] = nameData.GetSize()
 
 	return result.Ok().SetData(r), nil
 }

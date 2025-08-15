@@ -39,9 +39,18 @@ message InfoResp {
   int32 enable = 9;
 }
 
+service user {
+  rpc UserLogin(LoginReq) returns (LoginResp);
+
+  rpc UserRegister(RegisterReq) returns (RegisterResp);
+
+  rpc UserInfo(InfoReq) returns (InfoResp);
+}
+
 message AdminFindPageReq {
   int32 page = 1;
   int32 size = 2;
+  string filter = 3;
 }
 
 message AdminFindPageResp {
@@ -52,17 +61,25 @@ message AdminFindPageResp {
   int32 pages = 5;
 }
 
-service user {
-  rpc UserLogin(LoginReq) returns (LoginResp);
+message AdminFindUserPageReq {
+  int32 page = 1;
+  int32 size = 2;
+  string role = 3;
+}
 
-  rpc UserRegister(RegisterReq) returns (RegisterResp);
-
-  rpc UserInfo(InfoReq) returns (InfoResp);
+message AdminFindUserPageResp {
+  string records = 1;
+  int32 total = 2;
+  int32 size = 3;
+  int32 current = 4;
+  int32 pages = 5;
 }
 
 service admin {
   rpc FindPage(AdminFindPageReq) returns (AdminFindPageResp);
+
+  rpc FindUserPage(AdminFindUserPageReq) returns (AdminFindUserPageResp);
 }
 /*
-  goctl rpc protoc user-rpc.proto --go_out=C:\Users\12793\Desktop\golang\go-zero\apps\rpc\user --go-grpc_out=C:\Users\12793\Desktop\golang\go-zero\apps\rpc\user --zrpc_out=C:\Users\12793\Desktop\golang\go-zero\apps\rpc\user -m
+  goctl rpc protoc user-rpc.proto --go_out=C:\Users\12793\Desktop\MyWallpaper\MyWallpaper-Golang\apps\rpc\user --go-grpc_out=C:\Users\12793\Desktop\MyWallpaper\MyWallpaper-Golang\apps\rpc\user --zrpc_out=C:\Users\12793\Desktop\MyWallpaper\MyWallpaper-Golang\apps\rpc\user -m
  */

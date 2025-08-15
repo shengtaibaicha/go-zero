@@ -14,14 +14,16 @@ import (
 )
 
 type (
-	AdminFindPageReq  = user.AdminFindPageReq
-	AdminFindPageResp = user.AdminFindPageResp
-	InfoReq           = user.InfoReq
-	InfoResp          = user.InfoResp
-	LoginReq          = user.LoginReq
-	LoginResp         = user.LoginResp
-	RegisterReq       = user.RegisterReq
-	RegisterResp      = user.RegisterResp
+	AdminFindPageReq      = user.AdminFindPageReq
+	AdminFindPageResp     = user.AdminFindPageResp
+	AdminFindUserPageReq  = user.AdminFindUserPageReq
+	AdminFindUserPageResp = user.AdminFindUserPageResp
+	InfoReq               = user.InfoReq
+	InfoResp              = user.InfoResp
+	LoginReq              = user.LoginReq
+	LoginResp             = user.LoginResp
+	RegisterReq           = user.RegisterReq
+	RegisterResp          = user.RegisterResp
 
 	User interface {
 		UserLogin(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)

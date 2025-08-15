@@ -1,4 +1,4 @@
-// goctl api go -api C:\Users\12793\Desktop\golang\go-zero\cmd\api\gateway.api -dir .
+// goctl api go -api C:\Users\12793\Desktop\MyWallpaper\MyWallpaper-Golang\cmd\api\gateway.api -dir .
 syntax = "v1"
 
 // user
@@ -34,8 +34,8 @@ type (
 		FileId string `json:"fileId"`
 	}
 	FileUserPageReq {
-		page int32 `form:"page"`
-		size int32 `form:"size"`
+		Page int32 `form:"page"`
+		Size int32 `form:"size"`
 	}
 )
 
@@ -64,30 +64,30 @@ service gateway {
 
 type (
 	FindByPageReq {
-		page int32 `form:"page"`
-		size int32 `form:"size"`
+		Page int32 `form:"page"`
+		Size int32 `form:"size"`
 	}
 	FindPageByTagReq {
-		page  int32 `json:"page"`
-		size  int32 `json:"size"`
-		tagId int32 `json:"tagId"`
+		Page  int32 `json:"page"`
+		Size  int32 `json:"size"`
+		TagId int32 `json:"tagId"`
 	}
 	FindPageByNameReq {
-		page int32  `form:"page"`
-		size int32  `form:"size"`
-		name string `form:"name"`
+		Page int32  `form:"page"`
+		Size int32  `form:"size"`
+		Name string `form:"name"`
 	}
 	GetCaptchaReq  {}
 	UserLoginReq {
-		userName     string `json:"userName"`
-		userPassword string `json:"userPassword"`
-		captchaCode  string `json:"captchaCode"`
+		UserName     string `json:"userName"`
+		UserPassword string `json:"userPassword"`
+		CaptchaCode  string `json:"captchaCode"`
 	}
 	UserRegisterReq {
-		userName    string `json:"userName"`
-		password    string `json:"userPassword"`
-		userEmail   string `json:"userEmail"`
-		captchaCode string `json:"captchaCode"`
+		UserName    string `json:"userName"`
+		Password    string `json:"userPassword"`
+		UserEmail   string `json:"userEmail"`
+		CaptchaCode string `json:"captchaCode"`
 	}
 )
 
@@ -118,6 +118,23 @@ service gateway {
 	get /file/find/name (FindPageByNameReq) returns (Result)
 }
 
+type (
+	AuditReq {
+		FileId  string `json:"fileId"`
+		Audited string `json:"audited"`
+	}
+	AdminFindPageReq {
+		Page   int32  `form:"page"`
+		Size   int32  `form:"size"`
+		Filter string `form:"filter"`
+	}
+	AdminUserPageReq {
+		Page int32  `form:"page"`
+		Size int32  `form:"size"`
+		Role string `form:"role"`
+	}
+)
+
 @server (
 	group:      admin
 	prefix:     /wallpaper/admin
@@ -125,6 +142,12 @@ service gateway {
 )
 service gateway {
 	@handler AdminFindPage
-	get /file (FindByPageReq) returns (Result)
+	get /file (AdminFindPageReq) returns (Result)
+
+	@handler AdminAuditFile
+	put /audit (AuditReq) returns (Result)
+
+	@handler AdminUserPage
+	get /user (AdminUserPageReq) returns (Result)
 }
 

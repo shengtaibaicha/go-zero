@@ -10,16 +10,16 @@ import (
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func AdminFindPageHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func AdminAuditFileHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.AdminFindPageReq
+		var req types.AuditReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := admin.NewAdminFindPageLogic(r.Context(), svcCtx)
-		resp, err := l.AdminFindPage(&req)
+		l := admin.NewAdminAuditFileLogic(r.Context(), svcCtx)
+		resp, err := l.AdminAuditFile(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {

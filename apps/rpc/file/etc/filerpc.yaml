@@ -18,6 +18,14 @@ Minio:
   UseSSL: false             # 是否使用SSL连接（生产环境建议开启）
   Expires: 60               # 预签名URL的有效期（分钟）
 
+#Minio:
+#  Endpoint: 42.194.187.100:9000  # MinIO服务地址和端口
+#  AccessKey: f2diBCCGNWb6H3xuei6s     # 访问密钥（用户名）
+#  SecretKey: sKIRdIG8z2mnGpF1I8FVs7OZ1eHMA6PAziH705tk     # 密钥（密码）
+#  Bucket: MyWallpaper         # 存储桶名称，需要提前创建或让程序自动创建
+#  UseSSL: false             # 是否使用SSL连接（生产环境建议开启）
+#  Expires: 60               # 预签名URL的有效期（分钟）
+
 Redis:
   Host: 127.0.0.1:6379
   Type: node

@@ -3,6 +3,7 @@ package filelogic
 import (
 	"bytes"
 	"context"
+	"errors"
 	"go-zero/apps/rpc/file/file"
 	"go-zero/apps/rpc/file/internal/svc"
 	"go-zero/apps/rpc/file/tools/image"
@@ -38,6 +39,16 @@ func (l *UploadFileLogic) UploadFile(in *file.UploadReq) (*file.UploadResponse, 
 
 	MDB := l.svcCtx.MDB
 
+	// 判断图片是否已经被当前用户上传过
+	var f models.Files
+	tx := MDB.Model(&models.Files{}).Where("user_id = ? and file_title = ?", in.UserId, fileList[0]).First(&f)
+	if tx.RowsAffected != 0 || !errors.Is(tx.Error, gorm.ErrRecordNotFound) {
+		return &file.UploadResponse{
+			Success: false,
+			Msg:     "您已经上传过该图片了！",
+		}, nil
+	}
+
 	// 存储原文件到minio
 	filename := strconv.FormatInt(time.Now().UnixMilli(), 10) + "_" + fileList[0]
 	response, err := up(l, filename, in.File, in.Size, in.MimeType)
@@ -59,7 +70,7 @@ func (l *UploadFileLogic) UploadFile(in *file.UploadReq) (*file.UploadResponse, 
 		mfile = &models.Files{
 			FileId:     uuid.New().String(),
 			FileUrl:    response.FileUrl,
-			UploadTime: time.Now().Format("2006-01-02 15:04:05.000"),
+			UploadTime: time.Now(),
 			Status:     "未审核",
 			UserId:     in.UserId,
 			FileName:   filename,
@@ -70,43 +81,71 @@ func (l *UploadFileLogic) UploadFile(in *file.UploadReq) (*file.UploadResponse, 
 			FileSize:   in.Size,
 		}
 
-		// 开启gorm事务
+		// 开启gorm事务（修复：检查事务初始化错误）
 		db := MDB.Begin()
+		if db.Error != nil {
+			return &file.UploadResponse{
+				Success: false,
+				Msg:     "事务启动失败: " + db.Error.Error(),
+			}, nil
+		}
 		defer func() {
 			if r := recover(); r != nil {
-				db.Rollback() // 回滚事务
+				// 恐慌时回滚，并记录日志
+				if err := db.Rollback().Error; err != nil {
+					l.Logger.Error("恐慌时回滚失败: ", err)
+				}
 			}
 		}()
 
+		// 创建Files记录
 		err = db.Create(mfile).Error
 		if err != nil {
-			// 失败回滚
-			db.Rollback()
+			if rollbackErr := db.Rollback().Error; rollbackErr != nil {
+				l.Logger.Error("创建Files回滚失败: ", rollbackErr)
+			}
 			return &file.UploadResponse{
 				Success: false,
-				Message: "存储上传信息失败！",
+				Msg:     "存储上传信息失败（Files）: " + err.Error(),
 			}, nil
 		}
 
+		// 创建TagAndFile记录
 		err = db.Create(&models.TagAndFile{
 			Id:     uuid.New().String(),
 			TagId:  in.TagId,
 			FileId: mfile.FileId,
 		}).Error
 		if err != nil {
-			// 失败回滚
-			db.Rollback()
+			if rollbackErr := db.Rollback().Error; rollbackErr != nil {
+				l.Logger.Error("创建TagAndFile回滚失败: ", rollbackErr)
+			}
+
 			return &file.UploadResponse{
 				Success: false,
-				Message: "存储上传信息失败！",
+				Msg:     "存储上传信息失败（TagAndFile）: " + err.Error(),
 			}, nil
 		}
 
-		// 更新用户上传数量
-		db.Model(&models.Users{}).Where("user_id = ?", in.UserId).Update("upload_number", gorm.Expr("upload_number + ?", 1))
+		// 更新用户上传数量（修复：检查更新错误）
+		result := db.Model(&models.Users{}).Where("user_id = ?", in.UserId).Update("upload_number", gorm.Expr("upload_number + ?", 1))
+		if result.Error != nil {
+			if rollbackErr := db.Rollback().Error; rollbackErr != nil {
+				l.Logger.Error("更新用户数量回滚失败: ", rollbackErr)
+			}
+			return &file.UploadResponse{
+				Success: false,
+				Msg:     "更新用户上传数量失败: " + result.Error.Error(),
+			}, nil
+		}
 
-		// 提交事务
-		db.Commit()
+		// 提交事务（检查提交是否成功）
+		if err := db.Commit().Error; err != nil {
+			return &file.UploadResponse{
+				Success: false,
+				Msg:     "事务提交失败: " + err.Error(),
+			}, nil
+		}
 
 		return response, err
 	}
@@ -114,7 +153,7 @@ func (l *UploadFileLogic) UploadFile(in *file.UploadReq) (*file.UploadResponse, 
 	mfile = &models.Files{
 		FileId:     uuid.New().String(),
 		FileUrl:    response.FileUrl,
-		UploadTime: time.Now().Format("2006-01-02 15:04:05.000"),
+		UploadTime: time.Now(),
 		Status:     "未审核",
 		UserId:     in.UserId,
 		FileName:   filename,
@@ -125,43 +164,69 @@ func (l *UploadFileLogic) UploadFile(in *file.UploadReq) (*file.UploadResponse, 
 		FileSize:   in.Size,
 	}
 
-	// 开启gorm事务
+	// 开启gorm事务（修复：检查事务初始化错误）
 	db := MDB.Begin()
+	if db.Error != nil {
+		return &file.UploadResponse{
+			Success: false,
+			Msg:     "事务启动失败: " + db.Error.Error(),
+		}, nil
+	}
 	defer func() {
 		if r := recover(); r != nil {
-			db.Rollback() // 回滚事务
+			if err := db.Rollback().Error; err != nil {
+				l.Logger.Error("恐慌时回滚失败: ", err)
+			}
 		}
 	}()
 
+	// 创建Files记录
 	err = db.Create(mfile).Error
 	if err != nil {
-		// 失败回滚
-		db.Rollback()
+		if rollbackErr := db.Rollback().Error; rollbackErr != nil {
+			l.Logger.Error("创建Files回滚失败: ", rollbackErr)
+		}
 		return &file.UploadResponse{
 			Success: false,
-			Message: "存储上传信息失败！",
+			Msg:     "存储上传信息失败（Files）: " + err.Error(),
 		}, nil
 	}
 
+	// 创建TagAndFile记录
 	err = db.Create(&models.TagAndFile{
 		Id:     uuid.New().String(),
 		TagId:  in.TagId,
 		FileId: mfile.FileId,
 	}).Error
 	if err != nil {
-		// 失败回滚
-		db.Rollback()
+		if rollbackErr := db.Rollback().Error; rollbackErr != nil {
+			l.Logger.Error("创建TagAndFile回滚失败: ", rollbackErr)
+		}
 		return &file.UploadResponse{
 			Success: false,
-			Message: "存储上传信息失败！",
+			Msg:     "存储上传信息失败（TagAndFile）: " + err.Error(),
 		}, nil
 	}
 
-	// 更新用户上传数量
-	db.Model(&models.Users{}).Where("user_id = ?", in.UserId).Update("upload_number", gorm.Expr("upload_number + ?", 1))
+	// 更新用户上传数量（修复：检查更新错误）
+	result := db.Model(&models.Users{}).Where("user_id = ?", in.UserId).Update("upload_number", gorm.Expr("upload_number + ?", 1))
+	if result.Error != nil {
+		if rollbackErr := db.Rollback().Error; rollbackErr != nil {
+			l.Logger.Error("更新用户数量回滚失败: ", rollbackErr)
+		}
+		return &file.UploadResponse{
+			Success: false,
+			Msg:     "更新用户上传数量失败: " + result.Error.Error(),
+		}, nil
+	}
 
-	// 提交事务
-	db.Commit()
+	// 提交事务（检查提交是否成功）
+	if err := db.Commit().Error; err != nil {
+		return &file.UploadResponse{
+			Success: false,
+			Msg:     "事务提交失败: " + err.Error(),
+		}, nil
+	}
 
 	return response, err
 }
@@ -186,7 +251,7 @@ func up(l *UploadFileLogic, Filename string, File []byte, Size int64, MimeType s
 	if err != nil {
 		return &file.UploadResponse{
 			Success: false,
-			Message: "上传图片失败！",
+			Msg:     "上传图片失败！",
 		}, nil
 	}
 
@@ -196,6 +261,6 @@ func up(l *UploadFileLogic, Filename string, File []byte, Size int64, MimeType s
 		Success: true,
 		FileUrl: url,
 		FileId:  "0",
-		Message: "文件上传成功！",
+		Msg:     "文件上传成功！",
 	}, nil
 }

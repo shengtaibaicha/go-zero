@@ -29,11 +29,11 @@ func NewUploadLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UploadLogi
 
 func (l *UploadLogic) Upload(r *http.Request) (resp *result.Result, err error) {
 	// 限制文件大小
-	err = r.ParseMultipartForm(30 << 20) // 10*1024*1024
+	err = r.ParseMultipartForm(30 << 20) // 30*1024*1024
 	if err != nil {
 		return result.Err().SetMsg("文件大小超过限制!"), nil
 	}
-	// 1. 解析前端上传的文件（表单字段名为"file"）
+	// 解析前端上传的文件（表单字段名为"file"）
 	fileData, header, err := r.FormFile("file")
 
 	//判断文件格式
@@ -49,7 +49,7 @@ func (l *UploadLogic) Upload(r *http.Request) (resp *result.Result, err error) {
 	}
 	defer fileData.Close() // 确保文件流关闭
 
-	// 2. 读取文件内容为字节数组（适合中小文件）
+	// 读取文件内容为字节数组（适合中小文件）
 	fileContent, err := io.ReadAll(fileData)
 	if err != nil {
 		return result.Err().SetMsg("转换文件格式失败！"), err
@@ -69,7 +69,7 @@ func (l *UploadLogic) Upload(r *http.Request) (resp *result.Result, err error) {
 
 	if uploadFile.Success != true {
 		if uploadFile != nil {
-			return result.Err().SetMsg(uploadFile.Message), err
+			return result.Err().SetMsg(uploadFile.GetMsg()), err
 		}
 	}
 

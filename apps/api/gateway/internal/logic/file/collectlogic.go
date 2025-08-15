@@ -34,8 +34,8 @@ func (l *CollectLogic) Collect(req *types.CollectReq) (resp *result.Result, err 
 
 	collectFile, _ := l.svcCtx.FileClient.CollectFile(outgoingContext, &file.CollectFileReq{FileId: req.FileId})
 	if collectFile.Success != true {
-		return result.Err().SetMsg(collectFile.Msg), nil
+		return result.Err().SetMsg(collectFile.GetMsg()), nil
 	}
 
-	return result.Ok().SetMsg(collectFile.Msg), nil
+	return result.Ok().SetMsg(collectFile.GetMsg()), nil
 }

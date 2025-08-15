@@ -31,8 +31,17 @@ func (l *FindPageLogic) FindPage(in *user.AdminFindPageReq) (*user.AdminFindPage
 
 	var datas []models.Files
 	var total int64
-	MDB.Model(&models.Files{}).Find(&datas)
-	MDB.Model(&models.Files{}).Count(&total)
+	offset := (in.Page - 1) * in.Size
+	if in.Filter == "all" {
+		MDB.Model(&models.Files{}).Offset(int(offset)).Limit(int(in.Size)).Find(&datas)
+		MDB.Model(&models.Files{}).Count(&total)
+	} else if in.Filter == "audited" {
+		MDB.Model(&models.Files{}).Where("status = ?", "已审核").Offset(int(offset)).Limit(int(in.Size)).Find(&datas)
+		MDB.Model(&models.Files{}).Where("status = ?", "已审核").Count(&total)
+	} else {
+		MDB.Model(&models.Files{}).Where("status = ?", "未审核").Offset(int(offset)).Limit(int(in.Size)).Find(&datas)
+		MDB.Model(&models.Files{}).Where("status = ?", "未审核").Count(&total)
+	}
 
 	marshal, _ := json.Marshal(datas)
 

@@ -1,5 +1,5 @@
 /*
-  goctl rpc protoc file-rpc.proto --go_out=C:\Users\12793\Desktop\golang\go-zero\apps\rpc\file --go-grpc_out=C:\Users\12793\Desktop\golang\go-zero\apps\rpc\file --zrpc_out=C:\Users\12793\Desktop\golang\go-zero\apps\rpc\file -m
+  goctl rpc protoc file-rpc.proto --go_out=C:\Users\12793\Desktop\MyWallpaper\MyWallpaper-Golang\apps\rpc\file --go-grpc_out=C:\Users\12793\Desktop\MyWallpaper\MyWallpaper-Golang\apps\rpc\file --zrpc_out=C:\Users\12793\Desktop\MyWallpaper\MyWallpaper-Golang\apps\rpc\file -m
 */
 
 syntax = "proto3";
@@ -22,7 +22,7 @@ message UploadResponse {
   bool success = 1;
   string file_id = 2;     // 文件唯一标识
   string file_url = 3;    // 文件访问URL
-  string message = 4;     // 提示信息
+  string msg = 4;     // 提示信息
 }
 
 message FindByPageReq {
@@ -118,6 +118,16 @@ message GetTagsResp {
   string tags = 1;
 }
 
+message AuditFileReq {
+  string fileId = 1;
+  string audited = 2;
+}
+
+message AuditFileResp {
+  bool success = 1;
+  string msg = 2;
+}
+
 // 文件服务
 service File {
   rpc UploadFile(UploadReq) returns (UploadResponse);
@@ -137,4 +147,6 @@ service File {
   rpc FileUserPage(FileUserPageReq) returns (FileUserPageResp);
 
   rpc GetTags(GetTagsReq) returns (GetTagsResp);
+
+  rpc AuditFile(AuditFileReq) returns (AuditFileResp);
 }

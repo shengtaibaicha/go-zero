@@ -27,25 +27,29 @@ func NewAdminFindPageLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Adm
 	}
 }
 
-func (l *AdminFindPageLogic) AdminFindPage(req *types.FindByPageReq) (resp *result.Result, err error) {
+func (l *AdminFindPageLogic) AdminFindPage(req *types.AdminFindPageReq) (resp *result.Result, err error) {
 
 	page, _ := l.svcCtx.AdminClient.FindPage(l.ctx, &user.AdminFindPageReq{
-		Page: req.Page,
-		Size: req.Size,
+		Page:   req.Page,
+		Size:   req.Size,
+		Filter: req.Filter,
 	})
 	if page == nil {
 		return result.Err().SetMsg("查询失败！"), nil
 	}
 
 	var data []models.Files
-	json.Unmarshal([]byte(page.Records), &data)
+	jsonErr := json.Unmarshal([]byte(page.Records), &data)
+	if jsonErr != nil {
+		l.Logger.Error("json序列化失败：", jsonErr.Error())
+	}
 
 	r := map[string]any{}
 	r["records"] = data
-	r["total"] = page.Total
-	r["current"] = page.Current
-	r["pages"] = page.Pages
-	r["size"] = page.Size
+	r["total"] = page.GetTotal()
+	r["current"] = page.GetCurrent()
+	r["pages"] = page.GetPages()
+	r["size"] = page.GetSize()
 
 	return result.Ok().SetData(r), nil
 }

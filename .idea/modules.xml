@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/go-zero.iml" filepath="$PROJECT_DIR$/.idea/go-zero.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/MyWallpaper-Golang.iml" filepath="$PROJECT_DIR$/.idea/MyWallpaper-Golang.iml" />
     </modules>
   </component>
 </project>

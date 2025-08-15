@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3a630257-9f39-4750-a893-b07a57f917c4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/go-zero.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/handler/admin/adminfindpagehandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/handler/admin/adminfindpagehandler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/handler/routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/handler/routes.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/admin/adminfindpagelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/admin/adminfindpagelogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/file/collectlogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/file/collectlogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/file/uploadlogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/file/uploadlogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/findbypagelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/findbypagelogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/findpagebynamelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/findpagebynamelogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/findpagebytaglogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/findpagebytaglogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/gettagslogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/gettagslogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/userloginlogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/userloginlogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/userregisterlogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/userregisterlogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/types/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/types/types.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/file/client/file/file.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/client/file/file.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/file/etc/filerpc.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/etc/filerpc.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/file/file/file-rpc.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/file/file-rpc.pb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/file/file/file-rpc_grpc.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/file/file-rpc_grpc.pb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/collectfilelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/collectfilelogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/deletefilelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/deletefilelogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/downloadfilelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/downloadfilelogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/uploadfilelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/uploadfilelogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/file/internal/server/file/fileserver.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/internal/server/file/fileserver.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/user/client/admin/admin.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/user/client/admin/admin.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/user/client/user/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/user/client/user/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/user/internal/logic/admin/findpagelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/user/internal/logic/admin/findpagelogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/user/internal/server/admin/adminserver.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/user/internal/server/admin/adminserver.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/user/internal/server/user/userserver.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/user/internal/server/user/userserver.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/user/user/user-rpc.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/user/user/user-rpc.pb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/user/user/user-rpc_grpc.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/user/user/user-rpc_grpc.pb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/api/gateway.api" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/api/gateway.api" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/rpc/file-rpc.proto" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/rpc/file-rpc.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/rpc/user-rpc.proto" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/rpc/user-rpc.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/collect.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/collect.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/files.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/files.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/users.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/users.go" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="GOROOT" url="file://$USER_HOME$/go/bin/pkg/mod/golang.org/toolchain@v0.0.1-go1.24.5.windows-amd64" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;shengtaibaicha&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:shengtaibaicha/MyWallpaper-Golang.git&quot;,
+    &quot;accountId&quot;: &quot;564d1591-53ad-4d8a-87fc-4e76f6129967&quot;
+  }
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="31IvoJxEWNKTIYWJiNwGuQ2Ha4L" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Go Build.go build filerpc.go.executor&quot;: &quot;Debug&quot;,
+    &quot;Go Build.go build gateway.go.executor&quot;: &quot;Debug&quot;,
+    &quot;Go Build.go build userrpc.go.executor&quot;: &quot;Debug&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.GoLinterPluginOnboarding&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.GoLinterPluginStorageMigration&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/12793&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  }
+}</component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="GoApplicationRunConfiguration" />
+      </set>
+    </option>
+    <option name="configurationStatuses">
+      <map>
+        <entry key="GoApplicationRunConfiguration">
+          <value>
+            <map>
+              <entry key="go build filerpc.go" value="STOPPED" />
+              <entry key="go build gateway.go" value="STOPPED" />
+              <entry key="go build userrpc.go" value="STOPPED" />
+            </map>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="RunManager" selected="Go Build.go build gateway.go">
+    <configuration name="MyWallpaper" type="CompoundRunConfigurationType">
+      <toRun name="go build filerpc.go" type="GoApplicationRunConfiguration" />
+      <toRun name="go build userrpc.go" type="GoApplicationRunConfiguration" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build filerpc.go" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
+      <module name="MyWallpaper-Golang" />
+      <working_directory value="$PROJECT_DIR$/apps/rpc/file" />
+      <kind value="FILE" />
+      <package value="go-zero" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/apps/rpc/file/filerpc.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build gateway.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="MyWallpaper-Golang" />
+      <working_directory value="$PROJECT_DIR$/apps/api/gateway" />
+      <kind value="FILE" />
+      <package value="go-zero" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/apps/api/gateway/gateway.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build userrpc.go" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
+      <module name="MyWallpaper-Golang" />
+      <working_directory value="$PROJECT_DIR$/apps/rpc/user" />
+      <kind value="FILE" />
+      <package value="go-zero" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/apps/rpc/user/userrpc.go" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Compound.MyWallpaper" />
+      <item itemvalue="Go Build.go build filerpc.go" />
+      <item itemvalue="Go Build.go build userrpc.go" />
+      <item itemvalue="Go Build.go build gateway.go" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build gateway.go" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-gosdk-f466f9b0953e-3d2cccfc42a2-org.jetbrains.plugins.go.sharedIndexes.bundled-GO-252.23892.449" />
+        <option value="bundled-js-predefined-d6986cc7102b-e03c56caf84a-JavaScript-GO-252.23892.449" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3a630257-9f39-4750-a893-b07a57f917c4" name="Changes" comment="" />
+      <created>1755224575861</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1755224575861</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VgoProject">
+    <settings-migrated>true</settings-migrated>
+  </component>
+</project>

@@ -29,8 +29,14 @@ func NewGetTagsLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetTagsLo
 func (l *GetTagsLogic) GetTags() (resp *result.Result, err error) {
 
 	tags, _ := l.svcCtx.FileClient.GetTags(l.ctx, &file.GetTagsReq{})
+
 	var data []models.Tags
-	json.Unmarshal([]byte(tags.Tags), &data)
+
+	jsonErr := json.Unmarshal([]byte(tags.Tags), &data)
+	if jsonErr != nil {
+		l.Logger.Error("json序列化失败", jsonErr.Error())
+		return result.Err().SetMsg("json序列化失败！"), err
+	}
 
 	return result.Ok().SetData(data), nil
 }

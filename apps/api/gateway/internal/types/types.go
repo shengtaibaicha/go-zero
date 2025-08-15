@@ -3,6 +3,23 @@
 
 package types
 
+type AdminFindPageReq struct {
+	Page   int32  `form:"page"`
+	Size   int32  `form:"size"`
+	Filter string `form:"filter"`
+}
+
+type AdminUserPageReq struct {
+	Page int32  `form:"page"`
+	Size int32  `form:"size"`
+	Role string `form:"role"`
+}
+
+type AuditReq struct {
+	FileId  string `json:"fileId"`
+	Audited string `json:"audited"`
+}
+
 type CollectReq struct {
 	FileId string `json:"fileId"`
 }

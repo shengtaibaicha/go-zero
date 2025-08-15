@@ -27,3 +27,8 @@ func (s *AdminServer) FindPage(ctx context.Context, in *user.AdminFindPageReq) (
 	l := adminlogic.NewFindPageLogic(ctx, s.svcCtx)
 	return l.FindPage(in)
 }
+
+func (s *AdminServer) FindUserPage(ctx context.Context, in *user.AdminFindUserPageReq) (*user.AdminFindUserPageResp, error) {
+	l := adminlogic.NewFindUserPageLogic(ctx, s.svcCtx)
+	return l.FindUserPage(in)
+}

@@ -14,6 +14,8 @@ import (
 )
 
 type (
+	AuditFileReq       = file.AuditFileReq
+	AuditFileResp      = file.AuditFileResp
 	CollectFileReq     = file.CollectFileReq
 	CollectFileResp    = file.CollectFileResp
 	DeleteFileReq      = file.DeleteFileReq
@@ -43,6 +45,7 @@ type (
 		CollectFile(ctx context.Context, in *CollectFileReq, opts ...grpc.CallOption) (*CollectFileResp, error)
 		FileUserPage(ctx context.Context, in *FileUserPageReq, opts ...grpc.CallOption) (*FileUserPageResp, error)
 		GetTags(ctx context.Context, in *GetTagsReq, opts ...grpc.CallOption) (*GetTagsResp, error)
+		AuditFile(ctx context.Context, in *AuditFileReq, opts ...grpc.CallOption) (*AuditFileResp, error)
 	}
 
 	defaultFile struct {
@@ -99,4 +102,9 @@ func (m *defaultFile) FileUserPage(ctx context.Context, in *FileUserPageReq, opt
 func (m *defaultFile) GetTags(ctx context.Context, in *GetTagsReq, opts ...grpc.CallOption) (*GetTagsResp, error) {
 	client := file.NewFileClient(m.cli.Conn())
 	return client.GetTags(ctx, in, opts...)
+}
+
+func (m *defaultFile) AuditFile(ctx context.Context, in *AuditFileReq, opts ...grpc.CallOption) (*AuditFileResp, error) {
+	client := file.NewFileClient(m.cli.Conn())
+	return client.AuditFile(ctx, in, opts...)
 }

@@ -67,3 +67,8 @@ func (s *FileServer) GetTags(ctx context.Context, in *file.GetTagsReq) (*file.Ge
 	l := filelogic.NewGetTagsLogic(ctx, s.svcCtx)
 	return l.GetTags(in)
 }
+
+func (s *FileServer) AuditFile(ctx context.Context, in *file.AuditFileReq) (*file.AuditFileResp, error) {
+	l := filelogic.NewAuditFileLogic(ctx, s.svcCtx)
+	return l.AuditFile(in)
+}

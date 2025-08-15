@@ -14,17 +14,20 @@ import (
 )
 
 type (
-	AdminFindPageReq  = user.AdminFindPageReq
-	AdminFindPageResp = user.AdminFindPageResp
-	InfoReq           = user.InfoReq
-	InfoResp          = user.InfoResp
-	LoginReq          = user.LoginReq
-	LoginResp         = user.LoginResp
-	RegisterReq       = user.RegisterReq
-	RegisterResp      = user.RegisterResp
+	AdminFindPageReq      = user.AdminFindPageReq
+	AdminFindPageResp     = user.AdminFindPageResp
+	AdminFindUserPageReq  = user.AdminFindUserPageReq
+	AdminFindUserPageResp = user.AdminFindUserPageResp
+	InfoReq               = user.InfoReq
+	InfoResp              = user.InfoResp
+	LoginReq              = user.LoginReq
+	LoginResp             = user.LoginResp
+	RegisterReq           = user.RegisterReq
+	RegisterResp          = user.RegisterResp
 
 	Admin interface {
 		FindPage(ctx context.Context, in *AdminFindPageReq, opts ...grpc.CallOption) (*AdminFindPageResp, error)
+		FindUserPage(ctx context.Context, in *AdminFindUserPageReq, opts ...grpc.CallOption) (*AdminFindUserPageResp, error)
 	}
 
 	defaultAdmin struct {
@@ -41,4 +44,9 @@ func NewAdmin(cli zrpc.Client) Admin {
 func (m *defaultAdmin) FindPage(ctx context.Context, in *AdminFindPageReq, opts ...grpc.CallOption) (*AdminFindPageResp, error) {
 	client := user.NewAdminClient(m.cli.Conn())
 	return client.FindPage(ctx, in, opts...)
+}
+
+func (m *defaultAdmin) FindUserPage(ctx context.Context, in *AdminFindUserPageReq, opts ...grpc.CallOption) (*AdminFindUserPageResp, error) {
+	client := user.NewAdminClient(m.cli.Conn())
+	return client.FindUserPage(ctx, in, opts...)
 }

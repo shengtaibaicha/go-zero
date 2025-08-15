@@ -31,7 +31,10 @@ func (l *UserLoginLogic) UserLogin(req *types.UserLoginReq, redisKey string) (re
 		return result.Err().SetMsg("验证码不正确"), nil
 	}
 	// 验证成功后删除redis中的验证码
-	l.svcCtx.RedisClient.DelCtx(l.ctx, redisKey)
+	_, redisErr := l.svcCtx.RedisClient.DelCtx(l.ctx, redisKey)
+	if redisErr != nil {
+		return result.Err().SetMsg("删除redis中的验证码失败："), redisErr
+	}
 	token, err := l.svcCtx.UserClient.UserLogin(l.ctx, &user.LoginReq{
 		UserName:     req.UserName,
 		UserPassword: req.UserPassword,

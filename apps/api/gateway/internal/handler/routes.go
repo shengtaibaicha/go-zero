@@ -21,9 +21,19 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			[]rest.Middleware{serverCtx.JwtAuthMiddleware, serverCtx.AdminAuthMiddleware},
 			[]rest.Route{
 				{
+					Method:  http.MethodPut,
+					Path:    "/audit",
+					Handler: admin.AdminAuditFileHandler(serverCtx),
+				},
+				{
 					Method:  http.MethodGet,
 					Path:    "/file",
 					Handler: admin.AdminFindPageHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodGet,
+					Path:    "/user",
+					Handler: admin.AdminUserPageHandler(serverCtx),
 				},
 			}...,
 		),
