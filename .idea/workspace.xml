@@ -4,46 +4,29 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a630257-9f39-4750-a893-b07a57f917c4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/go-zero.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/handler/admin/adminfindpagehandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/handler/admin/adminfindpagehandler.go" afterDir="false" />
+    <list default="true" id="3a630257-9f39-4750-a893-b07a57f917c4" name="Changes" comment="2025/8/16">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/handler/routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/handler/routes.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/admin/adminfindpagelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/admin/adminfindpagelogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/file/collectlogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/file/collectlogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/admin/adminauditfilelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/admin/adminauditfilelogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/admin/adminuserpagelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/admin/adminuserpagelogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/file/deletelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/file/deletelogic.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/file/uploadlogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/file/uploadlogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/findbypagelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/findbypagelogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/findpagebynamelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/findpagebynamelogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/findpagebytaglogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/findpagebytaglogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/gettagslogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/gettagslogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/userloginlogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/userloginlogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/userregisterlogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/public/userregisterlogic.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/types/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/types/types.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/rpc/file/client/file/file.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/client/file/file.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/rpc/file/etc/filerpc.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/etc/filerpc.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/rpc/file/file/file-rpc.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/file/file-rpc.pb.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/rpc/file/file/file-rpc_grpc.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/file/file-rpc_grpc.pb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/auditfilelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/auditfilelogic.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/collectfilelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/collectfilelogic.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/deletefilelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/deletefilelogic.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/downloadfilelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/downloadfilelogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/fileuserpagelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/fileuserpagelogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/gettagslogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/gettagslogic.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/uploadfilelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/internal/logic/file/uploadfilelogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/rpc/file/internal/server/file/fileserver.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/internal/server/file/fileserver.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/rpc/user/client/admin/admin.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/user/client/admin/admin.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/rpc/user/client/user/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/user/client/user/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/rpc/user/internal/logic/admin/findpagelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/user/internal/logic/admin/findpagelogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/user/internal/logic/admin/finduserpagelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/user/internal/logic/admin/finduserpagelogic.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/rpc/user/internal/server/admin/adminserver.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/user/internal/server/admin/adminserver.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/rpc/user/internal/server/user/userserver.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/user/internal/server/user/userserver.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/rpc/user/user/user-rpc.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/user/user/user-rpc.pb.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/rpc/user/user/user-rpc_grpc.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/user/user/user-rpc_grpc.pb.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/api/gateway.api" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/api/gateway.api" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/rpc/file-rpc.proto" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/rpc/file-rpc.proto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/rpc/user-rpc.proto" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/rpc/user-rpc.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/collect.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/collect.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/files.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/files.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/users.go" beforeDir="false" afterPath="$PROJECT_DIR$/models/users.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,7 +185,22 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="2025/8/16" />
+    <option name="LAST_COMMIT_MESSAGE" value="2025/8/16" />
+  </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/apps/rpc/file/internal/logic/file/collectfilelogic.go</url>
+          <line>65</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -39,6 +39,16 @@ func (l *UploadFileLogic) UploadFile(in *file.UploadReq) (*file.UploadResponse, 
 
 	MDB := l.svcCtx.MDB
 
+	// 判断用户状态是否被禁用enable = 0
+	var enable models.Users
+	isEnable := MDB.Model(&models.Users{}).Where("enable = ? and user_id = ?", 0, in.UserId).First(&enable)
+	if isEnable.RowsAffected != 0 {
+		return &file.UploadResponse{
+			Success: false,
+			Msg:     "当前用户已被禁用，请联系管理员！",
+		}, nil
+	}
+
 	// 判断图片是否已经被当前用户上传过
 	var f models.Files
 	tx := MDB.Model(&models.Files{}).Where("user_id = ? and file_title = ?", in.UserId, fileList[0]).First(&f)

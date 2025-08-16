@@ -32,6 +32,7 @@ func (l *DeleteLogic) Delete(req *types.DeleteReq) (resp *result.Result, err err
 	// 拿到上下文的userId并通过metadata传递到rpc
 	md := metadata.New(map[string]string{
 		"userId": middleware.GetUserIdFromCtx(l.ctx),
+		"role":   middleware.GetRoleFromCtx(l.ctx),
 	})
 	l.ctx = metadata.NewOutgoingContext(l.ctx, md)
 	// 调用rpc服务

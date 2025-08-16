@@ -53,14 +53,17 @@ func (l *CollectFileLogic) CollectFile(in *file.CollectFileReq) (*file.CollectFi
 			Msg:     "操作失败！",
 		}, nil
 	}
-	userId := incomingContext.Get("userId")
+	userId := incomingContext.Get("userId")[0]
 
 	var r models.Collect
 	tx := db.Model(&models.Collect{}).Where("user_id = ? and file_id = ?", userId, in.FileId).First(&r)
 	if tx.RowsAffected == 0 || errors.Is(tx.Error, gorm.ErrRecordNotFound) {
 		// 当收藏表里面没有匹配的记录则写入
-		db.Model(&models.Collect{}).Create(&models.Collect{FileId: in.FileId, UserId: userId[0]})
-		update := db.Model(&models.Users{}).Where("user_id = ?", userId[0]).Update("collect_number", gorm.Expr("collect_number + 1"))
+		create := db.Model(&models.Collect{}).Create(&models.Collect{FileId: in.FileId, UserId: userId})
+		if create.Error != nil {
+			db.Rollback()
+		}
+		update := db.Model(&models.Users{}).Where("user_id = ?", userId).Update("collect_number", gorm.Expr("collect_number + ?", 1))
 		if err := update.Error; err != nil {
 			db.Rollback()
 		}
@@ -70,7 +73,7 @@ func (l *CollectFileLogic) CollectFile(in *file.CollectFileReq) (*file.CollectFi
 		if err := t.Error; err != nil {
 			db.Rollback()
 		}
-		update := db.Model(&models.Users{}).Where("user_id = ?", userId[0]).Update("collect_number", gorm.Expr("collect_number - 1"))
+		update := db.Model(&models.Users{}).Where("user_id = ?", userId).Update("collect_number", gorm.Expr("collect_number - 1"))
 		if err := update.Error; err != nil {
 			db.Rollback()
 		}

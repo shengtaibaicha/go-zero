@@ -75,10 +75,21 @@ message AdminFindUserPageResp {
   int32 pages = 5;
 }
 
+message ChangeUserStatusReq {
+  string userId = 1;
+}
+
+message CommonResp {
+  bool success = 1;
+  string msg = 2;
+}
+
 service admin {
   rpc FindPage(AdminFindPageReq) returns (AdminFindPageResp);
 
   rpc FindUserPage(AdminFindUserPageReq) returns (AdminFindUserPageResp);
+
+  rpc ChangeUserStatus(ChangeUserStatusReq) returns (CommonResp);
 }
 /*
   goctl rpc protoc user-rpc.proto --go_out=C:\Users\12793\Desktop\MyWallpaper\MyWallpaper-Golang\apps\rpc\user --go-grpc_out=C:\Users\12793\Desktop\MyWallpaper\MyWallpaper-Golang\apps\rpc\user --zrpc_out=C:\Users\12793\Desktop\MyWallpaper\MyWallpaper-Golang\apps\rpc\user -m

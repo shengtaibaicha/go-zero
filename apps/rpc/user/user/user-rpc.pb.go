@@ -645,6 +645,102 @@ func (x *AdminFindUserPageResp) GetPages() int32 {
 	return 0
 }
 
+type ChangeUserStatusReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ChangeUserStatusReq) Reset() {
+	*x = ChangeUserStatusReq{}
+	mi := &file_user_rpc_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ChangeUserStatusReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChangeUserStatusReq) ProtoMessage() {}
+
+func (x *ChangeUserStatusReq) ProtoReflect() protoreflect.Message {
+	mi := &file_user_rpc_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChangeUserStatusReq.ProtoReflect.Descriptor instead.
+func (*ChangeUserStatusReq) Descriptor() ([]byte, []int) {
+	return file_user_rpc_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *ChangeUserStatusReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+type CommonResp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Msg           string                 `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CommonResp) Reset() {
+	*x = CommonResp{}
+	mi := &file_user_rpc_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CommonResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CommonResp) ProtoMessage() {}
+
+func (x *CommonResp) ProtoReflect() protoreflect.Message {
+	mi := &file_user_rpc_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CommonResp.ProtoReflect.Descriptor instead.
+func (*CommonResp) Descriptor() ([]byte, []int) {
+	return file_user_rpc_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *CommonResp) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *CommonResp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
 var File_user_rpc_proto protoreflect.FileDescriptor
 
 const file_user_rpc_proto_rawDesc = "" +
@@ -694,14 +790,21 @@ const file_user_rpc_proto_rawDesc = "" +
 	"\x05total\x18\x02 \x01(\x05R\x05total\x12\x12\n" +
 	"\x04size\x18\x03 \x01(\x05R\x04size\x12\x18\n" +
 	"\acurrent\x18\x04 \x01(\x05R\acurrent\x12\x14\n" +
-	"\x05pages\x18\x05 \x01(\x05R\x05pages2\x96\x01\n" +
+	"\x05pages\x18\x05 \x01(\x05R\x05pages\"-\n" +
+	"\x13ChangeUserStatusReq\x12\x16\n" +
+	"\x06userId\x18\x01 \x01(\tR\x06userId\"8\n" +
+	"\n" +
+	"CommonResp\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x10\n" +
+	"\x03msg\x18\x02 \x01(\tR\x03msg2\x96\x01\n" +
 	"\x04user\x12,\n" +
 	"\tUserLogin\x12\x0e.user.LoginReq\x1a\x0f.user.LoginResp\x125\n" +
 	"\fUserRegister\x12\x11.user.RegisterReq\x1a\x12.user.RegisterResp\x12)\n" +
-	"\bUserInfo\x12\r.user.InfoReq\x1a\x0e.user.InfoResp2\x8d\x01\n" +
+	"\bUserInfo\x12\r.user.InfoReq\x1a\x0e.user.InfoResp2\xce\x01\n" +
 	"\x05admin\x12;\n" +
 	"\bFindPage\x12\x16.user.AdminFindPageReq\x1a\x17.user.AdminFindPageResp\x12G\n" +
-	"\fFindUserPage\x12\x1a.user.AdminFindUserPageReq\x1a\x1b.user.AdminFindUserPageRespB\bZ\x06./userb\x06proto3"
+	"\fFindUserPage\x12\x1a.user.AdminFindUserPageReq\x1a\x1b.user.AdminFindUserPageResp\x12?\n" +
+	"\x10ChangeUserStatus\x12\x19.user.ChangeUserStatusReq\x1a\x10.user.CommonRespB\bZ\x06./userb\x06proto3"
 
 var (
 	file_user_rpc_proto_rawDescOnce sync.Once
@@ -715,7 +818,7 @@ func file_user_rpc_proto_rawDescGZIP() []byte {
 	return file_user_rpc_proto_rawDescData
 }
 
-var file_user_rpc_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_user_rpc_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_user_rpc_proto_goTypes = []any{
 	(*LoginReq)(nil),              // 0: user.LoginReq
 	(*LoginResp)(nil),             // 1: user.LoginResp
@@ -727,23 +830,27 @@ var file_user_rpc_proto_goTypes = []any{
 	(*AdminFindPageResp)(nil),     // 7: user.AdminFindPageResp
 	(*AdminFindUserPageReq)(nil),  // 8: user.AdminFindUserPageReq
 	(*AdminFindUserPageResp)(nil), // 9: user.AdminFindUserPageResp
+	(*ChangeUserStatusReq)(nil),   // 10: user.ChangeUserStatusReq
+	(*CommonResp)(nil),            // 11: user.CommonResp
 }
 var file_user_rpc_proto_depIdxs = []int32{
-	0, // 0: user.user.UserLogin:input_type -> user.LoginReq
-	2, // 1: user.user.UserRegister:input_type -> user.RegisterReq
-	4, // 2: user.user.UserInfo:input_type -> user.InfoReq
-	6, // 3: user.admin.FindPage:input_type -> user.AdminFindPageReq
-	8, // 4: user.admin.FindUserPage:input_type -> user.AdminFindUserPageReq
-	1, // 5: user.user.UserLogin:output_type -> user.LoginResp
-	3, // 6: user.user.UserRegister:output_type -> user.RegisterResp
-	5, // 7: user.user.UserInfo:output_type -> user.InfoResp
-	7, // 8: user.admin.FindPage:output_type -> user.AdminFindPageResp
-	9, // 9: user.admin.FindUserPage:output_type -> user.AdminFindUserPageResp
-	5, // [5:10] is the sub-list for method output_type
-	0, // [0:5] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	0,  // 0: user.user.UserLogin:input_type -> user.LoginReq
+	2,  // 1: user.user.UserRegister:input_type -> user.RegisterReq
+	4,  // 2: user.user.UserInfo:input_type -> user.InfoReq
+	6,  // 3: user.admin.FindPage:input_type -> user.AdminFindPageReq
+	8,  // 4: user.admin.FindUserPage:input_type -> user.AdminFindUserPageReq
+	10, // 5: user.admin.ChangeUserStatus:input_type -> user.ChangeUserStatusReq
+	1,  // 6: user.user.UserLogin:output_type -> user.LoginResp
+	3,  // 7: user.user.UserRegister:output_type -> user.RegisterResp
+	5,  // 8: user.user.UserInfo:output_type -> user.InfoResp
+	7,  // 9: user.admin.FindPage:output_type -> user.AdminFindPageResp
+	9,  // 10: user.admin.FindUserPage:output_type -> user.AdminFindUserPageResp
+	11, // 11: user.admin.ChangeUserStatus:output_type -> user.CommonResp
+	6,  // [6:12] is the sub-list for method output_type
+	0,  // [0:6] is the sub-list for method input_type
+	0,  // [0:0] is the sub-list for extension type_name
+	0,  // [0:0] is the sub-list for extension extendee
+	0,  // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_user_rpc_proto_init() }
@@ -757,7 +864,7 @@ func file_user_rpc_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_user_rpc_proto_rawDesc), len(file_user_rpc_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   2,
 		},

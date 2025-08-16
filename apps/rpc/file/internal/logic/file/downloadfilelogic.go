@@ -2,6 +2,7 @@ package filelogic
 
 import (
 	"context"
+	"errors"
 	"go-zero/models"
 	"io"
 	"path/filepath"
@@ -31,6 +32,13 @@ func NewDownloadFileLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Down
 
 func (l *DownloadFileLogic) DownloadFile(in *file.DownloadFileReq) (*file.DownloadFileResp, error) {
 
+	incomingContext, Ok := metadata.FromIncomingContext(l.ctx)
+	if !Ok {
+		logx.Error("在下载文件任务中从metadata获取userId失败，请排查原因！")
+		return nil, errors.New("在下载文件任务中从metadata获取userId失败，请排查原因！")
+	}
+	userId := incomingContext.Get("userId")[0]
+
 	db := l.svcCtx.MDB.Begin()
 	if db.Error != nil {
 		return nil, db.Error
@@ -43,6 +51,13 @@ func (l *DownloadFileLogic) DownloadFile(in *file.DownloadFileReq) (*file.Downlo
 			}
 		}
 	}()
+
+	// 判断用户状态是否被禁用enable = 0
+	var enable models.Users
+	isEnable := db.Model(&models.Users{}).Where("enable = ? and user_id = ?", 0, userId).First(&enable)
+	if isEnable.RowsAffected != 0 {
+		return nil, errors.New("当前用户已被禁用，请联系管理员！")
+	}
 
 	// 从 MinIO 获取文件对象
 	object, err := l.svcCtx.MinioClient.GetObject(
@@ -79,15 +94,9 @@ func (l *DownloadFileLogic) DownloadFile(in *file.DownloadFileReq) (*file.Downlo
 	}
 
 	// 更新用户下载数量
-	incomingContext, Ok := metadata.FromIncomingContext(l.ctx)
-	if !Ok {
-		logx.Error("在下载文件任务中从metadata获取userId失败，请排查原因！")
-	} else {
-		userId := incomingContext.Get("userId")
-		update := db.Model(&models.Users{}).Where("user_id = ?", userId).Update("download_number", gorm.Expr("download_number + ?", 1))
-		if update.Error != nil {
-			db.Rollback()
-		}
+	update := db.Model(&models.Users{}).Where("user_id = ?", userId).Update("download_number", gorm.Expr("download_number + ?", 1))
+	if update.Error != nil {
+		db.Rollback()
 	}
 
 	db.Commit()

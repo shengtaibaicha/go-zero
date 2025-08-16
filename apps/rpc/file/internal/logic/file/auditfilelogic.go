@@ -8,6 +8,7 @@ import (
 	"go-zero/apps/rpc/file/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/logx"
+	"google.golang.org/grpc/metadata"
 )
 
 type AuditFileLogic struct {
@@ -26,15 +27,14 @@ func NewAuditFileLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AuditFi
 
 func (l *AuditFileLogic) AuditFile(in *file.AuditFileReq) (*file.AuditFileResp, error) {
 
-	db := l.svcCtx.MDB.Begin()
-
-	tx := db.First(&models.Files{})
-	if tx.Error != nil {
-		return &file.AuditFileResp{
-			Success: false,
-			Msg:     "审核失败：" + tx.Error.Error(),
-		}, nil
+	incomingContext, ok := metadata.FromIncomingContext(l.ctx)
+	if !ok {
+		l.Logger.Error("metadata.FromIncomingContext")
 	}
+
+	role := incomingContext.Get("role")[0]
+
+	db := l.svcCtx.MDB.Begin()
 
 	var status string
 	if in.Audited == "未审核" {
@@ -43,9 +43,20 @@ func (l *AuditFileLogic) AuditFile(in *file.AuditFileReq) (*file.AuditFileResp, 
 		status = "未审核"
 	}
 
-	update := db.Model(&models.Files{}).Where("file_id = ?", in.FileId).Update("status", status)
-	if update.Error != nil {
-		db.Rollback()
+	if role == "superAdmin" || role == "admin" {
+		update := db.Model(&models.Files{}).Where("file_id = ?", in.FileId).Update("status", status)
+		if update.Error != nil {
+			db.Rollback()
+			return &file.AuditFileResp{
+				Success: false,
+				Msg:     "审核失败！",
+			}, nil
+		}
+	} else {
+		return &file.AuditFileResp{
+			Success: false,
+			Msg:     "权限不足！",
+		}, nil
 	}
 
 	db.Commit()

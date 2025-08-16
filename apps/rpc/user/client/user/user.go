@@ -18,6 +18,8 @@ type (
 	AdminFindPageResp     = user.AdminFindPageResp
 	AdminFindUserPageReq  = user.AdminFindUserPageReq
 	AdminFindUserPageResp = user.AdminFindUserPageResp
+	ChangeUserStatusReq   = user.ChangeUserStatusReq
+	CommonResp            = user.CommonResp
 	InfoReq               = user.InfoReq
 	InfoResp              = user.InfoResp
 	LoginReq              = user.LoginReq

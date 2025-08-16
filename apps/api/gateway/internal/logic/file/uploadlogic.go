@@ -65,12 +65,10 @@ func (l *UploadLogic) Upload(r *http.Request) (resp *result.Result, err error) {
 		TagId:    int32(atoi),
 	}
 
-	uploadFile, err := l.svcCtx.FileClient.UploadFile(l.ctx, f)
+	uploadFile, _ := l.svcCtx.FileClient.UploadFile(l.ctx, f)
 
 	if uploadFile.Success != true {
-		if uploadFile != nil {
-			return result.Err().SetMsg(uploadFile.GetMsg()), err
-		}
+		return result.Err().SetMsg(uploadFile.GetMsg()), nil
 	}
 
 	return result.Ok().SetData(map[string]string{

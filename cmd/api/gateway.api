@@ -133,6 +133,9 @@ type (
 		Size int32  `form:"size"`
 		Role string `form:"role"`
 	}
+	ChangeUserStatusReq {
+		UserId string `json:"userId"`
+	}
 )
 
 @server (
@@ -149,5 +152,8 @@ service gateway {
 
 	@handler AdminUserPage
 	get /user (AdminUserPageReq) returns (Result)
+
+	@handler ChangeUserStatus
+	put /status (ChangeUserStatusReq) returns (Result)
 }
 

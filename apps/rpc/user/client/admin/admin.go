@@ -18,6 +18,8 @@ type (
 	AdminFindPageResp     = user.AdminFindPageResp
 	AdminFindUserPageReq  = user.AdminFindUserPageReq
 	AdminFindUserPageResp = user.AdminFindUserPageResp
+	ChangeUserStatusReq   = user.ChangeUserStatusReq
+	CommonResp            = user.CommonResp
 	InfoReq               = user.InfoReq
 	InfoResp              = user.InfoResp
 	LoginReq              = user.LoginReq
@@ -28,6 +30,7 @@ type (
 	Admin interface {
 		FindPage(ctx context.Context, in *AdminFindPageReq, opts ...grpc.CallOption) (*AdminFindPageResp, error)
 		FindUserPage(ctx context.Context, in *AdminFindUserPageReq, opts ...grpc.CallOption) (*AdminFindUserPageResp, error)
+		ChangeUserStatus(ctx context.Context, in *ChangeUserStatusReq, opts ...grpc.CallOption) (*CommonResp, error)
 	}
 
 	defaultAdmin struct {
@@ -49,4 +52,9 @@ func (m *defaultAdmin) FindPage(ctx context.Context, in *AdminFindPageReq, opts 
 func (m *defaultAdmin) FindUserPage(ctx context.Context, in *AdminFindUserPageReq, opts ...grpc.CallOption) (*AdminFindUserPageResp, error) {
 	client := user.NewAdminClient(m.cli.Conn())
 	return client.FindUserPage(ctx, in, opts...)
+}
+
+func (m *defaultAdmin) ChangeUserStatus(ctx context.Context, in *ChangeUserStatusReq, opts ...grpc.CallOption) (*CommonResp, error) {
+	client := user.NewAdminClient(m.cli.Conn())
+	return client.ChangeUserStatus(ctx, in, opts...)
 }

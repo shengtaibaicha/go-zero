@@ -37,7 +37,7 @@ func (l *FileUserPageLogic) FileUserPage(in *file.FileUserPageReq) (*file.FileUs
 		return nil, nil
 	}
 
-	userId := incomingContext.Get("userId")
+	userId := incomingContext.Get("userId")[0]
 
 	// 查询用户上传的图片
 	var r []models.Files

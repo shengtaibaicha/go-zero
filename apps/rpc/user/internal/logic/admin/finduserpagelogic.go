@@ -3,6 +3,7 @@ package adminlogic
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"go-zero/models"
 	"time"
 
@@ -10,6 +11,7 @@ import (
 	"go-zero/apps/rpc/user/user"
 
 	"github.com/zeromicro/go-zero/core/logx"
+	"google.golang.org/grpc/metadata"
 )
 
 type FindUserPageLogic struct {
@@ -28,6 +30,13 @@ func NewFindUserPageLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Find
 
 func (l *FindUserPageLogic) FindUserPage(in *user.AdminFindUserPageReq) (*user.AdminFindUserPageResp, error) {
 
+	incomingContext, ok := metadata.FromIncomingContext(l.ctx)
+	if !ok {
+		l.Logger.Error("metadata FromIncomingContext error")
+		return nil, errors.New("metadata FromIncomingContext error")
+	}
+	userId := incomingContext.Get("userId")[0]
+
 	MDB := l.svcCtx.MDB
 
 	offset := (in.Page - 1) * in.Size
@@ -45,14 +54,14 @@ func (l *FindUserPageLogic) FindUserPage(in *user.AdminFindUserPageReq) (*user.A
 	var total int64
 
 	if in.Role == "all" {
-		MDB.Model(&models.Users{}).Where("role != ?", "superAdmin").Offset(int(offset)).Limit(int(in.Size)).Scan(&data)
-		MDB.Model(&models.Users{}).Where("role != ?", "superAdmin").Count(&total)
+		MDB.Model(&models.Users{}).Where("role != ? and user_id != ?", "superAdmin", userId).Offset(int(offset)).Limit(int(in.Size)).Scan(&data)
+		MDB.Model(&models.Users{}).Where("role != ? and user_id != ?", "superAdmin", userId).Count(&total)
 	} else if in.Role == "admin" {
-		MDB.Model(&models.Users{}).Where("role = ?", "admin").Offset(int(offset)).Limit(int(in.Size)).Scan(&data)
-		MDB.Model(&models.Users{}).Where("role = ?", "admin").Count(&total)
+		MDB.Model(&models.Users{}).Where("role = ? and user_id != ?", "admin", userId).Offset(int(offset)).Limit(int(in.Size)).Scan(&data)
+		MDB.Model(&models.Users{}).Where("role = ? and user_id != ?", "admin", userId).Count(&total)
 	} else {
-		MDB.Model(&models.Users{}).Where("role = ?", "user").Offset(int(offset)).Limit(int(in.Size)).Scan(&data)
-		MDB.Model(&models.Users{}).Where("role = ?", "user").Count(&total)
+		MDB.Model(&models.Users{}).Where("role = ? and user_id != ?", "user", userId).Offset(int(offset)).Limit(int(in.Size)).Scan(&data)
+		MDB.Model(&models.Users{}).Where("role = ? and user_id != ?", "user", userId).Count(&total)
 	}
 
 	marshal, err := json.Marshal(data)

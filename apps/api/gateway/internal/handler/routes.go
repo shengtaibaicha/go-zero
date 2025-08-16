@@ -31,6 +31,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Handler: admin.AdminFindPageHandler(serverCtx),
 				},
 				{
+					Method:  http.MethodPut,
+					Path:    "/status",
+					Handler: admin.ChangeUserStatusHandler(serverCtx),
+				},
+				{
 					Method:  http.MethodGet,
 					Path:    "/user",
 					Handler: admin.AdminUserPageHandler(serverCtx),

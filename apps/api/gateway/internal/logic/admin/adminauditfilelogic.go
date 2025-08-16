@@ -3,12 +3,14 @@ package admin
 import (
 	"context"
 	"go-zero/apps/rpc/file/file"
+	"go-zero/common/middleware"
 	"go-zero/common/result"
 
 	"go-zero/apps/api/gateway/internal/svc"
 	"go-zero/apps/api/gateway/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
+	"google.golang.org/grpc/metadata"
 )
 
 type AdminAuditFileLogic struct {
@@ -27,7 +29,10 @@ func NewAdminAuditFileLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Ad
 
 func (l *AdminAuditFileLogic) AdminAuditFile(req *types.AuditReq) (resp *result.Result, err error) {
 
-	auditFile, _ := l.svcCtx.FileClient.AuditFile(l.ctx, &file.AuditFileReq{
+	md := metadata.New(map[string]string{"role": middleware.GetRoleFromCtx(l.ctx)})
+	outgoingContext := metadata.NewOutgoingContext(l.ctx, md)
+
+	auditFile, _ := l.svcCtx.FileClient.AuditFile(outgoingContext, &file.AuditFileReq{
 		FileId:  req.FileId,
 		Audited: req.Audited,
 	})

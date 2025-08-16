@@ -32,3 +32,8 @@ func (s *AdminServer) FindUserPage(ctx context.Context, in *user.AdminFindUserPa
 	l := adminlogic.NewFindUserPageLogic(ctx, s.svcCtx)
 	return l.FindUserPage(in)
 }
+
+func (s *AdminServer) ChangeUserStatus(ctx context.Context, in *user.ChangeUserStatusReq) (*user.CommonResp, error) {
+	l := adminlogic.NewChangeUserStatusLogic(ctx, s.svcCtx)
+	return l.ChangeUserStatus(in)
+}

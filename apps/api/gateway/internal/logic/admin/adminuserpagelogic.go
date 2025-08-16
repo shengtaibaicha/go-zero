@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"go-zero/apps/rpc/user/user"
+	"go-zero/common/middleware"
 	"go-zero/common/result"
 	"time"
 
@@ -11,6 +12,7 @@ import (
 	"go-zero/apps/api/gateway/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
+	"google.golang.org/grpc/metadata"
 )
 
 type AdminUserPageLogic struct {
@@ -29,6 +31,9 @@ func NewAdminUserPageLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Adm
 
 func (l *AdminUserPageLogic) AdminUserPage(req *types.AdminUserPageReq) (resp *result.Result, err error) {
 
+	md := metadata.New(map[string]string{"userId": middleware.GetUserIdFromCtx(l.ctx)})
+	outgoingContext := metadata.NewOutgoingContext(l.ctx, md)
+
 	type u struct {
 		UserId    string    `json:"userId"`
 		UserName  string    `json:"userName"`
@@ -40,7 +45,7 @@ func (l *AdminUserPageLogic) AdminUserPage(req *types.AdminUserPageReq) (resp *r
 
 	var data []u
 
-	page, err := l.svcCtx.AdminClient.FindUserPage(l.ctx, &user.AdminFindUserPageReq{
+	page, err := l.svcCtx.AdminClient.FindUserPage(outgoingContext, &user.AdminFindUserPageReq{
 		Page: req.Page,
 		Size: req.Size,
 		Role: req.Role,

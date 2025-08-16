@@ -35,6 +35,4 @@ func (l *GetTagsLogic) GetTags(in *file.GetTagsReq) (*file.GetTagsResp, error) {
 	return &file.GetTagsResp{
 		Tags: string(marshal),
 	}, nil
-
-	return &file.GetTagsResp{}, nil
 }

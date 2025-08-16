@@ -20,6 +20,10 @@ type AuditReq struct {
 	Audited string `json:"audited"`
 }
 
+type ChangeUserStatusReq struct {
+	UserId string `json:"userId"`
+}
+
 type CollectReq struct {
 	FileId string `json:"fileId"`
 }
