@@ -29,12 +29,13 @@ func NewAdminFindPageLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Adm
 
 func (l *AdminFindPageLogic) AdminFindPage(req *types.AdminFindPageReq) (resp *result.Result, err error) {
 
-	page, _ := l.svcCtx.AdminClient.FindPage(l.ctx, &user.AdminFindPageReq{
+	page, err := l.svcCtx.AdminClient.FindPage(l.ctx, &user.AdminFindPageReq{
 		Page:   req.Page,
 		Size:   req.Size,
 		Filter: req.Filter,
 	})
 	if page == nil {
+		l.Logger.Error(err)
 		return result.Err().SetMsg("查询失败！"), nil
 	}
 

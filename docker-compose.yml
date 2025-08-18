@@ -1,0 +1,167 @@
+version: '3.8'
+
+networks:
+  gozero-network:
+    driver: bridge
+    name: gozero-network
+
+volumes:
+  mysql-data:
+    name: gozero-mysql-data
+  redis-data:
+    name: gozero-redis-data
+  minio-data:
+    name: gozero-minio-data
+  etcd-data:
+    name: gozero-etcd-data
+
+services:
+  # 网关API服务
+  gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - SERVICE_TYPE=api
+        - SERVICE_NAME=gateway
+    container_name: gozero-gateway
+    restart: always
+    ports:
+      - "${GATEWAY_PORT}:8888"
+    env_file:
+      - .env
+    environment:
+      - GO_ENV=production
+      - ETCD_ENDPOINTS=etcd:2379
+    depends_on:
+      - etcd
+      - user
+      - file
+    networks:
+      - gozero-network
+    command: ["./gateway"]
+
+  # 用户RPC服务
+  user:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - SERVICE_TYPE=rpc
+        - SERVICE_NAME=user
+    container_name: gozero-user-rpc
+    restart: always
+    ports:
+      - "${USER_RPC_PORT}:8081"
+    env_file:
+      - .env
+    environment:
+      - GO_ENV=production
+      - REDIS_ADDR=redis:6379
+      - DB_HOST=mysql
+      - ETCD_ENDPOINTS=etcd:2379
+    depends_on:
+      - etcd
+      - mysql
+      - redis
+    networks:
+      - gozero-network
+    command: ["./user"]
+
+  # 文件RPC服务
+  file:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - SERVICE_TYPE=rpc
+        - SERVICE_NAME=file
+    container_name: gozero-file-rpc
+    restart: always
+    ports:
+      - "${FILE_RPC_PORT}:8080"
+    env_file:
+      - .env
+    environment:
+      - GO_ENV=production
+      - REDIS_ADDR=redis:6379
+      - MINIO_ADDR=minio:9000
+      - ETCD_ENDPOINTS=etcd:2379
+    depends_on:
+      - etcd
+      - redis
+      - minio
+    networks:
+      - gozero-network
+    volumes:
+      - minio-data:/data
+    command: ["./file"]
+
+  # etcd服务
+  etcd:
+    image: bitnami/etcd:3.5
+    container_name: gozero-etcd
+    restart: always
+    ports:
+      - "${ETCD_PORT}:2379"
+      - "2380:2380"
+    env_file:
+      - .env
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
+    volumes:
+      - etcd-data:/bitnami/etcd
+    networks:
+      - gozero-network
+
+  # MySQL服务
+  mysql:
+    image: mysql:8.0
+    container_name: gozero-mysql
+    restart: always
+    ports:
+      - "${MYSQL_PORT}:3306"
+    env_file:
+      - .env
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - gozero-network
+
+  # Redis服务
+  redis:
+    image: redis:7.0-alpine
+    container_name: gozero-redis
+    restart: always
+    ports:
+      - "${REDIS_PORT}:6379"
+    env_file:
+      - .env
+    volumes:
+      - redis-data:/data
+    networks:
+      - gozero-network
+
+  # MinIO服务
+  minio:
+    image: minio/minio:RELEASE.2025-04-22T22-12-26Z
+    container_name: gozero-minio
+    restart: always
+    ports:
+      - "${MINIO_PORT}:9000"
+      - "${MINIO_CONSOLE_PORT}:9001"
+    env_file:
+      - .env
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ACCESS_KEY}
+      - MINIO_ROOT_PASSWORD=${MINIO_SECRET_KEY}
+    volumes:
+      - minio-data:/data
+    command: server /data --console-address ":9001"
+    networks:
+      - gozero-network

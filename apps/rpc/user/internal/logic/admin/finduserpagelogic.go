@@ -66,6 +66,7 @@ func (l *FindUserPageLogic) FindUserPage(in *user.AdminFindUserPageReq) (*user.A
 
 	marshal, err := json.Marshal(data)
 	if err != nil {
+		l.Logger.Error(err)
 		return nil, err
 	}
 

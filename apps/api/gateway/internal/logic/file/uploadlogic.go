@@ -36,6 +36,20 @@ func (l *UploadLogic) Upload(r *http.Request) (resp *result.Result, err error) {
 	// 解析前端上传的文件（表单字段名为"file"）
 	fileData, header, err := r.FormFile("file")
 
+	// 读取文件内容，记录进度
+	//totalSize := header.Size
+	//readSize := 0
+	//buf := make([]byte, 1024*1024) // 1MB缓冲区
+	//for {
+	//	n, err := fileData.Read(buf)
+	//	if err != nil {
+	//		break
+	//	}
+	//	readSize += n
+	//	// 打印后端接收进度
+	//	fmt.Printf("后端接收进度：%d/%d bytes (%.2f%%)\n", readSize, totalSize, float64(readSize)/float64(totalSize)*100)
+	//}
+
 	//判断文件格式
 	contentType := header.Header.Get("Content-Type")
 	if contentType != "image/jpeg" && contentType != "image/png" {

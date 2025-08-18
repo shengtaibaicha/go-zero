@@ -43,7 +43,11 @@ func (l *FindPageLogic) FindPage(in *user.AdminFindPageReq) (*user.AdminFindPage
 		MDB.Model(&models.Files{}).Where("status = ?", "未审核").Count(&total)
 	}
 
-	marshal, _ := json.Marshal(datas)
+	marshal, err := json.Marshal(datas)
+	if err != nil {
+		l.Logger.Error(err)
+		return nil, err
+	}
 
 	pages := int32(total) / in.Size
 	if int32(total)%in.Size != 0 {

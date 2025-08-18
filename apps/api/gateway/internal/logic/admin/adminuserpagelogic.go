@@ -51,11 +51,13 @@ func (l *AdminUserPageLogic) AdminUserPage(req *types.AdminUserPageReq) (resp *r
 		Role: req.Role,
 	})
 	if err != nil {
+		l.Logger.Error(err)
 		return result.Err().SetMsg("获取用户列表错误！"), nil
 	}
 
 	err = json.Unmarshal([]byte(page.GetRecords()), &data)
 	if err != nil {
+		l.Logger.Error(err)
 		return result.Err().SetMsg("解析json数据错误！"), nil
 	}
 

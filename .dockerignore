@@ -1,0 +1,25 @@
+# 版本控制
+.git
+.gitignore
+
+# 构建产物
+*.exe
+apps/api/*/*[!yaml]
+apps/rpc/*/*[!yaml]
+
+# IDE配置
+.idea/
+.vscode/
+*.swp
+
+# 日志和临时文件
+logs/
+tmp/
+*.log
+uploads/
+
+# 环境变量
+.env.local
+
+# Go缓存
+go/pkg/
