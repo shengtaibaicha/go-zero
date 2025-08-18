@@ -37,10 +37,10 @@ func (l *AdminAuditFileLogic) AdminAuditFile(req *types.AuditReq) (resp *result.
 		Audited: req.Audited,
 	})
 	if auditFile.GetSuccess() {
-		return result.Err().SetMsg(auditFile.GetMsg()), nil
+		return result.Ok().SetMsg(auditFile.GetMsg()), nil
 	} else {
 		l.Logger.Error(auditFile.Msg)
 	}
 
-	return result.Ok().SetMsg(auditFile.GetMsg()), nil
+	return result.Err().SetMsg(auditFile.GetMsg()), nil
 }

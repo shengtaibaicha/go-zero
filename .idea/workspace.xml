@@ -4,14 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a630257-9f39-4750-a893-b07a57f917c4" name="Changes" comment="2025/8/16">
+    <list default="true" id="3a630257-9f39-4750-a893-b07a57f917c4" name="Changes" comment="2025/8/16  Docker">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/api/gateway/etc/gateway.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/etc/gateway.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/admin/adminauditfilelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/admin/adminauditfilelogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/admin/adminfindpagelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/admin/adminfindpagelogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/admin/adminuserpagelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/admin/adminuserpagelogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/api/gateway/internal/logic/file/uploadlogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/api/gateway/internal/logic/file/uploadlogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/rpc/user/internal/logic/admin/findpagelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/user/internal/logic/admin/findpagelogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/rpc/user/internal/logic/admin/finduserpagelogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/user/internal/logic/admin/finduserpagelogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/file/etc/filerpc.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/file/etc/filerpc.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/rpc/user/etc/userrpc.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/apps/rpc/user/etc/userrpc.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +44,7 @@
   <component name="ProjectId" id="31IvoJxEWNKTIYWJiNwGuQ2Ha4L" />
   <component name="ProjectLevelVcsManager">
     <OptionsSetting value="false" id="Update" />
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -68,7 +68,7 @@
     &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
     &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/12793&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/12793/Desktop/MyWallpaper/MyWallpaper-Golang&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
@@ -76,6 +76,15 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;com.gitee.ui.GiteeSettingsConfigurable&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\12793\Desktop\MyWallpaper\MyWallpaper-Golang" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\12793\Desktop\MyWallpaper\MyWallpaper-Golang\apps\rpc\user" />
+      <recent name="C:\Users\12793\Desktop\MyWallpaper\MyWallpaper-Golang\apps\rpc\file" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
@@ -187,7 +196,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="2025/8/16" />
-    <option name="LAST_COMMIT_MESSAGE" value="2025/8/16" />
+    <MESSAGE value="2025/8/16  Docker" />
+    <option name="LAST_COMMIT_MESSAGE" value="2025/8/16  Docker" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

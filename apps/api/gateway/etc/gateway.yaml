@@ -1,17 +1,22 @@
 Name: gateway
 Host: 0.0.0.0
 Port: 8888
+MaxBytes: 31547280  # 限制请求体最大为30M
+Timeout: 60000 # 单位：毫秒
+
+Log:
+  Mode: console  # 日志输出模式（file 或 console）
+  Level: info  # 日志级别（info 及以上，忽略 debug 级别的详细日志）
+  MaxContentLength: 1024  # 限制单条日志内容长度（字节），超过会被截断
 
 Redis:
   Host: 127.0.0.1:6379
   Type: node
   Pass: ""
 
-MaxBytes: 31547280  # 限制请求体最大为30M
-Timeout: 30000 # 单位：毫秒（30秒）
 
 FileRpc:
-  Timeout: 30000
+  Timeout: 60000 # 调用filerpc服务的等待超时时间 单位：毫秒
   Etcd:
     Hosts:
       - 127.0.0.1:2379

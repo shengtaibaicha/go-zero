@@ -14,3 +14,17 @@
 | rpc服务 | 文件管理相关微服务 | 根据网关服务发起的请求执行业务，主要包含项目中对文件的管理的相关操作，例如：图片的上传和下载，图片的审核以及删除，压缩等等 |
 
 目前还在开发中，更多功能等待完善...
+
+
+powershell下编译
+$env:CGO_ENABLED=0; $env:GOOS="linux"; $env:GOARCH="amd64"; go build -o 编译后的文件名 go文件.go
+
+cmd下编译
+set CGO_ENABLED=0
+set GOOS=linux
+set GOARCH=amd64
+go build -o gateway gateway.go
+
+chmod +x ./打包后的服务文件
+
+nohup ./打包后的服务文件 -f 配置文件.yaml > 日志文件.log 2>&1 &

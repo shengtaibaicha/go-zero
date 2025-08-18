@@ -1,5 +1,11 @@
 Name: user.rpc
 ListenOn: 0.0.0.0:8081
+Timeout: 60000 # 单位：毫秒
+
+Log:
+  Mode: console  # 日志输出模式（file 或 console）
+  Level: info  # 日志级别（info 及以上，忽略 debug 级别的详细日志）
+  MaxContentLength: 1024  # 限制单条日志内容长度（字节），超过会被截断
 
 Etcd:
   Hosts:
